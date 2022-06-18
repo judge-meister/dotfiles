@@ -151,6 +151,7 @@ exec_always ~/bin/kbd_model
 
     # manually lock the screen
     bindsym Ctrl+l exec $lockcmd
+#=    bindsym [Mod]+Shift+e  exit using nag bar
 
     # Exit sway (logs you out of your Wayland session)
     #bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
@@ -294,7 +295,7 @@ bindsym $mod+r mode "resize"
     bindsym XF86KbdBrightnessDown exec kbdbrightness -dec
 
 #=
-#= Screen Resolution
+#= Screen Resolution   $mod -    $mod =
 #=
     bindsym $mod+minus exec $HOME/bin/scale_sway.py -i
     bindsym $mod+equal exec $HOME/bin/scale_sway.py -d
@@ -302,13 +303,14 @@ bindsym $mod+r mode "resize"
 #= Random Wallpaper
 #=
     bindsym $mod+b exec ~/bin/random_swaybg.py
-    bindsym $mod+Shift+b exec ~/bin/random_swaybg.py $HOME/Pictures/WP/Montage/ivi_pizzot_montage_1920x1200_16668.jpg fill
-    bindsym $mod+Control+b exec ~/bin/random_swaybg.py $HOME/.config/sway/wallpaper.png fill
+    bindsym $mod+Shift+b exec ~/bin/random_swaybg.py $HOME/Pictures/WP/Montage/ivi_pizzot_montage_1920x1200_16668.jpg
+    bindsym $mod+Control+b exec ~/bin/random_swaybg.py $HOME/.config/sway/wallpaper.png
+    bindsym $mod+Mod1+b exec ~/bin/random_swaybg.py $HOME/clones/wallpapers/montage
 #=
 #= Toggle Alacritty Opacity
 #=
-    bindsym $mod+Control+a exec "$HOME/bin/toggle_alacritty_opacity.sh -d"
-    bindsym $mod+Shift+a exec "$HOME/bin/toggle_alacritty_opacity.sh -i"
+    bindsym $mod+Control+minus exec "$HOME/bin/toggle_alacritty_opacity.sh -d"
+    bindsym $mod+Control+equal exec "$HOME/bin/toggle_alacritty_opacity.sh -i"
 
 
 # -----------------------------------------------------------------------------
@@ -331,17 +333,17 @@ bindsym $mod+r mode "resize"
 #-
 #-   [Mod] UNSHIFTED                        [Mod] SHIFTED
 #-    ,1,2,3,4,5,6,7,8,9,0,-,=               ,1,2,3,4,5,6,7,8,9,0,_,+
-#-    ,w,e,r, , ,u, , , , , ,               Q, , , , , , , , , , , ,
-#-   a,s,d,f, ,h, , , , , , ,               A, ,D, , , , , , , , , , ,[return]
+#-    ,w,e,r, , ,u, , , , , ,               Q, ,E, , , , , , , , , ,
+#-   a,s,d,f, ,h, , , , , , ,                , ,D, , , , , , , , , , ,[return]
 #-   ,  , ,c,v,b, , , , ,                    , , ,C, ,B, , , , ,/
 #-   [space],[left],[up],[down],[right]     [space],[left],[up],[down],[right]
 #-
 #- 
 #-   [Mod] CONTROL                          CTRL (no Mod)
-#-   A                                      , , , , , , , ,l
+#-    , , , , , , , , , , ,-,=               , , , , , , , , , , ,_,+
+#-                                           , , , , , , , ,l
 #-   [left],[right]                         
 #-
-
 
 # END_KEYS
 
@@ -375,10 +377,9 @@ bindsym $mod+r mode "resize"
 	    Down      $nag_select prev
       }
     }
-    #bindsym $mod+Shift+e exit
 
     bindsym {
-      $mod+Shift+e $nag -t "warning" -m "Exit Sway?" -b "Exit" "swaymsg exit" -b "Reload" "swaymsg reload" -b "Power Off" "poweroff" -b "Reboot" "reboot"
+        $mod+Shift+e $nag -t "warning" -m "Exit Sway?" -b "Exit" "swaymsg exit" -b "Reload" "swaymsg reload" -b "Power Off" "poweroff" -b "Reboot" "reboot"
     }
     # -R is recommended for swaynag_command so that, upon a syntax error in your sway config, the
     # 'Reload Sway' option will be initially selected instead of the 'Exit Sway' option

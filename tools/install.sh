@@ -30,7 +30,7 @@ pacman_settings()
 
 # -----------------------------------------------------------------------------
 # add sudoers file for current user
-make_user_admin()
+install_make_user_admin()
 {
     if [ "$USER" != "root" ]
     then
@@ -46,7 +46,7 @@ make_user_admin()
 
 # -----------------------------------------------------------------------------
 # script to install yay
-install_yay_from_git()
+install_yay()
 {
   echo "Installing yay from git"; sleep 2
 
@@ -263,12 +263,12 @@ install_scripts()
 }
 
 # -----------------------------------------------------------------------------
-install_something()
-{
-  echo "Install Some Stuff"
-  echo "${INST_OPTS}"
-  ${INST_OPTS}
-}
+#install_something()
+#{
+#  echo "Install Some Stuff"
+#  echo "${INST_OPTS}"
+#  ${INST_OPTS}
+#}
 
 # -----------------------------------------------------------------------------
 install_everything()
@@ -284,7 +284,7 @@ install_everything()
   install_pacman_packages
 
   # AUR
-  install_yay_from_git
+  install_yay
   install_aur_packages
 
   install_dwm
@@ -300,12 +300,12 @@ usage()
   echo
   echo "options available are"
   echo "  make_user_admin"
+  echo "  pacman_packages"
   echo "  pacman_settings"
-  echo "  install_scripts"
-  echo "  install_pacman_packages"
-  echo "  install_yay_from_git"
-  echo "  install_aur_packages"
-  echo "  install_dwm"
+  echo "  aur_packages"
+  echo "  scripts"
+  echo "  yay"
+  echo "  dwm"
   echo
 }
 
@@ -319,7 +319,8 @@ do
           exit 0
           ;;
     'i' ) INST_OPTS=${OPTARG}
-          install_something
+          echo "Install - ${INST_OPTS}"
+          install_${INST_OPTS}
           ;;
     'a' ) install_everything
           ;;

@@ -22,6 +22,7 @@ grep -E 'bindsym|^#=' ~/.config/"${WM}"/config \
           -e 's/$mod/[Mod]/g' \
           -e 's/Shift/[Shift]/g' \
           -e 's/Ctrl/[Ctrl]/g' \
+          -e 's/Control/[Control]/g' \
           -e 's/$term/Terminal Emulator/g' \
           -e 's/$drun_/Application /g' \
           -e 's/$run_/Program /g' \

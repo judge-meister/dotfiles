@@ -13,12 +13,12 @@ from random_wall import get_random_remote_pic, RemotePicError, \
 
 
 def swaybg(url):
-    """need to kill off old swaybg"""
-    pids = [] #-1
-    for proc in psutil.process_iter():
-        if 'swaybg' in proc.name():
-            print(proc.name(), proc.pid)
-            pids.append(proc.pid)
+    """doesn't need to kill off old swaybg"""
+    #pids = [] #-1
+    #for proc in psutil.process_iter():
+    #    if 'swaybg' in proc.name():
+    #        print(proc.name(), proc.pid)
+    #        pids.append(proc.pid)
 
     os.system(f'swaymsg output "*" bg {url} fill')
 
@@ -35,13 +35,19 @@ def main():
     """ main """
     if len(sys.argv) > 1:
         if os.path.exists(sys.argv[1]):
-            pic = sys.argv[1]
-            set_wallpaper(f'{pic}')
-            sys.exit()
+            if os.path.isfile(sys.argv[1]):
+                pic = sys.argv[1]
+                set_wallpaper(f'{pic}')
+                sys.exit()
+            elif os.path.isdir(sys.argv[1]):
+                pic = get_random_local_pic(sys.argv[1])
+                #print(f" {pic}")
+                set_wallpaper(f'{pic}')
+                sys.exit()
 
     try:
         pic = get_random_remote_pic()
-        print(f"{pic}")
+        #print(f"{pic}")
         pic = download_remote_pic(pic)
         set_wallpaper(f"{pic}")
 

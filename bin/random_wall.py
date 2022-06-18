@@ -60,14 +60,15 @@ def download_remote_pic(pic):
 def get_list_of_pictures(picpath):
     """get pic list"""
     paths = []
-    for root, _dirn, filen in os.walk(os.path.join('/home/judge/Pictures', picpath), followlinks=True):
+    #for root, _dirn, filen in os.walk(os.path.join('/home/judge/Pictures', picpath), followlinks=True):
+    for root, _dirn, filen in os.walk(os.path.join(picpath), followlinks=True):
         for file in filen:
             paths.append(os.path.join(root, file))
     return paths
 
-def get_random_local_pic():
+def get_random_local_pic(picpath):
     """ random local pic """
-    pics = get_list_of_pictures()
+    pics = get_list_of_pictures(picpath)
     return pics[random.randint(0, len(pics)-1)]
 
 
