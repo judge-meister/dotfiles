@@ -1,0 +1,32 @@
+#!/bin/bash
+
+currkb=$(swaymsg -r -t get_inputs | jq -r '.[].xkb_active_layout_name' | grep -v null | sort -u | sed 's/.*(\([UKS]*\)).*/\1/g' )
+#echo $currkb
+
+swap()
+{
+if [ "$currkb" == "US" ]
+then
+  swaymsg input "type:keyboard" xkb_layout gb
+  currkb=UK
+else
+  swaymsg input "type:keyboard" xkb_layout us
+  currkb=US
+fi
+pkill -SIGRTMIN+9 waybar
+}
+
+report()
+{
+  echo $currkb
+}
+
+if [ "$1" == "-r" ]
+then
+  report
+else
+  swap
+  report
+fi
+
+#

@@ -1,0 +1,5 @@
+#!/bin/sh
+#
+# Requires: feh
+#
+feh --bg-scale '/home/judge/Downloads/216531-3008x1699.jpg' 

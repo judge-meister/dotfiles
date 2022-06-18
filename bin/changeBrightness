@@ -1,0 +1,22 @@
+#!/bin/bash
+# changeBrightness
+
+# Arbitrary but unique message tag
+msgTag="mybrightness"
+
+# Change the brightness using brightnessctl
+if [ "$1" == "-dec" ]; then
+  brightnessctl -c backlight set 5%-
+elif [ "$1" == "-inc" ]; then
+  brightnessctl -c backlight set +5%
+fi
+
+# get the new current brightness
+bright=$(brightnessctl info | grep Current | sed 's|.*(\([0-9%]*\)).*|\1|g')
+
+# Show the brightness notification
+dunstify -a "changeBrightness" -u low -i audio-volume-high -h "string:x-dunst-stack-tag:$msgTag" \
+    -h int:value:"$bright" "Brightness: ${bright}"
+
+# Play the volume changed sound
+canberra-gtk-play -i audio-volume-change -d "changeBrightness"

@@ -1,0 +1,9 @@
+[Unit]
+Description=Alert in case of available package updates
+
+[Service]
+Type=oneshot
+ExecStart=/home/judge/bin/checkupdates_alert
+
+[Install]
+WantedBy=graphical.target

@@ -1,0 +1,52 @@
+#!/bin/bash
+# Requires: docker
+
+if [ "$1" == "build" ]
+then
+  cd ~/dockerfiles/tiger-vnc/ || exit
+  docker build -t judge/tigervnc:latest .
+  exit
+fi
+
+host_port="torrent:5901"
+if [ "$1" != "" ]
+then
+  host_port="$1"
+fi
+
+running=$(docker inspect --format "{{.State.Running}}" "tigervnc"  2>/dev/null)
+[ "$running" != "" ] && echo "Running $running"
+
+ID=$(docker container ls -a | grep vncviewer | awk -F' ' '{print $1}')
+[ "$ID" != "" ] && echo "Container ID $ID"
+
+if [ "$ID" != "" ]
+then
+  if [ "$running" == "true" ]
+  then
+    echo "Stop container $ID"
+    docker stop "$ID"
+  fi
+  echo "Remove Container $ID"
+  docker container rm "$ID"
+fi
+
+RM="--rm"
+if [ "$1" == "-keep" ]
+then
+  RM=""
+fi
+
+xhost local:root
+
+echo "Create and Run new tigervnc container"
+
+docker run -it "$RM" \
+        -v /etc/localtime:/etc/localtime:ro \
+        -v /tmp/.X11-unix:/tmp/.X11-unix \
+        -v ~/.vnc:/vnc:ro \
+        -e "DISPLAY=unix${DISPLAY}" \
+        --net host \
+        --name tigervnc \
+        -d judge/tigervnc "$host_port" "-passwd" "/vnc/passwd"
+

@@ -1,0 +1,13 @@
+--- Makefile	2021-11-27 22:29:16.700084893 +0000
++++ Makefile.ij	2021-11-27 22:28:29.016937525 +0000
+@@ -44,8 +44,8 @@
+ 	sed "s/VERSION/${VERSION}/g" < dwm.1 > ${DESTDIR}${MANPREFIX}/man1/dwm.1
+ 	chmod 644 ${DESTDIR}${MANPREFIX}/man1/dwm.1
+ 	mkdir -p ${DESTDIR}${PREFIX}/share/xsession
+-	cp -f dwm.desktop ${DESTDIR}${PREFIX}/share/xsession
+-	chmod 644 ${DESTDIR}${PREFIX}/share/xsession/dwm.desktop
++	cp -f dwm.desktop ${DESTDIR}/usr/share/xsession
++	chmod 644 ${DESTDIR}/usr/share/xsession/dwm.desktop
+ 
+ uninstall:
+ 	rm -f ${DESTDIR}${PREFIX}/bin/dwm\

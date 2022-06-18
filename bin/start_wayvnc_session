@@ -1,0 +1,15 @@
+#!/bin/bash
+set -x
+
+export WLR_BACKENDS=headless 
+export WLR_LIBINPUT_NO_DEVICES=1
+
+#sway &
+
+#sleep 5
+
+#wayvnc -r -s seat0
+
+
+exec env WLR_BACKENDS=headless WLR_LIBINPUT_NO_DEVICES=1 sway --config ~/.config/sway/remote.config
+

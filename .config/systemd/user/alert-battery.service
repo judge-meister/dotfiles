@@ -1,0 +1,9 @@
+[Unit]
+Description=Alert in case of low remaining battery
+
+[Service]
+Type=oneshot
+ExecStart=/home/judge/bin/low_battery_alert
+
+[Install]
+WantedBy=graphical.target

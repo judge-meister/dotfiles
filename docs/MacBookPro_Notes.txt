@@ -1,0 +1,42 @@
+
+HARDWARE
+
+battery
+  /sys/class/power_supply/BAT0/*
+
+screen backlight
+  /sys/class/backlight/nv_backlight
+
+keyboard backlight
+  /sys/class/led/smc::backlight/
+
+enable Fn keys (disable media keys)
+  echo 2 >> /eys/module/hid_apple/parameter/fnmode
+
+Core Temp (more realistic temp values)
+  in Mint Linux
+    /sys/class/hwmon/hwmon2/temp*_input
+    hwmon2 -> /sys/devices/platform/coretemp.0/hwmon/hwmon2
+  in Arch it seems its hwmon4
+    hwmon4 -> /sys/devices/platform/coretemp.0/hwmon/hwmon4
+
+Light sensor
+  /sys/devices/platform/applesmc.768/light
+
+TO DO
+
+change the Super/Mod key for DWM to suit the macbook CMD key.
+brave browser keyboard shortcut, particularly for next tab - Done, "Keyboard Shortcuts" chrome extension by Joe Pestro
+
+WORKING
+
+iSight camera working (tested with mplayer tv:// -vf screenshot)
+Touchpad working with Tap to click, Natural Scrolling, Middle and Right click capability
+
+BRAVE BROWSER KEYBOARD SHORTCUTS
+
+Ctrl+Tab       Next Tab
+Ctrl+Shift+Tab Previous Tab
+Alt+Right      Next Page
+Alt+Left       Previous Page
+

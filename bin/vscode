@@ -1,0 +1,52 @@
+#!/bin/bash
+
+which code
+code
+exit
+
+if [ "$1" == "build" ]
+then
+  cd ~/dockerfiles/vscode || exit
+  docker build -t judge/vscode:latest ~/clones/dotfiles/dockerfiles/vscode
+  exit
+fi
+
+running=$(docker inspect --format "{{.State.Running}}" "vscode"  2>/dev/null)
+[ "$running" != "" ] && echo "Running $running"
+
+ID=$(docker container ls -a | grep vscode | awk -F' ' '{print $1}')
+[ "$ID" != "" ] && echo "Container ID $ID"
+
+if [ "$ID" != "" ]
+then
+  if [ "$running" == "true" ]
+  then
+    echo "Stop container $ID"
+    docker stop "$ID"
+  fi
+  echo "Remove Container $ID"
+  docker container rm "$ID"
+fi
+
+RM="--rm"
+if [ "$1" == "-keep" ]
+then
+  RM=""
+fi
+
+#xhost local:root
+
+echo "Create and Run new vscode container"
+
+docker run  "$RM" \
+           -v /etc/localtime:/etc/localtime:ro \
+           -v /tmp/.X11-unix:/tmp/.X11-unix  \
+           -v "$HOME":/home/user \
+           -e "DISPLAY=unix${DISPLAY}" \
+           --device /dev/dri \
+           --net host \
+           --name visualstudio \
+           judge/vscode
+
+
+

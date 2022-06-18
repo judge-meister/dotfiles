@@ -1,0 +1,10 @@
+#!/bin/bash
+
+status=$(cat /sys/class/power_supply/BAT0/status)
+capacity=$(cat /sys/class/power_supply/BAT0/capacity)
+
+echo "${capacity}% ${status} "
+
+#result=$(python3 "$HOME"/bin/battery.py)
+#echo -e "${result} "
+

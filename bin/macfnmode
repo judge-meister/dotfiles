@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+# change fn key mode on macbook
+#
+
+VENDOR=$(cat /sys/class/dmi/id/sys_vendor)
+if [ "$VENDOR" != "Apple Inc." ]
+then
+  exit
+fi
+
+if [ $# -eq 0 ]
+then
+  echo "mac_fnmode [fn | media]"
+  exit 1
+fi
+if [ "$1" == "fn" ]
+then
+  echo 2 | sudo tee /sys/module/hid_apple/parameters/fnmode
+elif [ "$1" == "media" ]
+then
+  echo 1 | sudo tee /sys/module/hid_apple/parameters/fnmode
+fi
+

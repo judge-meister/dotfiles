@@ -1,0 +1,29 @@
+--- blocks.def.h	2021-09-21 23:32:31.517849191 +0100
++++ blocks.def.h.ij	2021-09-21 23:32:22.571182951 +0100
+@@ -1,17 +1,26 @@
+ //Modify this file to change what commands output to your statusbar, and recompile using the make command.
+ static const Block blocks[] = {
+ 	/*Icon*/	/*Command*/	 	/*Update Interval*/	/*Update Signal*/
+-    {" 🐧 ", "/opt/dwmblocks-distrotube-git/scripts/kernel",		    360,		        2},
++	{" 🐧 ", "~/.local/bin/kernel",			360,		2},
+ 
+-	{" 🔺 ", "/opt/dwmblocks-distrotube-git/scripts/upt",		        60,		            2},
++	{" 🔺 ", "~/.local/bin/upt",				60,			2},
+ 
+-	{" 📦 ", "/opt/dwmblocks-distrotube-git/scripts/pacupdate",		360,		        9},
+-	
+-	{" 💻 ", "/opt/dwmblocks-distrotube-git/scripts/memory",	        6,		            1},
++	{" 📦 ", "~/.local/bin/pacupdate",		360,		9},
+ 
+-	{" 🔊 ", "/opt/dwmblocks-distrotube-git/scripts/volume",			2,		            10},
++	{" 💻 ", "~/.local/bin/memory",	 		6,			1},
+ 
+-	{" 🕑 ", "/opt/dwmblocks-distrotube-git/scripts/clock",			5,		            0},
++	{" 🔋 ", "~/.local/bin/battery",			5,			10},
++
++	{" 🔊 ", "~/.local/bin/volume",			2,			10},
++
++	{" 🕑 ", "~/.local/bin/clock",			5,			0},
+ };
+ 
+ //sets delimeter between status commands. NULL character ('\0') means no delimeter.

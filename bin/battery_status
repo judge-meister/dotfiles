@@ -1,0 +1,64 @@
+#!/bin/bash
+
+output=""
+if [ "$1" == "-utf" ]
+then
+  output="${output}<span font='FontAwesome'>"
+fi
+
+CHARGING="\uf0e7 "  # "⚡"  #  \uf0e7 lightning
+EMPTY="\u58d "  #" "   # U+f579  10%   U+f57e  60%   U+f583 charging  U+f590 unknown
+LEVEL20="\uf57a "  #" " # U+f57a  20%   U+f57f  70%   U+f582 alert
+LEVEL40="\uf57c "  #" " # U+f57b  30%   U+f580  80%   U+f58d outline
+LEVEL60="\uf57e "  #" " # U+f57c  40%   U+f581  90%   U+f58b minus
+LEVEL80="\uf580 "  #" " # U+f57d  50%   U+f578  full  U+f58e plus
+FULL="\uf578 "  #" "
+
+status=$(cat /sys/class/power_supply/BAT0/status) 
+capacity=$(cat /sys/class/power_supply/BAT0/capacity)
+
+#echo "${capacity}% ${status}"
+#echo "${capacity}%"
+
+if [ "${status}" == "Full" ] || [ "${status}" == "Unknown" ]
+then
+  output="${output}${FULL}${capacity}%"
+
+elif [ "${status}" == "Charging" ] 
+then
+  output="${output}${CHARGING}${capacity}%"
+
+elif [ "${status}" == "Discharging" ]
+then
+
+  # show battery level symbol
+  if   [ "${capacity}" -lt 10 ]; then output="${output}${EMPTY}${capacity}%"
+  elif [ "${capacity}" -lt 30 ]; then output="${output}${LEVEL20}${capacity}%"
+  elif [ "${capacity}" -lt 50 ]; then output="${output}${LEVEL40}${capacity}%"
+  elif [ "${capacity}" -lt 70 ]; then output="${output}${LEVEL60}${capacity}%"
+  elif [ "${capacity}" -lt 90 ]; then output="${output}${LEVEL80}${capacity}%"
+  else                                output="${output}${FULL}${capacity}%"
+  fi
+
+  # set colours for low battery levels
+  if [ "${capacity}" -le 15 ]
+  then
+    if [ "$1" == "-utf" ]
+    then
+      output="${output}</span>"
+    fi
+    exit 33
+  elif [ "${capacity}" -le 25 ]
+  then
+    output="#FF8000"
+  fi
+else
+  output="${status}${capacity}%"
+fi
+
+if [ "$1" == "-utf" ]
+then
+  output="${output}</span>"
+fi
+echo "${output}"
+exit 0

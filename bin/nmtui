@@ -1,0 +1,5 @@
+#!/bin/bash
+# Requires: kitty, networkmanager
+
+kitty -e /usr/bin/nmtui &
+

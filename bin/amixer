@@ -1,0 +1,6 @@
+# small interface between pamixer and dwmblocks, which expects amixer
+#
+# Requires: pamixer
+#
+pamixer --get-volume-human
+

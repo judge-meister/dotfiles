@@ -1,0 +1,99 @@
+Arch Linux Installation
+-----------------------
+
+loadkeys uk
+
+timedatectl set-ntp true
+timedatectl status
+
+# for a BIOS based install
+fdisk -l
+fdisk /dev/vda
+# create DOS partition table (grub-install requires DOS)
+o
+
+# create 2 partitions (assuming 30G disk)
+# 1 - 28G
+n, p, 1, (def), +28G
+
+# 2 - 2G  swap
+n, p, 2, (def), (def)
+t, 2, 82
+
+# write and exit
+w
+
+# for a EFI based install
+fdisk -l
+fdisk /dev/vda
+# gpt partition
+g
+
+# create 3 partitions (assuming 30G disk)
+vda1 550MB @ start of disk, type EFI, formatted MSDOS 
+vda2 8GB @ end of disk, type Linux swap
+vda3 28GB the rest of the disk, type Linux, formatted ext4
+
+mkswap /dev/vda2
+swapon /dev/vda2
+
+mkfs.ext4 /dev/vda1
+
+mount /dev/vda1 /mnt
+
+pacstrap /mnt base linux linux-firmware
+
+genfstab -U /mnt >> /mnt/etc/fstab
+
+arch-chroot /mnt
+
+ln -s /usr/share/zoneinfo/Europe/London /etc/localtime
+
+hwclock --systohc
+
+pacman -S vim
+
+vim /etc/locale.gen
+# uncomment en_GB.UTF-8 UTF-8
+
+locale-gen
+
+echo LANG=en_GB.UTF-8 >> /etc/locale.conf
+
+echo KEYMAP=uk >> /etc/vconsole.conf
+
+echo archpad >> /etc/hostname
+
+# add 3 lines from arch linux install wiki
+cat <<EOT >> /etc/hosts
+127.0.0.1	localhost
+::1		localhost
+127.0.1.1	myhostname.localdomain myhostname
+EOT
+
+passwd
+
+useradd -m judge
+passwd judge
+
+usermod -aG wheel,audio,video,storage,optical judge
+
+pacman -S sudo
+
+visudo
+# find and uncomment the line about %wheel
+
+pacman -S grub
+
+grub-install --target=i386-pc /dev/vda
+grub-mkconfig -o /boot/grub/grub.cfg
+
+pacman -S networkmanager git
+
+systemctl enable NetworkManager
+
+exit
+umount /mnt
+
+reboot
+

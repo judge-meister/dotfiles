@@ -1,0 +1,12 @@
+#!/bin/bash
+# Requires: xorg-xrandr
+
+if [ "$1" != "" ]
+then
+  SCALE=$1
+else
+  SCALE=1.15
+fi
+
+xrandr --output LVDS-1 --scale ${SCALE}x${SCALE}
+

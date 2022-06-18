@@ -1,0 +1,43 @@
+# For the benefit of emacs users: -*- shell-script -*-
+###########################
+# xbindkeys configuration #
+###########################
+#
+# Version: 1.8.7
+#
+
+"pactl set-sink-mute @DEFAULT_SINK@ toggle"
+  XF86AudioMute
+
+"pactl set-source-mute @DEFAULT_SINK@ toggle"
+  XF86AudioMicMute
+
+"pactl set-sink-volume @DEFAULT_SINK@ -5%"
+  XF86AudioLowerVolume
+
+"pactl set-sink-volume @DEFAULT_SINK@ +5%"
+  XF86AudioRaiseVolume
+
+"macbrightness -inc 10" 
+  XF86MonBrightnessUp 
+
+"macbrightness -dec 10" 
+  XF86MonBrightnessDown
+
+"kbdbrightness -dec"
+  XF86KbdBrightnessDown
+
+"kbdbrightness -inc"
+  XF86KbdBrightnessUp
+
+# XF86LaunchA
+# XF86LaunchB
+# XF86AudioPrev
+# XF86AudioPlay
+# XF86AudioNext
+
+
+
+##################################
+# End of xbindkeys configuration #
+##################################

@@ -1,0 +1,104 @@
+#!/bin/bash
+#
+# startgui
+#
+
+error_exit() 
+{ 
+  echo "$1" 
+  exit 1 
+}
+
+get_dm_list()
+{
+  find /usr/share/xsessions/ -type f -exec grep  '^Exec=' {} \; | sed 's/Exec=//g'
+  find /usr/share/wayland-sessions/ -type f -exec grep  '^Exec=' {} \; 2>/dev/null | sed 's/Exec=//g'
+}
+
+# already running a dm ?
+[ -n "$DISPLAY" ] && [ "$STARTGUI_TEST" == "" ] && error_exit "A window manager appears to already be running."
+
+# restart NetworkManager on MacbookPro as it never seems to connect on boot up
+if [ "$(cat /sys/class/dmi/id/sys_vendor)" == "Apple Inc." ]
+then
+  sudo systemctl restart NetworkManager
+fi
+
+# possible window managers 
+# (console plasma i3 i3-gaps enlightenment awesome dwm sway)
+# shellcheck disable=SC2207
+declare -a DM_LIST=(console $(get_dm_list))
+
+load_last_dm()
+{
+  # load last_dm
+  LAST_NUM=0
+  LAST_DM=console
+  [ -f ~/.last_dm ] && LAST_DM=$(cat ~/.last_dm)
+  for x in $(seq 0 $((${#DM_LIST[@]}-1)))
+  do
+    if [ "$LAST_DM" == "${DM_LIST[$x]}" ]
+    then
+      LAST_NUM=$x
+    fi
+  done
+}
+
+# pick which interface to start
+pick_wm()
+{
+  echo "Pick a desktop"
+  echo ""
+  for x in $(seq 0 $((${#DM_LIST[@]}-1)))
+  do
+    if [ "$LAST_NUM" -eq "$x" ]
+    then
+      echo "${x}) ${DM_LIST[$x]}       <<-- Last Display Manager"
+    else
+      echo "${x}) ${DM_LIST[$x]}"
+    fi
+  done
+  # add other options
+  echo
+  echo "l) Log Out"
+  echo "p) Power Off"
+  echo "r) Reboot"
+  echo
+  echo "Default is the ${DM_LIST[${LAST_NUM}]} [${LAST_NUM}]"
+  read -r dm
+
+  if [ "$dm" == "" ]
+  then 
+    dm=$LAST_NUM
+  fi
+
+}
+
+while :
+do
+  load_last_dm
+  pick_wm
+  echo
+
+  case $dm in
+    p) echo "Powering Off"; sleep 1; poweroff ;;
+    r) echo "Rebooting";   sleep 1; reboot ;;
+    l) echo "Logging Out"; sleep 1; exit ;;
+  esac
+
+  echo "${DM_LIST[$dm]}" > ~/.last_dm
+
+  echo "start ${DM_LIST[$dm]}"
+  sleep 1
+
+  case "${DM_LIST[$dm]}" in
+    sway) sway ;;
+
+    console) bash;;
+    
+    *) startx ~/.xinitrc "${DM_LIST[$dm]}";;
+  esac
+
+done
+
+

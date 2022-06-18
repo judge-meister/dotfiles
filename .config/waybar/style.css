@@ -1,0 +1,180 @@
+/* style sheet for waybar */
+
+@define-color whitecolor #bbbbbb;
+@define-color buttonbg rgba(55,55,55,0.6);/*#373737;*/
+@define-color buttonborder #202020;
+
+* {
+    border: none;
+    border-radius: 4px;
+    font-family: "noto sans,mononoki Nerd Font";
+    font-size: 12pt;
+    font-weight: normal /*bold*/;
+    min-height: 0;
+}
+
+window#waybar {
+    /*background: rgba(0,0,0,0.4);*//* black 70% transparent; */
+    background: rgba(0,0,0,0.0);/* black 70% transparent; */
+    color: @whitecolor;
+}
+
+.modules-right {
+    /*width: auto;*/
+    min-width: 800px;
+    /*background: #ff9900;*/
+}
+
+#window {
+    /*font-weight: bold;*/
+    /*font-family: "Source Code Pro";*/
+    color: @whitecolor;
+    padding-right: 20px;
+    border-right: 0px solid #777;
+}
+
+#workspaces button {
+    padding: 0 5px;
+    margin: 0 1px;
+    /*width: 10px;*/
+    /*background: transparent;*/
+    background: @buttonbg;
+    color: @whitecolor;
+    border-left: 0px solid @whitecolor;
+    border-right: 0px solid @whitecolor;
+    /*border-right: 2px solid transparent;*/
+    border: 1px solid @buttonborder;
+}
+
+#workspaces button.focused {
+    border: 0px solid #777;    /*1*/ 
+    border: 1px solid @buttonborder;
+    background: #6c71c4;       /*2*/
+    color: #cccccc;            /*3*/
+}
+
+#workspaces button.active {
+    border: 0px solid #fdf6e6; /*1*/ 
+    border: 1px solid @buttonborder;
+    background: #6c71c4;       /*2*/
+    color: #fdf6e3;            /*3*/
+}
+
+#workspaces button.inactive {
+    border: 0px solid #586e75; /*1*/ 
+    border: 1px solid @buttonborder;
+    background: #202020;       /*2*/
+    color: #586e75;            /*3*/
+}
+
+#workspaces button.urgent {
+    border: 0px solid #d33682; /*1*/ 
+    border: 1px solid @buttonborder;
+    background: #d33682;       /*2*/
+    color: #fdf6e3;            /*3*/
+}
+
+#mode {
+    margin: 0 2px;
+    background: #F4525D;
+    color: #ccc;
+    border-bottom: 0px solid #bbb;
+}
+
+#battery, 
+#backlight,
+#cpu, 
+#custom-launcher,
+#custom-scale, 
+#custom-spotify, 
+#custom-updates, 
+#custom-docker, 
+#custom-disk_root, 
+#custom-disk_home, 
+#custom-power,
+#custom-clock,
+#custom-language,
+#custom-hostname,
+#custom-fanspeed,
+#memory, 
+#mode, 
+#network, 
+#pulseaudio, 
+#temperature, 
+#tray,
+#clock
+{
+    padding: 0 5px;
+    margin: 0 1px;
+    border-left: 0px solid #777;
+    border-right: 0px solid #777;
+    background: @buttonbg;
+    color: @whitecolor;
+    border: 1px solid @buttonborder;
+}
+
+#clock { margin-right: 2px; }
+/*#clock {
+    font-weight: bold;
+    padding: 0 4px;
+    margin: 0 4px;
+    border-left: 1px solid #777;
+    border-right: 0px solid #777;
+    color: @whitecolor;
+}*/
+
+#battery icon {
+    color: red;
+}
+
+#battery.charging {
+    color: yellow;
+}
+
+/*#battery.critical {
+    background-color: red;
+    color: white;
+}*/
+
+@keyframes blink {
+    to {
+        background-color: #ff9900; /*#ffffff;*/
+        /*color: black;*/
+    }
+}
+
+#battery.warning:not(.charging) {
+    color: @whitecolor;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#battery.critical:not(.charging) {
+    color: red;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#temperature.critical {
+    background: #ff9900;
+    color: red;
+}
+
+#network.disconnected {
+    background: #f53c3c;
+}
+
+#custom-spotify {
+    color: rgb(102, 220, 105);
+}
+
+#custom-updates.hover {
+    background: #444;
+}
+

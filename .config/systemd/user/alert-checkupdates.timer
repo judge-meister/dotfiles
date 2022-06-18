@@ -1,0 +1,9 @@
+[Unit]
+Description=Check on available package updates every 30 minutes to warn the user
+
+[Timer]
+OnActiveSec=2m
+OnUnitActiveSec=30m
+
+[Install]
+WantedBy=timers.target

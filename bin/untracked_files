@@ -1,0 +1,8 @@
+#!/bin/bash
+ROOT=.
+if [ $# -gt 0 ]
+then
+    ROOT="$1"
+fi
+find "$ROOT" -not -path "*/.cache/*" -not -path "*/clones/*" -not -path "*/BraveSoftware/*" -type f | more
+

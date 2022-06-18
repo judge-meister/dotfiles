@@ -1,0 +1,27 @@
+#!/bin/bash
+
+BRIGHT="/sys/class/leds/smc::kbd_backlight/brightness"
+MAX=$(cat "/sys/class/leds/smc::kbd_backlight/max_brightness")
+CUR=$(cat "$BRIGHT")
+INC=32
+
+if [ "$1" == "-inc" ]
+then
+  CUR=$((CUR+INC))
+  if [ $CUR -ge "$MAX" ]
+  then
+    CUR=$MAX
+  fi
+fi
+
+if [ "$1" == "-dec" ]
+then
+  CUR=$((CUR-INC))
+  if [ $CUR -le 0 ]
+  then
+    CUR=0
+  fi
+fi
+
+echo $CUR | sudo tee "$BRIGHT" >/dev/null
+

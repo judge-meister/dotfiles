@@ -1,0 +1,22 @@
+#!/bin/bash
+#
+# Requires: pacman-contrib, libnotify
+#
+
+update_count=$(checkupdates | wc -l)
+if [ "$update_count" -gt 0 ]
+then
+    notify-send -u normal "Pacman Updates" "$(checkupdates|cut -d' ' -f1,4)"
+fi
+
+# by using a cpu_temperature item in i3status config we can show the number of pacman updates available.
+# but to make it work we need to multiply the number of updates by 1000 for it to be displayed in i3bar.
+# in addition to hide the updates item when there are none available we store a very large number and
+# use the max_threshold attribute and format_above_threshold attriutes in the i3status config
+mkdir -p ~/.tmp
+if [ "$update_count" -eq 0 ]
+then
+    echo "0000000" > ~/.tmp/pacupts
+else
+    echo "$((update_count*1000))" > ~/.tmp/pacupts
+fi

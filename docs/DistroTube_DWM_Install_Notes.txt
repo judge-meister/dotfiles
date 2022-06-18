@@ -1,0 +1,31 @@
+# ------------------------------------------
+# Install DWM window manager from DistroTube
+# ------------------------------------------
+
+# install supporting dependencies
+sudo pacman -S xf86-video-fbdev xorg xorg-xinit nitrogen picom sway swaybg swaylock swayidle waybar
+sudo pacman -S base-devel openssh ranger pacman-contrib alacritty adobe-source-code-pro-fonts adobe-source-sans-pro-fonts ttf-roboto-mono ttf-roboto
+sudo pacman -S firefox
+
+# install yay for managing AUR
+mkdir clones; cd clones; 
+git clone https://aur.archlinux.org/yay-git.git
+cd yay-git/
+makepkg -si
+
+# install distrotube's implementation of dwm
+yay -S dwm-distrotube-git st-distrotube-git dmenu-distrotube-git dwmblocks-distrotube-git nerd-fonts-mononoki tabbed
+
+# set up ssh keys for my github
+mkdir ~/.ssh 
+chmod 700 .ssh
+# from macbookpro 
+#  scp ~/.ssh/id_ed25519 ~/.ssh/id_ed25519.pub archpad:/home/judge/.ssh/
+
+# download arch-profile
+git clone git@github.com:judge-meister/arch-profile.git .
+
+
+-------------------------------------------
+# git clone https://gitlab.com/dwt1/dotfiles.git
+

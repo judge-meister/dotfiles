@@ -1,0 +1,10 @@
+--- dwm.c	2021-09-21 23:37:17.907835572 +0100
++++ dwm.c.ij2	2021-09-21 23:39:39.174495531 +0100
+@@ -1548,6 +1548,7 @@
+ runAutostart(void) {
+ 	system("cd /opt/dwm-distrotube-git; ./autostart_blocking.sh");
+ 	system("cd /opt/dwm-distrotube-git; ./autostart.sh &");
++	system("~/.dwm/autostart.sh &");
+ }
+ 
+ void

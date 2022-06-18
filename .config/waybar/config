@@ -1,0 +1,211 @@
+//
+// Requires: alacritty, brightnessctl, libpulse, pavucontrol
+// Requires: networkmanager, noto-fonts, nerd-fonts-mononoki
+//
+
+{
+    "layer": "top",       // Waybar at top layer
+    "position": "top",    // Waybar at the top of your screen
+    "height": 24,         // Waybar height
+    // "width": 1366,     // Waybar width - (commented out means full width of screen)
+    "margin-top": 5,      // margin around waybar
+    "margin-left": 5,     // 
+    "margin-right": 5,    // 
+    "spacing": 1,         // space between modules
+
+    // Choose the order of the modules
+    "modules-left": ["custom/hostname",
+                     "sway/workspaces", 
+                     "sway/mode", 
+                     "custom/spotify"],
+    //"modules-center": ["sway/window"],
+    "modules-right": ["custom/scale", 
+                      "custom/disk_root", 
+                      "custom/disk_home", 
+                      //"custom/docker", 
+                      "custom/updates",
+                      "backlight",
+                      "pulseaudio", 
+                      "network", 
+                      "temperature", 
+                      "custom/fanspeed",
+                      "cpu", 
+                      "memory", 
+                      "battery", 
+                      "custom/language",
+                      "tray", 
+                      "clock", 
+                      "custom/clock"
+                      ],
+    "sway/workspaces": {
+        "format": "{name}",
+        "disable-scroll": false,
+        "disable-markup": false,
+        "all-outputs": false,
+        //"format": " {icon} ",
+        //"format-icons": {
+        //    "1": "",  "2": "",  "3": "",  "4": "",  "5": "",
+        //    "6": "",    
+        //    "urgent": "",  "focused": "",  "default": ""
+        //}
+    },
+    "sway/mode": {
+        "format": "<span style=\"italic\">{}</span>"
+    },
+    "tray": {
+        "icon-size": 16,
+        "spacing": 10
+    },
+    "clock": {
+        /*"format-alt": "{:%Y-%m-%d}",*/
+        "format-alt": "{:%c}",
+    },
+    "cpu": {
+        "format": "{usage}%  ",
+        "on-click": "alacritty -o font.size=11.0 -e htop",
+    },
+    "memory": {
+        "format": "{}%  "
+    },
+    "temperature": {
+        "hwmon-path": "/sys/class/hwmon/hwmon4/temp2_input",
+        "format": "{temperatureC}°C ",
+        "critical-threshold": 80,
+        "format-critical": "{temperatureC}°C ",
+        "tooltip": false,
+    },
+    "custom/fanspeed": {
+        "format": "({})",
+        "tooltip": false,
+        "exec": "cat /sys/class/hwmon/hwmon3/fan1_input",
+        "interval": 5,
+    },
+    "backlight": {
+        // "device": "acpi_video1",
+        "format": "{percent}% {icon} ",
+        "format-icons": ["", ""],
+        "tooltip-format": "Backlight Brightness",
+        "on-scroll-down": "brightnessctl -c backlight set 5%-",
+        "on-scroll-up": "brightnessctl -c backlight set +5%",
+        "on-click": "brightnessctl -c backlight set 5%-",
+        "on-click-right": "brightnessctl -c backlight set +5%"
+    },
+    "battery": {
+        "bat": "BAT0",
+        "interval": 15,
+        "states": {
+            // "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        // "format-good": "", // An empty format will hide the module
+        "format-full": "",
+        "format-charging": "{capacity}% ⚡",
+        "format-icons": ["", "", "", "", ""]
+    },
+    "network": {
+        // "interface": "wlp2s0", // (Optional) To force the use of this interface
+        "format-wifi": "({signalStrength}%)  ",
+        //"format-ethernet": "{ifname}: {ipaddr}/{cidr}  ",
+        "format-ethernet": "  ",
+        "format-disconnected": "Disconnected ⚠",
+        "tooltip-format": "({ifname}) {essid}: {ipaddr}/{cidr}",
+        "on-click": "nmtui",
+    },
+    "pulseaudio": {
+        //"scroll-step": 1,
+        "format": "{volume}% {icon} ",
+        "format-bluetooth": "{volume}% {icon}",
+        "format-muted": "",
+        "format-icons": {
+            "headphones": "",
+            "handsfree": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", ""]
+        },
+        "on-click-middle": "pavucontrol",
+        "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ -1%",
+        "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ +1%",
+        "on-click": "pactl set-sink-volume @DEFAULT_SINK@ -1%",
+        "on-click-right": "pactl set-sink-volume @DEFAULT_SINK@ +1%",
+    },
+    "custom/hostname": {
+        "format": "{}",
+        "exec": "hostname",
+        "tooltip": false,
+        "interval": 360,
+    },
+    "custom/language": {
+        "format": "{}",
+        "tooltip": false,
+        "exec": "$HOME/bin/swap_kb -r",
+        "on-click": "$HOME/bin/swap_kb",
+        "interval": 5,
+        "signal": 9,
+    },
+    "custom/spotify": {
+        "format": " {}",
+        "max-length": 40,
+        "interval": 30, // Remove this if your script is endless and write in loop
+        "exec": "$HOME/.config/waybar/mediaplayer.sh 2> /dev/null", // Script in resources folder
+        "exec-if": "pgrep spotify"
+    },
+    "custom/updates": {
+        "format": "{}  ",
+        "tooltip": false,
+        //"max-length": 15,
+        "interval": 360,
+        "exec": "echo $(($(cat ~/.tmp/pacupts) /1000))",
+        "exec-if": "[ -f $HOME/.tmp/pacupts ]",
+        "on-click": "alacritty -o font.size=11.0 -e update_packages",
+        "signal": 8
+    },
+    "custom/docker": {
+        "format": "{}",
+        "interval": 60,
+        "tooltip": false,
+        //"max-length": 15,
+        "exec": "$HOME/.local/bin/dockerisrunning",
+        "exec-if": "[ -f $HOME/.local/bin/dockerisrunning ]",
+    },
+    "custom/disk_root": {
+        "format": "{}  ",
+        "interval": 60,
+        "tooltip": false,
+        "exec": "df -hl | grep ' /$' | awk -F' ' '{print $4}'",
+    },
+    "custom/disk_home": {
+        "format": "{}  ",
+        "interval": 60,
+        "tooltip": false,
+        "exec": "df -hl | grep '/home$' | awk -F' ' '{print $4}'",
+    },
+    "custom/scale": {
+        "format": "{}",
+        "interval": 1,
+        "tooltip": false,
+        "exec": "$HOME/bin/scale_sway.py -s",
+        "on-click": "$HOME/bin/scale_sway.py -i",
+        "on-click-right": "$HOME/bin/scale_sway.py -d",
+    },
+    "custom/clock": {
+        "format": "{}",
+        "interval": 1,
+        "exec": "date +%H:%M",
+        "exec-if": "[ -f /etc/debian_version ]",
+    },
+    //"custom/power": {
+    //  	"format":"⏻ ",
+    //   	"on-click": "nwgbar -o 0.6",
+    //  	"tooltip": false,
+    //},
+    //"custom/launcher": {
+    //	"format":" ",
+    //	"on-click": "exec nwg-drawer -c 7 -is 70 -spacing 23",
+    //	"tooltip": false,
+    //},
+}

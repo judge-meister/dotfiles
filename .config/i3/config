@@ -1,0 +1,383 @@
+# i3 config file (v4)
+#
+# Please see http://i3wm.org/docs/userguide.html for a complete reference!
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+# This font is widely installed, provides lots of unicode glyphs, right-to-left
+# text rendering and scalability on retina/hidpi displays (thanks to pango).
+
+# Test other Mod keys
+#bindsym Mod1+Return exec $term -T "st Mod1 Left Alt"
+#bindsym Mod2+Return exec $term -T "st Mod2"
+#bindsym Mod3+Return exec $term -T "st Mod3"
+#bindsym Mod4+Return exec $term -T "st Mod4 Cmd / Windows (L & R)"
+#bindsym Mod5+Return exec $term -T "st Mod5 Right Alt"
+
+# Requires: alacritty, rofi, xorg-xrandr, xautolock, feh 
+# Requires: ttf-font-awesome, i3blocks, libpulse, scrot
+
+# -----------------------------------------------------------------------------
+# Global Settings
+
+# font settings
+font pango: SourceCodePro Medium 8
+
+# float settings
+floating_minimum_size 150 x 150
+floating_maximum_size 2500 x 1500
+
+# border width
+default_border pixel 1
+#default_floating_border normal 1
+
+# gaps settings
+smart_gaps on
+gaps inner 5
+gaps outer 0
+
+# -----------------------------------------------------------------------------
+# Variables
+
+# use windows / cmd key
+set $mod Mod4
+
+# Home row direction keys, like vim
+set $left h
+set $down j
+set $up k
+set $right l
+
+# preferred temrinal emulator
+set $term alacritty
+
+# preferred lock command
+set $lockcmd i3lock-fancy
+
+# preferred launcher - rofi
+set $drun_menu rofi -show drun -theme "solarized_alternate"
+set $run_menu rofi -show run -theme "solarized_alternate"
+set $combi_menu "rofi -modi drun,combi,window -show drun -combi-modi run,drun -theme solarized_alternate"
+
+
+# -----------------------------------------------------------------------------
+# Output configuration
+
+# multiple monitor setup (display port screen left of local LCD)
+# output eDP-1 scale 1
+exec --no-startup-id xrandr --output DP-1 --left-of LVDS-1 --auto
+
+
+# -----------------------------------------------------------------------------
+# Idle configuration - auto screen lock
+#
+exec_always --no-startup-id xautolock -time 10 -locker "i3lock-fancy && sleep 1"
+#
+# This will lock your screen after 10 minutes of inactivity
+
+
+# -----------------------------------------------------------------------------
+# Input configuration
+#
+
+
+# -----------------------------------------------------------------------------
+# Key bindings
+#=
+#= Basics:
+#=
+    # Start a terminal
+    bindsym $mod+Return exec $term
+
+    # Kill focused window
+    bindsym $mod+Shift+q kill
+
+    # help for key bindings
+    bindsym $mod+Shift+slash exec ~/.config/i3/keys.sh i3
+
+    # launcher bindings
+    bindsym $mod+d exec $drun_menu
+    bindsym $mod+Shift+d exec $run_menu
+    #bindsym $mod+Control+d exec $run_menu
+    bindsym $mod+Control+d exec --no-startup-id dmenu_run
+
+    # Drag floating windows by holding down $mod and left mouse button.
+    # Resize them with right mouse button + $mod.
+    # Despite the name, also works for non-floating windows.
+    # Change normal to inverse to use left mouse button for resizing and right
+    # mouse button for dragging.
+    floating_modifier $mod
+
+    # Reload the configuration file
+    bindsym $mod+Shift+c reload
+
+    # manually lock the screen
+    bindsym $mod+l exec $lockcmd 
+
+    # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+    bindsym $mod+Shift+r restart
+
+    # exit i3 (logs you out of your X session)
+    #bindsym $mod+Shift+e exit
+    bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Exit i3wm?' -B 'Exit' 'i3-msg exit' -B 'Reload' 'i3-msg reload' -B 'Power Off' 'poweroff' -B 'Reboot' 'reboot'"
+
+    # exit i3 (logs you out of your X session)
+    #bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+
+    # run pacman -Syu in a terminal
+    bindsym $mod+u exec $term -e update_packages
+
+#=
+#= Moving Around:
+#=
+    # move to monitor
+    bindsym $mod+Control+Left move workspace to output left
+    bindsym $mod+Control+Right move workspace to output right
+
+    # Move your focus around - use $mod+[up|down|left|right]
+    bindsym $mod+Left focus left
+    bindsym $mod+Down focus down
+    bindsym $mod+Up focus up
+    bindsym $mod+Right focus right
+
+    # Move the focused window with the same, but add Shift
+    bindsym $mod+Shift+Left move left
+    bindsym $mod+Shift+Down move down
+    bindsym $mod+Shift+Up move up
+    bindsym $mod+Shift+Right move right
+#=
+#= Workspaces:
+#=
+    # Switch to workspace
+    bindsym $mod+1 workspace number 1
+    bindsym $mod+2 workspace number 2
+    bindsym $mod+3 workspace number 3
+    bindsym $mod+4 workspace number 4
+    bindsym $mod+5 workspace number 5
+    bindsym $mod+6 workspace number 6
+    bindsym $mod+7 workspace number 7
+    bindsym $mod+8 workspace number 8
+    bindsym $mod+9 workspace number 9
+    bindsym $mod+0 workspace number 10
+
+    # Move focused container to workspace
+    bindsym $mod+Shift+1 move container to workspace number 1
+    bindsym $mod+Shift+2 move container to workspace number 2
+    bindsym $mod+Shift+3 move container to workspace number 3
+    bindsym $mod+Shift+4 move container to workspace number 4
+    bindsym $mod+Shift+5 move container to workspace number 5
+    bindsym $mod+Shift+6 move container to workspace number 6
+    bindsym $mod+Shift+7 move container to workspace number 7
+    bindsym $mod+Shift+8 move container to workspace number 8
+    bindsym $mod+Shift+9 move container to workspace number 9
+    bindsym $mod+Shift+0 move container to workspace number 10
+    # Note: workspaces can have any name you want, not just numbers.
+    # We just use 1-10 as the default.
+#=
+#= Layout stuff:
+#=
+    # You can "split" the current object of your focus with
+    # $mod+h or $mod+v, for horizontal and vertical splits
+    # respectively.
+    bindsym $mod+h split h
+    bindsym $mod+v split v
+
+    # change container layout (stacked, tabbed, toggle split)
+    bindsym $mod+s layout stacking
+    bindsym $mod+w layout tabbed
+    bindsym $mod+e layout toggle split
+
+    # enter fullscreen mode for the focused container
+    bindsym $mod+f fullscreen
+
+    # toggle tiling / floating
+    bindsym $mod+Shift+space floating toggle
+
+    # change focus between tiling / floating windows
+    bindsym $mod+space focus mode_toggle
+
+    # focus the parent container
+    bindsym $mod+a focus parent
+
+    # focus the child container
+    #bindsym $mod+d focus child
+#
+# Scratchpad:
+#
+    # "scratchpad", which is a bag of holding for windows.
+    # You can send windows there and get them back later.
+
+    # Move the currently focused window to the scratchpad
+    #bindsym $mod+Shift+minus move scratchpad
+
+    # Show the next scratchpad window or hide the focused scratchpad window.
+    # If there are multiple scratchpad windows, this command cycles through them.
+    #bindsym $mod+minus scratchpad show
+#=
+#= Resizing containers:
+#=
+mode "resize" {
+    # These bindings trigger as soon as you enter the resize mode
+
+    # left will shrink the containers width
+    # right will grow the containers width
+    # up will shrink the containers height
+    # down will grow the containers height
+
+    #bindsym Left resize shrink width 10px
+    #bindsym Down resize grow height 10px
+    #bindsym Up resize shrink height 10px
+    #bindsym Right resize grow width 10px
+
+    bindsym Left resize shrink width 10 px or 10 ppt
+    bindsym Down resize grow height 10 px or 10 ppt
+    bindsym Up resize shrink height 10 px or 10 ppt
+    bindsym Right resize grow width 10 px or 10 ppt
+
+    # Return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+#
+# Media keys:
+#
+    # audio controls
+    set $mute    exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+    set $mic_off exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+    set $vol_dn  exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+    set $vol_up  exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+
+    bindsym XF86AudioMute        $mute
+    bindsym XF86AudioMicMute     $mic_off
+    bindsym XF86AudioLowerVolume $vol_dn
+    bindsym XF86AudioRaiseVolume $vol_up
+
+    # screen brightness controls
+    bindsym XF86MonBrightnessUp exec macbrightness -inc
+    bindsym XF86MonBrightnessDown exec macbrightness -dec
+
+    # keyboard brightness controls
+    bindsym XF86KbdBrightnessUp exec kbdbrightness -inc
+    bindsym XF86KbdBrightnessDown exec kbdbrightness -dec
+
+    # alacritty terminal opacity control
+    bindsym $mod+Control+a exec "$HOME/bin/toggle_alacritty_opacity.sh -d"
+    bindsym $mod+Shift+a exec "$HOME/bin/toggle_alacritty_opacity.sh -i"
+
+#=
+#= Screen Resolution
+#=
+    bindsym $mod+plus exec (~/bin/scale_screen.py -i && sleep 1 && ~/.fehbg)
+    bindsym $mod+minus exec (~/bin/scale_screen.py -d && sleep 1 && ~/.fehbg)
+#=
+#= Random Wallpaper
+#=
+    bindsym $mod+b exec ~/bin/random_wall.py
+    bindsym $mod+Shift+b exec ~/.fehbg
+
+
+# -----------------------------------------------------------------------------
+#
+# Extras from Jessie Frazelle dotfiles
+#=
+#= Screenshots
+#=
+    # Screenshot fullscreen
+    bindsym Print exec "scrot -q 100 ${HOME}'/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e ${HOME}'/google-cloud-sdk/bin/gsutil cp -a public-read $f gs://misc.j3ss.co/screenshots/ && echo https://misc.j3ss.co/screenshots/$n | xclip -i -selection clipboard'"
+
+    # Screenshot with selection
+    bindsym $mod+Print exec "sleep 0.4; scrot -q 100 -s ${HOME}'/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e ${HOME}'/google-cloud-sdk/bin/gsutil cp -a public-read $f gs://misc.j3ss.co/screenshots/ && echo https://misc.j3ss.co/screenshots/$n | xclip -i -selection clipboard'"
+
+    # Screenshot current focused window
+    bindsym Shift+Print exec "scrot -q 100 -u ${HOME}'/Pictures/Screenshots/%Y-%m-%d-%H-%M-%S_$wx$h.png' -e ${HOME}'/google-cloud-sdk/bin/gsutil cp -a public-read $f gs://misc.j3ss.co/screenshots/ && echo https://misc.j3ss.co/screenshots/$n | xclip -i -selection clipboard'"
+
+
+# END_KEYS
+
+# -----------------------------------------------------------------------------
+# Status Bar:
+
+bar {
+    position top
+    #font pango: FontAwesome 10
+    font pango: Noto Sans 10
+    status_command i3blocks
+    colors {
+        separator  #268bd2
+        background #202020ee
+        statusline #83949600
+        focused_workspace  #aaaaaa #6c71c4   #cccccc
+        active_workspace   #fdf6e3 #6c71c4   #fdf6e3
+        inactive_workspace #586e75 #202020ee #586e75
+        urgent_workspace   #d33682 #d33682   #fdf6e3
+    }
+    # i3bar_command i3status --config ~/.config/i3/status.conf
+    # i3bar_command i3bar --transparency
+    i3bar_command i3bar 
+}
+client.focused          #6c71c4 #6c71c4 #ffffff #fdf6e3 #6c71c4
+client.focused_inactive #073642 #073642 #ffffff #eee8d5 #6c71c4
+client.unfocused        #073642 #073642 #888888 #93a1a1 #586e75
+client.urgent           #d33682 #d33682 #ffffff #fdf6e3 #dc322f
+client.placeholder      #000000 #0c0c0c #ffffff #000000 #0c0c0c
+
+
+# -----------------------------------------------------------------------------
+# Discrete app settings
+
+# tigervnc, Brave - open on new workspace
+assign [class="TigerVNC Viewer"] → 6
+assign [class="Brave-browser"] → 10
+assign [class="firefoxdeveloperedition"] → 10
+
+# spotify, brave: no border
+for_window [class="^Spotify$"] border none
+for_window [class="^Spotify Premium$"] border none
+for_window [class="Brave-browser"] border none
+for_window [class="firefoxdeveloperedition"] border none
+
+# no title: st terminal
+for_window [class="st-256color"] border pixel 1
+for_window [class="Alacritty"] border pixel 1
+
+# skype, steam, wine, Gimp etc. : float
+for_window [class="Code"] floating enable
+for_window [class="copyq"] floating enable
+for_window [class="feh"] floating enable
+for_window [class="Gimp"] floating enable
+for_window [class="Gimp-2.10"] floating enable
+#for_window [class="Tor Browser"] floating enable
+for_window [class="Virt-manager"] floating enable
+for_window [class="Virt-viewer"] floating enable
+#for_window [class="VirtualBox"] floating enable
+#for_window [class="vlc"] floating enable
+#for_window [class="Wine"] floating enable
+#for_window [class="zoom"] floating enable
+for_window [class="Qemu-system-i386"] floating enable
+for_window [class="qemu-system-x86_64"] floating enable
+#for_window [class="jigsawgirls.exe"] floating enable
+for_window [class="mpv"] floating enable
+for_window [class="Fontviewer"] floating enable
+for_window [class="Toplevel"] floating enable
+for_window [class="Yad"] floating enable
+
+for_window [class="NEdit"] border normal 1
+for_window [class="NEdit" instance="FileSelect_popup"] floating enable
+for_window [class="NEdit" instance="help"] floating enable
+for_window [class="NEdit" instance="Information"] floating enable
+for_window [class="NEdit" instance="Warning"] floating enable
+for_window [class="NEdit" instance="Question"] floating enable
+for_window [class="NEdit" instance="Prompt_popup"] floating enable
+for_window [class="NEdit" instance="findDialog_popup"] floating enable
+
+
+# -----------------------------------------------------------------------------
+# start a few useful programs
+
+exec --no-startup-id ~/.config/i3/autostart.sh
+
+
+

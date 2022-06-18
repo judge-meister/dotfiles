@@ -1,0 +1,44 @@
+#!/bin/bash
+#
+# Requires: bc
+#
+MAX=$(cat /sys/class/backlight/intel_backlight/max_brightness)
+CUR=$(cat /sys/class/backlight/intel_backlight/brightness)
+CUR_PERC=$(echo "((${CUR}*100/${MAX})+0.5)" | bc -l | python3 -c "print(round(float(input())))")
+
+adjust_brightness()
+{
+  VALUE=$((MAX * PERC / 100))
+  echo new brightness = $VALUE
+  echo $VALUE | sudo tee /sys/class/backlight/intel_backlight/brightness
+}
+
+if [ "$1" == "-inc" ] && [ "$CUR_PERC" -lt $((MAX-10)) ]
+then
+  PERC=$((CUR_PERC+10))
+elif [ "$1" == "-dec" ] && [ "$CUR_PERC" -gt 10 ]
+then
+  PERC=$((CUR_PERC-10))
+elif [ "$1" != "" ]
+then
+  PERC=$1
+else
+  PERC=25
+fi
+
+#if [ "$1" != "" ]
+#then
+#  PERC=$1
+#else
+#  PERC=25
+#fi
+
+if [[ $((PERC)) -gt 100 ]] || [[ $((PERC)) -lt 0 ]]
+then
+  echo invalid setting
+  exit 1
+
+else
+  adjust_brightness
+fi
+

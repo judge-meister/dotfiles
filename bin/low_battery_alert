@@ -1,0 +1,35 @@
+#!/bin/bash
+# Requires: libnotify, acpi, dunst
+
+limit=20
+[ "$1" != "" ] && limit=150
+
+VAL=$(acpi -b)
+
+bat_status=$(echo "$VAL" | awk -F' ' '{print $3}' | sed 's|,||g')
+capacity=$(echo "$VAL" | awk -F' ' '{print $4}' | sed 's|%,||g')
+
+if [[ "${bat_status}" == "Discharging" && ${capacity} -le ${limit} ]]
+then
+    echo "Battery alert - ${capacity}%"
+    dunstify \
+        -u critical \
+        --raw_icon="$HOME"/.local/share/icons/battery_low_dark.png \
+        "Low battery" \
+        "Only ${capacity}% battery remaining"
+
+    done=0
+    while [ "$done" -eq "0" ]; 
+    do
+        val=$(acpi_listen -t 5 2>&1 |grep '^ac_adapter .* 00000001$' | awk -F' ' '{print $4}')
+        #echo $val;
+        if [ "$val" == "00000001" ]
+        then
+            dunstctl close
+            done=1
+        fi
+    done
+fi
+
+# acpi -b
+# Battery 0: Discharging, 96%, 02:32:24 remaining
