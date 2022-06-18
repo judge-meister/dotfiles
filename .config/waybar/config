@@ -75,9 +75,9 @@
         "tooltip": false,
     },
     "custom/fanspeed": {
-        "format": "({})",
+        "format": "{} ",
         "tooltip": false,
-        "exec": "cat /sys/class/hwmon/hwmon3/fan1_input",
+        "exec": "sensors -j | jq -r '[.[][]] | .[].fan1_input?' | grep -v null",
         "interval": 5,
     },
     "backlight": {

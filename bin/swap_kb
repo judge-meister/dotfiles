@@ -2,6 +2,14 @@
 
 currkb=$(swaymsg -r -t get_inputs | jq -r '.[].xkb_active_layout_name' | grep -v null | sort -u | sed 's/.*(\([UKS]*\)).*/\1/g' )
 #echo $currkb
+if [ "$currkb" == "United Kingdom - Mac" ]
+then
+    currkb="UK"
+fi
+if [ "$currkb" == "USA" ]
+then
+    currkb="US"
+fi
 
 swap()
 {
