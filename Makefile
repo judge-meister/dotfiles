@@ -26,7 +26,7 @@ cleandotfiles: ## Remove the dotfiles
 
 .PHONY: folders
 folders: cleanfolders ## do lower directories
-	for file in $(shell find .config .local bin docs dockerfiles -type f | grep -v -E 'wofi|__pycache__' ); do \
+	for file in $(shell find .config .local bin docs dockerfiles -type f | grep -v -E 'wofi|__pycache__|play-with-mpv.desktop' ); do \
 		d=$$(dirname $$file); \
 		mkdir -p $(HOME)/$$d; \
 		ln -snfv $(CURDIR)/$$file $(HOME)/$$d/ ; \

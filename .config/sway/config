@@ -413,6 +413,7 @@ bar {
 
 # tigervnc, Brave - open on new workspace
 assign [class="TigerVNC Viewer"] → 6
+assign [class="Vncviewer"] → 6
 assign [class="Brave-browser"] → 10
 assign [class="firefoxdeveloperedition"] → 10
 assign [app_id="Firefox Developer Edition"] → 10
@@ -465,6 +466,8 @@ for_window [class="NEdit" instance="findDialog_popup"] floating enable, border p
 exec --no-startup-id ~/.config/sway/autostart.sh
 
 exec  wl-paste -t text --watch clipman store 
+
+#exec stacki3 45
 
 #exec_always $HOME/bin/random_swaybg.py $HOME/.config/sway/wallpaper.png fill
 

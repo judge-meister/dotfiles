@@ -30,7 +30,7 @@ esac
 echo "$opacity > $toggle_opacity"
 
 ## Replace opacity value in alacritty.yml
-sed -i -- "s/opacity: $opacity/opacity: $toggle_opacity/" \
+sed -i -- "s/ opacity: $opacity/ opacity: $toggle_opacity/" \
     ~/.config/alacritty/alacritty.yml
 
 cp ~/.config/alacritty/alacritty.yml ~/clones/dotfiles/.config/alacritty/alacritty.yml
