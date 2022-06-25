@@ -13,6 +13,7 @@
 # Requires: libpulse, swaynagmode, waybar
 # Requires: wl-clipboard
 
+
 # -----------------------------------------------------------------------------
 # Global Settings
 
@@ -38,6 +39,8 @@ gaps outer 0
 
 # use windows / cmd key
 set $mod Mod4
+set $alt Mod1
+
 
 # Home row direction keys, like vim
 set $left h
@@ -47,14 +50,15 @@ set $right l
 
 # preferred terminal emulator
 set $term alacritty -o font.size=12.0
+set $term2 foot 
 
 # preferred lock command
 set $lockcmd $HOME/bin/fancy-swaylock
 
 # preferred launcher - rofi
-set $rofi_themed rofi -theme Arc-Dark
-set $drun_menu $rofi_themed -show drun
-set $run_menu $rofi_themed -show run
+set $rofi_themed  rofi -theme Arc-Dark
+set $drun_menu   $rofi_themed -show drun
+set $run_menu    $rofi_themed -show run
 set $combi_menu "$rofi_themed -modi run,drun,calc -show drun"
 
 #-show combi -combi-modi run,drun,ssh,keys,filebrowser,calc 
@@ -65,59 +69,19 @@ set $combi_menu "$rofi_themed -modi run,drun,calc -show drun"
 set $dmenu dmenu_run -fn 'Roboto Sans-16' -b | xargs swaymsg exec --
 
 # -----------------------------------------------------------------------------
-# Output configuration
-
-# You can get the names of your outputs by running: swaymsg -t get_outputs
-#
-#   output HDMI-A-1 resolution 1920x1080 position 1920,0
-#
-#output * resolution --custom 1366x768
-#output * mode 1600x900
-output LVDS-1 scale 0.85
-
-# Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-#output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
-output LVDS-1 bg /home/judge/.config/sway/wallpaper.png fill
-#output * bg /home/judge/Pictures/sexy-model-woman-boobs-nude-gorgeous-trimmed-pussy-african-pierced-nipples-1366x768.png fill
-#output * bg $HOME/Pictures/Montage/ivi_pizzot_montage_1920x1200_16668.jpg fill
-
-seat seat0 hide_cursor when-typing enable
-
-# -----------------------------------------------------------------------------
-# Idle configuration - auto screen lock
-#
-exec swayidle -w \
-         timeout 600 'fancy-swaylock' \
-         timeout 900 'swaymsg "output * dpms off"' \
-         resume 'swaymsg "output * dpms on"' \
-         before-sleep 'fancy-swaylock'
-#
-# This will lock your screen after 600 seconds of inactivity, then turn off
-# your displays after another 300 seconds, and turn your screens back on when
-# resumed. It will also lock your screen before your computer goes to sleep.
-
-
-# -----------------------------------------------------------------------------
-# Input configuration
-#
-input "type:touchpad" {
-      tap enabled
-      click_method clickfinger
-      drag enabled
-      drag_lock enabled
-      natural_scroll enabled
-      scroll_method two_finger
-}
-
-# You can get the names of your inputs by running: swaymsg -t get_inputs
-# Read `man 5 sway-input` for more information about this section.
-input "type:keyboard" {
-      xkb_layout gb 
-      # xkb_model macbook79
-}
-# only add the xkb_model setting if on a macbook
-exec_always ~/bin/kbd_model
-
+# Programs - need to move some of these to ./scripts folder
+set $keys              ~/.local/bin/keys.sh sway
+set $update_packages   update_packages
+set $mute              changeVolume -toggle
+set $mic_off           changeVolume -mic
+set $vol_dn            changeVolume -dec
+set $vol_up            changeVolume -inc
+set $changeBrightness  changeBrightness
+set $kbdBrightness     kbdbrightness
+set $sway_scale        ~/.local/bin/sway_scale.py
+set $random_wallpaper  ~/bin/random_swaybg.py
+set $alacritty_opacity ~/bin/toggle_alacritty_opacity.sh
+set $screenshot        swaygrab
 
 # -----------------------------------------------------------------------------
 # Key bindings
@@ -125,18 +89,19 @@ exec_always ~/bin/kbd_model
 #= Basics:
 #=
     # Start a terminal
-    bindsym $mod+Return exec $term
+    bindsym $mod+Return       exec $term
+    bindsym $mod+Shift+Return exec $term2
 
     # Kill focused window
     bindsym $mod+Shift+q kill
 
     # help for key bindings
-    bindsym $mod+Shift+slash exec ~/.config/i3/keys.sh sway
+    bindsym $mod+Shift+slash exec $keys
 
     # launcher bindings
-    bindsym $mod+d exec $drun_menu
-    bindsym $mod+Shift+d exec $run_menu
-    bindsym $mod+Mod1+d exec $combi_menu
+    bindsym $mod+d         exec $drun_menu
+    bindsym $mod+Shift+d   exec $run_menu
+    bindsym $mod+Mod1+d    exec $combi_menu
     bindsym $mod+Control+d exec $dmenu
 
     # Drag floating windows by holding down $mod and left mouse button.
@@ -157,25 +122,25 @@ exec_always ~/bin/kbd_model
     #bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
 
     # run pacman -Syu in a terminal
-    bindsym $mod+u exec $term -e update_packages
+    bindsym $mod+u exec $term -e $update_packages
 
 #=
 #= Moving Around:
 #=
     # move to monitor
-    bindsym $mod+Control+Left move workspace to output left
+    bindsym $mod+Control+Left  move workspace to output left
     bindsym $mod+Control+Right move workspace to output right
 
     # Move your focus around - use $mod+[up|down|left|right]
-    bindsym $mod+Left focus left
-    bindsym $mod+Down focus down
-    bindsym $mod+Up focus up
+    bindsym $mod+Left  focus left
+    bindsym $mod+Down  focus down
+    bindsym $mod+Up    focus up
     bindsym $mod+Right focus right
 
     # Move the focused window with the same, but add Shift
-    bindsym $mod+Shift+Left move left
-    bindsym $mod+Shift+Down move down
-    bindsym $mod+Shift+Up move up
+    bindsym $mod+Shift+Left  move left
+    bindsym $mod+Shift+Down  move down
+    bindsym $mod+Shift+Up    move up
     bindsym $mod+Shift+Right move right
 #=
 #= Workspaces:
@@ -248,69 +213,40 @@ exec_always ~/bin/kbd_model
 #=
 #= Resizing containers:
 #=
-mode "resize" {
-    # These bindings trigger as soon as you enter the resize mode
-
-    # left will shrink the containers width
-    # right will grow the containers width
-    # up will shrink the containers height
-    # down will grow the containers height
-
-    #bindsym Left resize shrink width 10px
-    #bindsym Down resize grow height 10px
-    #bindsym Up resize shrink height 10px
-    #bindsym Right resize grow width 10px
-
-    bindsym Left resize shrink width 10 px or 10 ppt
-    bindsym Down resize grow height 10 px or 10 ppt
-    bindsym Up resize shrink height 10 px or 10 ppt
-    bindsym Right resize grow width 10 px or 10 ppt
-
-    # Return to default mode
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-bindsym $mod+r mode "resize"
-
 #
 # Media keys:
 #
     # audio controls
-    set $mute    exec changeVolume set-sink-mute @DEFAULT_SINK@ toggle
-    set $mic_off exec changeVolume set-source-mute @DEFAULT_SOURCE@ toggle
-    set $vol_dn  exec changeVolume set-sink-volume @DEFAULT_SINK@ -5%
-    set $vol_up  exec changeVolume set-sink-volume @DEFAULT_SINK@ +5%
-
-    bindsym XF86AudioMute        $mute
-    bindsym XF86AudioMicMute     $mic_off
-    bindsym XF86AudioLowerVolume $vol_dn
-    bindsym XF86AudioRaiseVolume $vol_up
+    bindsym XF86AudioMute        exec $mute
+    bindsym XF86AudioMicMute     exec $mic_off
+    bindsym XF86AudioLowerVolume exec $vol_dn
+    bindsym XF86AudioRaiseVolume exec $vol_up
 
     # screen brightness controls
-    bindsym XF86MonBrightnessUp exec changeBrightness -inc
-    bindsym XF86MonBrightnessDown exec changeBrightness -dec
+    bindsym XF86MonBrightnessUp   exec $changeBrightness -inc
+    bindsym XF86MonBrightnessDown exec $changeBrightness -dec
 
     # keyboard brightness controls
-    bindsym XF86KbdBrightnessUp exec kbdbrightness -inc
-    bindsym XF86KbdBrightnessDown exec kbdbrightness -dec
+    bindsym XF86KbdBrightnessUp   exec $kbdBrightness -inc
+    bindsym XF86KbdBrightnessDown exec $kbdBrightness -dec
 
 #=
 #= Screen Resolution   $mod -    $mod =
 #=
-    bindsym $mod+minus exec $HOME/bin/scale_sway.py -i
-    bindsym $mod+equal exec $HOME/bin/scale_sway.py -d
+    bindsym $mod+minus exec $sway_scale -i
+    bindsym $mod+equal exec $sway_scale -d
 #=
 #= Random Wallpaper
 #=
-    bindsym $mod+b exec ~/bin/random_swaybg.py
-    bindsym $mod+Shift+b exec ~/bin/random_swaybg.py $HOME/Pictures/WP/Montage/ivi_pizzot_montage_1920x1200_16668.jpg
-    bindsym $mod+Control+b exec ~/bin/random_swaybg.py $HOME/.config/sway/wallpaper.png
-    bindsym $mod+Mod1+b exec ~/bin/random_swaybg.py $HOME/clones/wallpapers/montage
+    bindsym $mod+b         exec $random_wallpaper
+    bindsym $mod+Shift+b   exec $random_wallpaper $HOME/Pictures/WP/Montage/ivi_pizzot_montage_1920x1200_16668.jpg
+    bindsym $mod+Control+b exec $random_wallpaper $HOME/.config/sway/wallpaper.png
+    bindsym $mod+Mod1+b    exec $random_wallpaper $HOME/clones/wallpapers/montage
 #=
 #= Toggle Alacritty Opacity
 #=
-    bindsym $mod+Control+minus exec "$HOME/bin/toggle_alacritty_opacity.sh -d"
-    bindsym $mod+Control+equal exec "$HOME/bin/toggle_alacritty_opacity.sh -i"
+    bindsym $mod+Control+minus exec $alacritty_opacity -d
+    bindsym $mod+Control+equal exec $alacritty_opacity -i
 
 
 # -----------------------------------------------------------------------------
@@ -320,13 +256,13 @@ bindsym $mod+r mode "resize"
 #= Screenshots
 #=
     # Screenshot fullscreen, sway
-    bindsym Print exec "swaygrab  ${HOME}/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').png"
+    bindsym Print       exec $screenshot        ${HOME}/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').png"
 
     # Screenshot capture, sway
-    bindsym $mod+Print exec "swaygrab region ${HOME}/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').webm"
+    bindsym $mod+Print  exec $screenshot region ${HOME}/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').webm"
 
     # Screenshot current focused window, sway
-    bindsym Shift+Print exec "swaygrab active ${HOME}/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').png"
+    bindsym Shift+Print exec $screenshot active ${HOME}/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').png"
 
 #-
 #-Keys used and available
@@ -334,7 +270,7 @@ bindsym $mod+r mode "resize"
 #-   [Mod] UNSHIFTED                        [Mod] SHIFTED
 #-    ,1,2,3,4,5,6,7,8,9,0,-,=               ,1,2,3,4,5,6,7,8,9,0,_,+
 #-    ,w,e,r, , ,u, , , , , ,               Q, ,E, , , , , , , , , ,
-#-   a,s,d,f, ,h, , , , , , ,                , ,D, , , , , , , , , , ,[return]
+#-   a,s,d,f,g,h, , , , , , ,                , ,D, , , , , , , , , , ,[return]
 #-   ,  , ,c,v,b, , , , ,                    , , ,C, ,B, , , , ,/
 #-   [space],[left],[up],[down],[right]     [space],[left],[up],[down],[right]
 #-
@@ -391,7 +327,7 @@ bindsym $mod+r mode "resize"
 # Read `man 5 sway-bar` or `man 5 waybar` for more information about this 
 # section.
 bar {
-    swaybar_command waybar
+    swaybar_command waybar -c ~/.config/sway/waybar/config -s ~/.config/sway/waybar/style.css
 }
 #bar {
 #    position top
@@ -433,23 +369,12 @@ for_window [app_id="Alacritty"] border pixel 1
 for_window [class="Code"] floating enable
 for_window [app_id="copyq"] floating enable
 for_window [class="feh"] floating enable
+for_window [class="Fontviewer"] floating enable
 for_window [class="Gimp"] floating enable
 for_window [class="Gimp-2.10"] floating enable
 for_window [app_id="imv"] floating enable
-for_window [app_id="virt-manager"] floating enable
-for_window [app_id="virt-viewer"] floating enable
-#for_window [class="VirtualBox"] floating enable
-#for_window [class="vlc"] floating enable
-#for_window [class="Wine"] floating enable
-#for_window [class="zoom"] floating enable
-for_window [app_id="Qemu-system-i386"] floating enable
-for_window [app_id="qemu-system-x86_64"] floating enable
 #for_window [class="jigsawgirls.exe"] floating enable
 for_window [app_id="mpv"] floating enable
-for_window [class="Fontviewer"] floating enable
-for_window [class="Toplevel"] floating enable
-for_window [app_id="yad"] floating enable
-
 for_window [class="NEdit"] border normal 1
 for_window [class="NEdit" instance="FileSelect_popup"] floating enable, border pixel 1
 for_window [class="NEdit" instance="help"] floating enable
@@ -458,6 +383,18 @@ for_window [class="NEdit" instance="Warning"] floating enable, border pixel 1
 for_window [class="NEdit" instance="Question"] floating enable, border pixel 1
 for_window [class="NEdit" instance="Prompt_popup"] floating enable, border pixel 1
 for_window [class="NEdit" instance="findDialog_popup"] floating enable, border pixel 1
+for_window [app_id="nm-connection-editor"] floating enable
+for_window [app_id="Qemu-system-i386"] floating enable
+for_window [app_id="qemu-system-x86_64"] floating enable
+for_window [class="Toplevel"] floating enable
+
+for_window [app_id="virt-manager"] floating enable
+for_window [app_id="virt-viewer"] floating enable
+#for_window [class="vlc"] floating enable
+#for_window [class="zoom"] floating enable
+for_window [app_id="yad"] floating enable
+
+
 
 
 # -----------------------------------------------------------------------------
@@ -471,5 +408,11 @@ exec  wl-paste -t text --watch clipman store
 
 #exec_always $HOME/bin/random_swaybg.py $HOME/.config/sway/wallpaper.png fill
 
+include ~/.config/sway/sway-input
+include ~/.config/sway/sway-output
+include ~/.config/sway/sway-modes
+include ~/clones/dotfiles/.config/sway/sway-input
+include ~/clones/dotfiles/.config/sway/sway-output
+include ~/clones/dotfiles/.config/sway/sway-modes
 include /etc/sway/config.d/*
 

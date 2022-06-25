@@ -15,9 +15,10 @@ autocmd FileType yaml setlocal ai ts=2 sw=2 et
 autocmd BufWritePre *.py :%s/\s\+$//e
 
 " set the coloUr scheme
-colorscheme pablo
-set bg=dark
-:hi Normal guibg=NONE ctermbg=NONE
+"colorscheme pablo
+"colorscheme koehler
+"set bg=dark
+":hi Normal guibg=NONE ctermbg=NONE
 
 " set the line numbering colours
 :hi linenr guifg=grey guibg=black
@@ -110,6 +111,7 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 
 set cursorline
 set laststatus=2
+highlight CursorLine cterm=underline ctermbg=none 
 
 " filetype_sh ------------{{{
 augroup filetype_sh
@@ -120,7 +122,7 @@ augroup END
 " }}}
 
 " status bar and cursor ------------------ {{{
-highlight StatusLine ctermbg=DarkGrey ctermfg=white
+highlight StatusLine cterm=None ctermbg=DarkGrey ctermfg=white
 augroup statusbar
     autocmd!
     autocmd InsertEnter * highlight StatusLine ctermbg=5
@@ -128,7 +130,7 @@ augroup statusbar
     autocmd InsertEnter * highlight FoldColumn ctermbg=5
 
     autocmd InsertLeave * highlight StatusLine ctermbg=DarkGrey ctermfg=white
-    autocmd InsertLeave * highlight CursorLine ctermbg=NONE
+    "autocmd InsertLeave * highlight CursorLine ctermbg=NONE
     autocmd InsertLeave * highlight FoldColumn ctermbg=DarkGrey
 augroup END
 " }}}

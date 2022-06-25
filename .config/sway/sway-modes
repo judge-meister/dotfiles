@@ -1,0 +1,97 @@
+# -----------------------------------------------
+# Sway Modes
+
+## -- resize containers --
+
+mode "Resize" {
+    # These bindings trigger as soon as you enter the resize mode
+
+    bindsym Left  resize shrink width  10 px or 10 ppt
+    bindsym Down  resize grow   height 10 px or 10 ppt
+    bindsym Up    resize shrink height 10 px or 10 ppt
+    bindsym Right resize grow   width  10 px or 10 ppt
+
+    # Return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "Resize"
+
+## -- adjust gaps (inner/outer) --
+
+mode "Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)" {
+    bindsym plus         gaps outer current plus 5
+    bindsym minus        gaps outer current minus 5
+    bindsym Shift+plus   gaps outer all plus 5
+    bindsym Shift+minus  gaps outer all minus 5
+    bindsym Escape mode "Gaps: (o)uter (i)nner"
+}
+mode "Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)" {
+    bindsym plus         gaps inner current plus 5
+    bindsym minus        gaps inner current minus 5
+    bindsym Shift+plus   gaps inner all plus 5
+    bindsym Shift+minus  gaps inner all minus 5
+    bindsym Escape mode "Gaps: (o)uter (i)nner"
+}
+mode "Gaps: (o)uter (i)nner" {
+    # Gaps: (o)uter (i)nner - can we have a mode within a mode
+    # Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+    bindsym o mode "Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)"
+    bindsym i mode "Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)"
+    bindsym Escape mode "default"
+}
+bindsym $mod+g mode "Gaps: (o)uter (i)nner"
+
+## -- move floating container --
+
+mode "move" {
+    bindsym Up    move up
+    bindsym Down  move down
+    bindsym Left  move left
+    bindsym Right move right
+
+    bindsym Escape mode "default"
+}
+bindsym $mod+m mode "move"
+
+
+## -- Opacity of a container --
+
+set $opacity 1
+for_window {
+    [class=".*"] opacity $opacity
+    [app_id=".*"] opacity $opacity
+}
+
+mode "opacity" {
+    bindsym {
+        0 opacity 1
+        1 opacity 0.55
+        2 opacity 0.65
+        3 opacity 0.70
+        4 opacity 0.75
+        5 opacity 0.80
+        6 opacity 0.85
+        7 opacity 0.90
+        8 opacity 0.95
+        9 opacity 0.98
+        
+        Escape mode "default"
+        $mod+o mode "default"
+    }
+}
+bindsym {
+    $mod+o       mode "opacity"
+    $mod+slash   opacity plus 0.02
+    $mod+period  opacity minus 0.02
+}
+
+## -- Opacity of alacritty background --
+
+mode "alacritty opacity" {
+    bindsym Up   exec toggle_alacritty_opacity.sh -i
+    bindsym Down exec toggle_alacritty_opacity.sh -d
+    bindsym Escape mode "default"
+}
+bindsym $mod+$alt+a mode "alacritty opacity"
+

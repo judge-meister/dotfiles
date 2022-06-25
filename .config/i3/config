@@ -93,7 +93,7 @@ exec_always --no-startup-id xautolock -time 10 -locker "i3lock-fancy && sleep 1"
     bindsym $mod+Shift+q kill
 
     # help for key bindings
-    bindsym $mod+Shift+slash exec ~/.config/i3/keys.sh i3
+    bindsym $mod+Shift+slash exec ~/.local/bin/keys.sh i3
 
     # launcher bindings
     bindsym $mod+d exec $drun_menu
@@ -245,10 +245,10 @@ bindsym $mod+r mode "resize"
 # Media keys:
 #
     # audio controls
-    set $mute    exec pactl set-sink-mute @DEFAULT_SINK@ toggle
-    set $mic_off exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
-    set $vol_dn  exec pactl set-sink-volume @DEFAULT_SINK@ -5%
-    set $vol_up  exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+    set $mute    exec changeVolume set-sink-mute @DEFAULT_SINK@ toggle
+    set $mic_off exec changeVolume set-source-mute @DEFAULT_SOURCE@ toggle
+    set $vol_dn  exec changeVolume set-sink-volume @DEFAULT_SINK@ -5%
+    set $vol_up  exec changeVolume set-sink-volume @DEFAULT_SINK@ +5%
 
     bindsym XF86AudioMute        $mute
     bindsym XF86AudioMicMute     $mic_off
@@ -256,8 +256,8 @@ bindsym $mod+r mode "resize"
     bindsym XF86AudioRaiseVolume $vol_up
 
     # screen brightness controls
-    bindsym XF86MonBrightnessUp exec macbrightness -inc
-    bindsym XF86MonBrightnessDown exec macbrightness -dec
+    bindsym XF86MonBrightnessUp exec changeBrightness -inc
+    bindsym XF86MonBrightnessDown exec changeBrightness -dec
 
     # keyboard brightness controls
     bindsym XF86KbdBrightnessUp exec kbdbrightness -inc

@@ -34,9 +34,25 @@ grim -g "0,0 $(xrandr | grep  XWAYLAND0 | awk -F' ' '{print $3}' |sed 's|+0+0||'
 #convert $IMAGE  -level 0%,100%,0.8 -blur $BLURTYPE -gravity center $IMAGE
 
 # add text and lock image to screenshot
-convert $IMAGE -brightness-contrast 10x10 -level 0%,100%,0.8 -blur $BLURTYPE -font Roboto-Regular -pointsize 26 -fill white -gravity center -annotate +0+160 "Type Password to Unlock" "$HOME"/.local/share/icons/lock.png -gravity center -composite $IMAGE
+convert $IMAGE -brightness-contrast 10x10 -level 0%,100%,0.9 -blur $BLURTYPE -font Roboto-Regular -pointsize 26 -fill white -gravity center -annotate +0+160 "Type Password to Unlock" "$HOME"/.local/share/icons/lock.png -gravity center -composite $IMAGE
 
-swaylock -f -i $IMAGE
+swaylock  -r -l -f -i $IMAGE \
+    --indicator-thickness 15 \
+    --indicator-radius 120 \
+    \
+    --ring-color 00000000 \
+    \
+    --inside-color 00000000 \
+    --inside-clear-color 33ff3377 \
+    --inside-ver-color 3333ff77 \
+    --inside-wrong-color ff333377 \
+    \
+    --separator-color 00000000 \
+    \
+    --line-ver-color 00000000 \
+    --line-clear-color 00000000 \
+    --line-wrong-color 00000000 \
+    --line-color 00000000 
 
 #rm -f $IMAGE
 rm -f ${IMAGE%.*}*.png

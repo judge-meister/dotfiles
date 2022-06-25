@@ -5,6 +5,7 @@ alias ls='ls -G --color=auto '
 
 alias grep='grep --color=auto '
 alias egrep='egrep --color=auto '
+alias more='less'
 
 alias rm='rm -i'
 alias mv='mv -i'

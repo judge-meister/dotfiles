@@ -1,0 +1,26 @@
+# -----------------------------------------------
+# Sway Output
+
+# You can get the names of your outputs by running: swaymsg -t get_outputs
+#
+#   output HDMI-A-1 resolution 1920x1080 position 1920,0
+#
+#output * resolution --custom 1366x768
+#output * mode 1600x900
+output LVDS-1 scale 0.85
+
+# Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
+set $sway_blue /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png
+set $sexy_girl /home/judge/Pictures/sexy-model-woman-boobs-nude-gorgeous-trimmed-pussy-african-pierced-nipples-1366x768.png
+set $ivi_pizzot $HOME/Pictures/Montage/ivi_pizzot_montage_1920x1200_16668.jpg
+set $def_wall /home/judge/.config/sway/wallpaper.png
+
+#output * bg $sway_blue fill
+#output * bg $sexy_girl fill
+#output * bg $ivi_pizzot fill
+output LVDS-1 bg $def_wall fill
+
+# -- hide the cursor --
+seat seat0 hide_cursor when-typing enable
+
+

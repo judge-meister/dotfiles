@@ -1,11 +1,29 @@
 #!/bin/bash
-# changeVolume
+# change the Volume
+# -inc     increase volume
+# -dec     decrease volume
+# -toggle  mute/unmute speaker
+# -mic     mute/unmute mic
+
+# Change the volume using pulseaudio
+case "$1" in
+  -inc)
+    pactl set-sink-volume @DEFAULT_SINK@ +5%
+    ;;
+  -dec)
+    pactl set-sink-volume @DEFAULT_SINK@ -5%
+    ;;
+  -toggle)
+    pactl set-sink-mute @DEFAULT_SINK@ toggle
+    ;;
+  -mic)
+    pactl set-source-mute @DEFAULT_SINK@ toggle
+    ;;
+esac
 
 # Arbitrary but unique message tag
 msgTag="myvolume"
 
-# Change the volume using pulseaudio
-pactl "$@"
 
 # Query pactl for the current volume and whether or not the speaker is muted
 volume=$(pactl get-sink-volume @DEFAULT_SINK@ |head -1|awk '{print $5}' |sed 's|[^0-9]*||g')
