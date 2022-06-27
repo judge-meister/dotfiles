@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# alacritty -o font.size=12
+# kitty -o font_size=12
+# foot -o main.font=monospace:size=8
+# xterm
+# xfce4-terminal
+
+if [[ "$(which alacritty 2>/dev/null)" != "" ]]; then
+    alacritty -o font.size=12  $@
+
+elif [[ "$(which foot 2>/dev/null)" != "" ]]; then
+    foot -o main.font=monospace:size=8  $@
+
+elif [[ "$(which kitty 2>/dev/null)" != "" ]]; then
+    kitty -o font_size=12  $@
+
+elif [[ "$(which xterm 2>/dev/null)" != "" ]]; then
+    xterm -bg black -fg white  $@
+fi
+
+
+

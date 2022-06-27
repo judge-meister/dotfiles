@@ -18,7 +18,7 @@
                      "sway/workspaces", 
                      "sway/mode", 
                      "custom/spotify"],
-    //"modules-center": ["sway/window"],
+    "modules-center": ["sway/window"],
     "modules-right": ["custom/scale", 
                       "custom/disk_root", 
                       "custom/disk_home", 
@@ -85,10 +85,10 @@
         "format": "{percent}% {icon} ",
         "format-icons": ["", ""],
         "tooltip-format": "Backlight Brightness",
-        "on-scroll-down": "changeBrightness -inc", //"brightnessctl -c backlight set 5%-",
-        "on-scroll-up": "changeBrightness -dec", //"brightnessctl -c backlight set +5%",
-        "on-click": "changeBrightness -inc", //"brightnessctl -c backlight set 5%-",
-        "on-click-right": "changeBrightness -dec", //"brightnessctl -c backlight set +5%"
+        "on-scroll-down": "~/.config/sway/scripts/backlight -inc", 
+        "on-scroll-up":   "~/.config/sway/scripts/backlight -dec", 
+        "on-click":       "~/.config/sway/scripts/backlight -inc", 
+        "on-click-right": "~/.config/sway/scripts/backlight -dec",
     },
     "battery": {
         "bat": "BAT0",
@@ -111,7 +111,7 @@
         "format-ethernet": "  ",
         "format-disconnected": "Disconnected ⚠",
         "tooltip-format": "({ifname}) {essid}: {ipaddr}/{cidr}",
-        "on-click": "nmtui",
+        "on-click": "~/.config/sway/scripts/run_nmtui",
     },
     "pulseaudio": {
         //"scroll-step": 1,
@@ -128,10 +128,10 @@
             "default": ["", ""]
         },
         "on-click-middle": "pavucontrol",
-        "on-scroll-up": "changeVolume set-sink-volume @DEFAULT_SINK@ -1%",
-        "on-scroll-down": "changeVolume set-sink-volume @DEFAULT_SINK@ +1%",
-        "on-click": "changeVolume set-sink-volume @DEFAULT_SINK@ -1%",
-        "on-click-right": "changeVolume set-sink-volume @DEFAULT_SINK@ +1%",
+        "on-scroll-down": "~/.config/sway/scripts/volume -inc",
+        "on-scroll-up":   "~/.config/sway/scripts/volume -dec",
+        "on-click":       "~/.config/sway/scripts/volume -inc",
+        "on-click-right": "~/.config/sway/scripts/volume -dec",
     },
     "custom/hostname": {
         "format": "{}",
@@ -142,8 +142,8 @@
     "custom/language": {
         "format": "{}",
         "tooltip": false,
-        "exec": "$HOME/.local/bin/sway_kb -r",
-        "on-click": "$HOME/.local/bin/sway_kb",
+        "exec":     "$HOME/.config/sway/scripts/keyboard -r",
+        "on-click": "$HOME/.config/sway/scripts/keyboard",
         "interval": 5,
         "signal": 9,
     },
@@ -157,18 +157,16 @@
     "custom/updates": {
         "format": "{}  ",
         "tooltip": false,
-        //"max-length": 15,
         "interval": 360,
         "exec": "echo $(($(cat ~/.tmp/pacupts) /1000))",
         "exec-if": "[ -f $HOME/.tmp/pacupts ]",
-        "on-click": "alacritty -o font.size=11.0 -e update_packages",
+        "on-click": "$HOME/.config/sway/scripts/terminal -e update_packages",
         "signal": 8
     },
     "custom/docker": {
         "format": "{}",
         "interval": 60,
         "tooltip": false,
-        //"max-length": 15,
         "exec": "$HOME/.local/bin/dockerisrunning",
         "exec-if": "[ -f $HOME/.local/bin/dockerisrunning ]",
     },
@@ -188,24 +186,14 @@
         "format": "{}",
         "interval": 1,
         "tooltip": false,
-        "exec": "$HOME/.local/bin/sway_scale.py -s",
-        "on-click": "$HOME/.local/bin/sway_scale.py -i",
+        "exec":           "$HOME/.local/bin/sway_scale.py -s",
+        "on-click":       "$HOME/.local/bin/sway_scale.py -i",
         "on-click-right": "$HOME/.local/bin/sway_scale.py -d",
     },
-    "custom/clock": {
+    "custom/clock": { // this custom clock module for debian because its clock module is broken
         "format": "{}",
         "interval": 1,
         "exec": "date +%H:%M",
         "exec-if": "[ -f /etc/debian_version ]",
     },
-    //"custom/power": {
-    //  	"format":"⏻ ",
-    //   	"on-click": "nwgbar -o 0.6",
-    //  	"tooltip": false,
-    //},
-    //"custom/launcher": {
-    //	"format":" ",
-    //	"on-click": "exec nwg-drawer -c 7 -is 70 -spacing 23",
-    //	"tooltip": false,
-    //},
 }

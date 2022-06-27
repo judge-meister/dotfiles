@@ -1,0 +1,5 @@
+#!/bin/bash
+# Requires: foot, networkmanager
+
+foot -a nmtui -W 80x24 -e /usr/bin/nmtui &
+

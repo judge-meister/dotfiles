@@ -49,7 +49,8 @@ set $up k
 set $right l
 
 # preferred terminal emulator
-set $term alacritty -o font.size=12.0
+#set $term alacritty -o font.size=12.0
+set $term ~/.config/swat/scripts/terminal
 set $term2 foot 
 
 # preferred lock command
@@ -72,11 +73,8 @@ set $dmenu dmenu_run -fn 'Roboto Sans-16' -b | xargs swaymsg exec --
 # Programs - need to move some of these to ./scripts folder
 set $keys              ~/.local/bin/keys.sh sway
 set $update_packages   update_packages
-set $mute              changeVolume -toggle
-set $mic_off           changeVolume -mic
-set $vol_dn            changeVolume -dec
-set $vol_up            changeVolume -inc
-set $changeBrightness  changeBrightness
+set $volume            ~/.config/sway/scripts/volume
+set $backlight         ~/.config/sway/scripts/backlight
 set $kbdBrightness     kbdbrightness
 set $sway_scale        ~/.local/bin/sway_scale.py
 set $random_wallpaper  ~/bin/random_swaybg.py
@@ -217,14 +215,14 @@ set $screenshot        swaygrab
 # Media keys:
 #
     # audio controls
-    bindsym XF86AudioMute        exec $mute
-    bindsym XF86AudioMicMute     exec $mic_off
-    bindsym XF86AudioLowerVolume exec $vol_dn
-    bindsym XF86AudioRaiseVolume exec $vol_up
+    bindsym XF86AudioMute        exec $volume -toggle
+    bindsym XF86AudioMicMute     exec $volume -mic
+    bindsym XF86AudioLowerVolume exec $volume -dec
+    bindsym XF86AudioRaiseVolume exec $volume -inc
 
     # screen brightness controls
-    bindsym XF86MonBrightnessUp   exec $changeBrightness -inc
-    bindsym XF86MonBrightnessDown exec $changeBrightness -dec
+    bindsym XF86MonBrightnessUp   exec $backlight -inc
+    bindsym XF86MonBrightnessDown exec $backlight -dec
 
     # keyboard brightness controls
     bindsym XF86KbdBrightnessUp   exec $kbdBrightness -inc
@@ -269,9 +267,9 @@ set $screenshot        swaygrab
 #-
 #-   [Mod] UNSHIFTED                        [Mod] SHIFTED
 #-    ,1,2,3,4,5,6,7,8,9,0,-,=               ,1,2,3,4,5,6,7,8,9,0,_,+
-#-    ,w,e,r, , ,u, , , , , ,               Q, ,E, , , , , , , , , ,
+#-    ,w,e,r, , ,u, ,o, , , ,               Q, ,E, , , , , , , , , ,
 #-   a,s,d,f,g,h, , , , , , ,                , ,D, , , , , , , , , , ,[return]
-#-   ,  , ,c,v,b, , , , ,                    , , ,C, ,B, , , , ,/
+#-    , ,c,v,b, ,m, , ,                      , ,C, ,B, , , , ,/
 #-   [space],[left],[up],[down],[right]     [space],[left],[up],[down],[right]
 #-
 #- 
@@ -286,15 +284,15 @@ set $screenshot        swaygrab
 ###----------------------------------------------------------------------------
 ### nag settings
 
-    # nag
-    set {
+# nag
+set {
 	$nag         exec swaynagmode
 	$nag_exit    $nag --exit
 	$nag_confirm $nag --confirm
 	$nag_select  $nag --select
-    }
-    mode "nag" {
-      bindsym {
+}
+mode "nag" {
+    bindsym {
 	    Ctrl+d    mode "default"
 
 	    Ctrl+c    $nag_exit
@@ -311,15 +309,15 @@ set $screenshot        swaygrab
 
 	    Up        $nag_select next
 	    Down      $nag_select prev
-      }
     }
+}
 
-    bindsym {
-        $mod+Shift+e $nag -t "warning" -m "Exit Sway?" -b "Exit" "swaymsg exit" -b "Reload" "swaymsg reload" -b "Power Off" "poweroff" -b "Reboot" "reboot"
-    }
-    # -R is recommended for swaynag_command so that, upon a syntax error in your sway config, the
-    # 'Reload Sway' option will be initially selected instead of the 'Exit Sway' option
-    swaynag_command $nag -R
+bindsym {
+    $mod+Shift+e $nag -t "warning" -m "Exit Sway?" -b "Exit" "swaymsg exit" -b "Reload" "swaymsg reload" -b "Power Off" "poweroff" -b "Reboot" "reboot"
+}
+# -R is recommended for swaynag_command so that, upon a syntax error in your sway config, the
+# 'Reload Sway' option will be initially selected instead of the 'Exit Sway' option
+swaynag_command $nag -R
 
 # -----------------------------------------------------------------------------
 # Status Bar:
@@ -327,22 +325,8 @@ set $screenshot        swaygrab
 # Read `man 5 sway-bar` or `man 5 waybar` for more information about this 
 # section.
 bar {
-    swaybar_command waybar -c ~/.config/sway/waybar/config -s ~/.config/sway/waybar/style.css
+    swaybar_command waybar
 }
-#bar {
-#    position top
-#    font pango: FontAwesome 10
-#    status_command i3blocks
-#    colors {
-#        separator  #268bd2
-#        background #202020ee
-#        statusline #83949600
-#        focused_workspace  #aaaaaa #6c71c4   #-ccccc
-#        active_workspace   #fdf6e3 #6c71c4   #fdf6e3
-#        inactive_workspace #586e75 #202020ee #586e75
-#        urgent_workspace   #d33682 #d33682   #fdf6e3
-#    }
-#}
 
 # -----------------------------------------------------------------------------
 # Discrete app settings
@@ -370,6 +354,7 @@ for_window [class="Code"] floating enable
 for_window [app_id="copyq"] floating enable
 for_window [class="feh"] floating enable
 for_window [class="Fontviewer"] floating enable
+for_window [app_id="nmtui"] floating enable
 for_window [class="Gimp"] floating enable
 for_window [class="Gimp-2.10"] floating enable
 for_window [app_id="imv"] floating enable
@@ -408,11 +393,10 @@ exec  wl-paste -t text --watch clipman store
 
 #exec_always $HOME/bin/random_swaybg.py $HOME/.config/sway/wallpaper.png fill
 
+include ~/.config/sway/sway-idle
 include ~/.config/sway/sway-input
 include ~/.config/sway/sway-output
 include ~/.config/sway/sway-modes
-include ~/clones/dotfiles/.config/sway/sway-input
-include ~/clones/dotfiles/.config/sway/sway-output
-include ~/clones/dotfiles/.config/sway/sway-modes
+
 include /etc/sway/config.d/*
 
