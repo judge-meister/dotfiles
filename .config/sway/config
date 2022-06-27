@@ -50,7 +50,7 @@ set $right l
 
 # preferred terminal emulator
 #set $term alacritty -o font.size=12.0
-set $term ~/.config/swat/scripts/terminal
+set $term ~/.config/sway/scripts/terminal
 set $term2 foot 
 
 # preferred lock command

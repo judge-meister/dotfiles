@@ -8,6 +8,7 @@ export TERM="xterm-256color"
 [[ $- != *i* ]] && return
 
 . ~/.bash_aliases
+. ~/.bash_ls_colors
 
 PS1='[\u@\h \W]\$ '
 
