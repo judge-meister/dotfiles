@@ -186,9 +186,9 @@
         "format": "{}",
         "interval": 1,
         "tooltip": false,
-        "exec":           "$HOME/.local/bin/sway_scale.py -s",
-        "on-click":       "$HOME/.local/bin/sway_scale.py -i",
-        "on-click-right": "$HOME/.local/bin/sway_scale.py -d",
+        "exec":           "$HOME/.config/sway/scripts/sway_scale.py -s",
+        "on-click":       "$HOME/.config/sway/scripts/sway_scale.py -i",
+        "on-click-right": "$HOME/.config/sway/scripts/sway_scale.py -d",
     },
     "custom/clock": { // this custom clock module for debian because its clock module is broken
         "format": "{}",

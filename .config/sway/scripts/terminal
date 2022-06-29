@@ -5,6 +5,7 @@
 # foot -o main.font=monospace:size=8
 # xterm
 # xfce4-terminal
+# shellcheck disable=SC2068
 
 if [[ "$(which alacritty 2>/dev/null)" != "" ]]; then
     alacritty -o font.size=12  $@

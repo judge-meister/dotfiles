@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck disable=SC2034
 
 # Backgroud Image
 #IMAGE="$HOME/.config/sway/wallpaper/lockscreen.png"
@@ -21,7 +22,7 @@ swaylock -f \
     \
     '# Appearance' \
     --color ${bg}E6 \
-    '#--font 'JetBrainsMono Nerd Font' --font-size 18' \
+    '#--font JetBrainsMono Nerd Font --font-size 18' \
     \
     '# Backspace key' \
     --key-hl-color ${green} \
