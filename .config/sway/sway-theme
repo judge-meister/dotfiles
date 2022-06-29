@@ -1,0 +1,19 @@
+# -----------------------------------------------
+# Sway theme
+
+font pango: SourceCodePro Medium 12
+
+# float settings
+floating_minimum_size 150 x 150
+floating_maximum_size 1600 x 900
+floating_modifier $mod normal
+
+# border width
+default_border pixel 1
+default_floating_border normal 1
+
+# gaps settings
+smart_gaps off
+gaps inner 5
+gaps outer 0
+

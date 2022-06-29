@@ -6,6 +6,9 @@ MANU := $(shell sudo dmidecode -s system-manufacturer)
 .PHONY: all
 all: dotfiles folders etc 
 
+.PHONY: sway
+sway: dotfiles swayfolders
+	
 .PHONY: clean
 clean: cleandotfiles cleanfolders cleanetc 
 
@@ -23,6 +26,23 @@ cleandotfiles: ## Remove the dotfiles
 		f=$$(basename $$file); \
 		rm -fv $(HOME)/$$f; \
 	done;
+
+.PHONY: swayfolders
+swayfolders: cleanswayfolders ## do lower directories
+	for file in $(shell find .config/sway .config/waybar .config/alacritty .config/dunst .local bin -type f | grep -v -E 'wofi|__pycache__' ); do \
+		d=$$(dirname $$file); \
+		mkdir -p $(HOME)/$$d; \
+		ln -snfv $(CURDIR)/$$file $(HOME)/$$d/ ; \
+	done; \
+	systemctl --user daemon-reload;
+
+.PHONY: cleanswayfolders
+cleanswayfolders: ## do lower directories
+	for file in $(shell find .config/sway .config/waybar .config/alacritty .config/dunst .local bin -type f ); do \
+		f=$$(basename $$file); \
+		rm -fv $(HOME)/$$file ; \
+	done;
+
 
 .PHONY: folders
 folders: cleanfolders ## do lower directories

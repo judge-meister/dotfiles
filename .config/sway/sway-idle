@@ -2,11 +2,11 @@
 # Sway Idle configuration - auto screen lock
 
 exec swayidle -w \
-         timeout 600 'fancy-swaylock' \
+         timeout 600 '$lockcmd' \
          timeout 900 'swaymsg "output * dpms off"' \
          resume 'swaymsg "output * dpms on"' \
-         before-sleep 'fancy-swaylock' \
-#
+         before-sleep '$lockcmd' 
+
 # This will lock your screen after 600 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.

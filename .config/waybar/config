@@ -6,7 +6,7 @@
 {
     "layer": "top",       // Waybar at top layer
     "position": "top",    // Waybar at the top of your screen
-    "height": 24,         // Waybar height
+    "height": 25,         // Waybar height
     // "width": 1366,     // Waybar width - (commented out means full width of screen)
     "margin-top": 5,      // margin around waybar
     "margin-left": 5,     // 
