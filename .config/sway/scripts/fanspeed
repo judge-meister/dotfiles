@@ -1,0 +1,6 @@
+#!/bin/bash
+
+sensors -j | jq -r '.[].fan1.fan1_input' | grep -v null
+
+sensors -j | jq -r '.[]."Exhaust  ".fan1_input' | grep -v null
+

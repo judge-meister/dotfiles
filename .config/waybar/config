@@ -78,7 +78,7 @@
     "custom/fanspeed": {
         "format": "{} ",
         "tooltip": false,
-        "exec": "sensors -j | jq -r '.[].fan1.fan1_input' | grep -v null",
+        "exec": "~/.config/sway/scripts/fanspeed",
         "interval": 5,
     },
     "backlight": {
