@@ -1,7 +1,15 @@
 /* style sheet for waybar */
 
+@define-color ared #e06b74;
+@define-color agreen #98c379;
+@define-color ayellow #E5C07A;
+@define-color ablue #62AEEF;
+@define-color amagenta #C77800;
+@define-color acyan #55B6C2;
+
 @define-color whitecolor #bbbbbb;
-@define-color buttonbg rgba(55,55,55,0.6);/*#373737;*/
+/*@define-color buttonbg rgba(55,55,55,0.6);*/
+@define-color buttonbg rgba(214,93,14,0.3);
 @define-color buttonborder #202020;
 
 * {
@@ -15,7 +23,7 @@
 
 window#waybar {
     /*background: rgba(0,0,0,0.4);*//* black 70% transparent; */
-    background: rgba(0,0,0,0.0);/* black 70% transparent; */
+    background: rgba(0,0,0,0.1);/* black 70% transparent; */
     color: @whitecolor;
 }
 
@@ -84,6 +92,7 @@ window#waybar {
 #battery, 
 #backlight,
 #cpu, 
+#window,
 #custom-launcher,
 #custom-scale, 
 #custom-spotify, 
@@ -96,6 +105,7 @@ window#waybar {
 #custom-language,
 #custom-hostname,
 #custom-fanspeed,
+#idle_inhibitor,
 #memory, 
 #mode, 
 #network, 
@@ -109,6 +119,7 @@ window#waybar {
     border-left: 0px solid #777;
     border-right: 0px solid #777;
     background: @buttonbg;
+    /*background-image: linear-gradient(to right,@acyan,white,@ablue);*/
     color: @whitecolor;
     border: 1px solid @buttonborder;
 }
@@ -177,4 +188,5 @@ window#waybar {
 #custom-updates.hover {
     background: #444;
 }
+
 

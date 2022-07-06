@@ -294,15 +294,17 @@ bar {
 assign [class="TigerVNC Viewer"] → 6
 assign [class="Vncviewer"] → 6
 assign [class="Brave-browser"] → 10
-assign [class="firefoxdeveloperedition"] → 10
-assign [app_id="Firefox Developer Edition"] → 10
+assign [app_id="org.qutebrowser.qutebrowser"] → 9
+assign [app_id="firefoxdeveloperedition"] → 10
+#assign [app_id="Firefox Developer Edition"] → 10
 
 # spotify, brave: no border
 for_window [app_id="^Spotify$"] border none
 for_window [app_id="^Spotify Premium$"] border none
 for_window [app_id="Brave-browser"] border none
-for_window [class="firefoxdeveloperedition"] border none
-for_window [app_id="Firefox Developer Edition"] border none
+for_window [app_id="firefoxdeveloperedition"] border none
+for_window [app_id="org.qutebrowser.qutebrowser"] border none
+#for_window [app_id="Firefox Developer Edition"] border none
 
 # no title: st terminal
 for_window [app_id="st-256color"] border pixel 1

@@ -2,4 +2,9 @@
 #
 # Requires: feh
 #
-feh --bg-scale '/home/judge/Downloads/216531-3008x1699.jpg' 
+
+if [ "$(pgrep sway)" != "" ]; then
+    random_swaybg.py /home/judge/clones/wallpapers/butts/216531-3008x1699.png
+else
+    feh --bg-scale /home/judge/clones/wallpapers/butts/216531-3008x1699.png
+fi

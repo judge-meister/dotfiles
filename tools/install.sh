@@ -320,6 +320,7 @@ do
           ;;
     'i' ) INST_OPTS=${OPTARG}
           echo "Install - ${INST_OPTS}"
+          # shellcheck disable=SC2086
           install_${INST_OPTS}
           ;;
     'a' ) install_everything
