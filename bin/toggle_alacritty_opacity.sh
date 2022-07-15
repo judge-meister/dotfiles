@@ -17,6 +17,7 @@ case $1 in
       ;;
   -i) toggle_opacity=$(printf "%.2f" "$(echo "$opacity-0.05" | bc)")
       ;;
+  -h|*) echo "Usage: $0 [ -d | -i ]" ;exit 2;;
 esac
 #echo "$opacity > $toggle_opacity"
 
