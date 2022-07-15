@@ -1,6 +1,10 @@
 #!/bin/bash
 
-sensors -j | jq -r '.[].fan1.fan1_input' | grep -v null
-
-sensors -j | jq -r '.[]."Exhaust  ".fan1_input' | grep -v null
+VENDOR=$(cat /sys/class/dmi/id/sys_vendor)
+if [ "$VENDOR" == "Apple Inc." ]
+then
+  sensors -j | jq -r '.[]."Exhaust  ".fan1_input' | grep -v null
+else
+  sensors -j | jq -r '.[].fan1.fan1_input' | grep -v null
+fi
 

@@ -5,7 +5,7 @@
 import sys
 import getopt
 import json
-from subprocess import check_output
+from subprocess import check_output, CalledProcessError
 
 
 
@@ -62,9 +62,12 @@ def main():
 
 if __name__ == '__main__':
 
-    sway = check_output(['pidof', '/usr/bin/sway'], universal_newlines=True) != ''
-    if not sway:
-        print("not running sway")
-        sys.exit()
+    try:
+        sway = check_output(['pidof', '/usr/bin/sway'], universal_newlines=True) != ''
+        if not sway:
+            print("not running sway")
+            sys.exit()
 
-    main()
+        main()
+    except CalledProcessError:
+        sys.exit()
