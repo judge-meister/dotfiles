@@ -6,5 +6,9 @@ VENDOR=$(cat /sys/class/dmi/id/sys_vendor)
 if [ "$VENDOR" == "Apple Inc." ]
 then
     swaymsg input "type:keyboard" xkb_model macbook79
+    if [ "$(cat /sys/module/hid_apple/parameters/iso_layout)" != "1" ]
+    then
+        echo "1" | sudo tee /sys/module/hid_apple/parameters/iso_layout
+    fi
 fi
 
