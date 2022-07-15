@@ -3,106 +3,92 @@
 "_______________
 
 " Plug 'terminalnode/sway-vim-syntax'
-aug i3config#ft_detect
-    au BufNewFile,BufRead *config/sway/* set filetype=swayconfig
-    au BufNewFile,BufRead *config/sway/*sh set filetype=sh
-aug end
+"aug i3config#ft_detect
+"    au BufNewFile,BufRead *config/sway/* set filetype=swayconfig
+"    au BufNewFile,BufRead *config/sway/*sh set filetype=sh
+"aug end
 
 " enable syntax highlighting, duh
-:syntax enable
+syntax enable
 
 " set the current working folder to the same as the file shown
 "		useful for then entering clearcase commands or using
 "		% to get the current file and it works
-:autocmd BufEnter * cd %:p:h
+autocmd BufEnter * cd %:p:h
 
+" yaml formatting
 autocmd FileType yaml setlocal ai ts=2 sw=2 et
+" remove line ending whitespace in python files
 autocmd BufWritePre *.py :%s/\s\+$//e
 
 " set the coloUr scheme
-"colorscheme pablo
-"colorscheme koehler
-"set bg=dark
+" light - delek, morning, peachpuff, shine, zellner
+" not suitable - blue, darkblue
+" transparent - default
+" not black - desert, evening, slate
+colorscheme slate
+" black bg - elflord, industry, koehler, murphy, pablo, ron, torte
+"colorscheme industry - black
+
+set bg=dark
 ":hi Normal guibg=NONE ctermbg=NONE
 
 " set the line numbering colours
-:hi linenr guifg=grey guibg=black
-
-" set the font and size
-":set guifont=Monospace\ 9
+hi linenr guifg=grey guibg=black
 
 " incrementally search
-:set incsearch
+set incsearch
 
-:map <F1> :noh<CR>
-:map <F9> :vertical wincmd f<CR>
+map <F1> :noh<CR>
+map <F9> :vertical wincmd f<CR>
 		
-:map <F12> :r! date<CR>
-:map <C-T> :tabnew<CR>
-:map <F11> :set noexpandtab<CR>:setlocal list<CR>:set listchars=tab:>~,trail:.<CR>
+
+map <F12> :r! date<CR>
+" true tab char
+map <C-T> :tabnew<CR>
+" highlight tab chars
+map <F10> :set noexpandtab<CR>:setlocal list<CR>:set listchars=tab:>~,trail:.<CR>
+map <S-F10> :setlocal nolist<CR>
 
 " paste from system '+' clipboard buffer
-:map <c-v> "+P
+map <c-v> "+P
 
 " make return indent to the same as previous line
-:set autoindent
-:set smartindent
+set autoindent
+set smartindent
 
 " only search case sensitive for something containing uppercase letters
-:set smartcase
-:set ignorecase
-:set showmatch
+set smartcase
+set ignorecase
+set showmatch
 
 " turn tabs into spaces
-:set expandtab
+set expandtab
 
 " show line numbers
-:set number
+set number
 
 " set the indenting amount (for >> and <<)
-:set shiftwidth=4
+set shiftwidth=4
 
 " set the tab amount
-:set tabstop=4
+set tabstop=4
 
-:set wildmenu
+set wildmenu
 
-:set scrolloff=2
-:set guioptions=aegimrL
+set scrolloff=2
+set guioptions=aegimrL
 set hlsearch
 
 autocmd! bufwritepost .vimrc source ~/.vimrc
 
 " always show the line number and column width
-:set ruler
+set ruler
 
 " be able to use the mouse in the terminal
 if has('mouse')
   :set mouse=a
 endif
-
-" execute a command for all buffers ther are shown in windows
-fun! AllWindows(cmnd)
-	let cmnd = a:cmnd
-	let origw = winnr()
-	let i = 1
-	while (i <= bufnr(*$))
-		if bufexists(i)
-			let w = bufwinnr(i)
-			if w != -1
-				echo "=== window: " . w . " files " . bufname(i)
-				execute "normal \<c-w>" . w . "w"
-				execute cmnd
-			endif
-		endif
-		let i = i+1
-	endwhile
-	execute "normal \<c-w>" . origw . "w"
-endfun
-
-" Adding those quotes is pretty boring. That is easy to fix. Just make a command like
-command! -nargs=+ -complete=command AllBuf call AllWindows(<q-args>)
-
 
 " Added 20/02/14 - for moving lines up and down using Alt+direction key, useful for re-ordering lists
 
@@ -116,7 +102,7 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 
 set cursorline
 set laststatus=2
-highlight CursorLine cterm=underline ctermbg=none 
+"highlight CursorLine cterm=underline ctermbg=none 
 
 " filetype_sh ------------{{{
 augroup filetype_sh
@@ -127,17 +113,17 @@ augroup END
 " }}}
 
 " status bar and cursor ------------------ {{{
-highlight StatusLine cterm=None ctermbg=DarkGrey ctermfg=white
-augroup statusbar
-    autocmd!
-    autocmd InsertEnter * highlight StatusLine ctermbg=5
+"highlight StatusLine cterm=None ctermbg=DarkGrey ctermfg=white
+"augroup statusbar
+"    autocmd!
+"    autocmd InsertEnter * highlight StatusLine ctermbg=5
     "autocmd InsertEnter * highlight CursorLine ctermbg=black
-    autocmd InsertEnter * highlight FoldColumn ctermbg=5
+"    autocmd InsertEnter * highlight FoldColumn ctermbg=5
 
-    autocmd InsertLeave * highlight StatusLine ctermbg=DarkGrey ctermfg=white
+"    autocmd InsertLeave * highlight StatusLine ctermbg=DarkGrey ctermfg=white
     "autocmd InsertLeave * highlight CursorLine ctermbg=NONE
-    autocmd InsertLeave * highlight FoldColumn ctermbg=DarkGrey
-augroup END
+"    autocmd InsertLeave * highlight FoldColumn ctermbg=DarkGrey
+"augroup END
 " }}}
 
 function! GitBranch()
@@ -150,7 +136,7 @@ function! StatuslineGit()
 endfunction
 
 " switch cursor colour in insert mode, only works in right kind of terminal
-if &term =~ "xterm"
+"if &term =~ "xterm"
     " colour when in insert mode
     let &t_SI = "\<Esc>]12;yellow\x7"
     " colour otherwise
@@ -159,7 +145,7 @@ if &term =~ "xterm"
     silent !echo -ne "\033]12;grey\007"
     " revert back to grey
     autocmd VimLeave * silent !echo -ne "\033]112\007"
-endif
+"endif
 
 set statusline=
 set statusline+=%{StatuslineGit()}>
