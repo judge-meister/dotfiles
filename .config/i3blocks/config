@@ -3,7 +3,8 @@
 
 separator_block_width=10
 #color=#6c71c4
-color=#7E84E6
+#color=#7E84E6
+color=#DDDDDD
 
 [i3-focusedwindow]
 label=[]= 

@@ -52,7 +52,7 @@ set $right l
 set $term alacritty
 
 # preferred lock command
-set $lockcmd i3lock-fancy
+set $lockcmd ~/.config/i3/scripts/i3lock-fancy
 
 # preferred launcher - rofi
 set $drun_menu rofi -show drun -theme "solarized_alternate"
@@ -71,7 +71,7 @@ exec --no-startup-id xrandr --output DP-1 --left-of LVDS-1 --auto
 # -----------------------------------------------------------------------------
 # Idle configuration - auto screen lock
 #
-exec_always --no-startup-id xautolock -time 10 -locker "i3lock-fancy && sleep 1"
+exec_always --no-startup-id xautolock -time 10 -locker "~/.config/i3/scripts/i3lock-fancy && sleep 1"
 #
 # This will lock your screen after 10 minutes of inactivity
 
@@ -303,7 +303,7 @@ bindsym $mod+r mode "resize"
 bar {
     position top
     #font pango: FontAwesome 10
-    font pango: Noto Sans 10
+    font pango: Noto Sans 11
     status_command i3blocks
     colors {
         separator  #268bd2
@@ -314,6 +314,7 @@ bar {
         inactive_workspace #586e75 #202020ee #586e75
         urgent_workspace   #d33682 #d33682   #fdf6e3
     }
+    tray_padding 5 
     # i3bar_command i3status --config ~/.config/i3/status.conf
     # i3bar_command i3bar --transparency
     i3bar_command i3bar 
