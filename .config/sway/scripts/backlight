@@ -1,5 +1,6 @@
 #!/bin/bash
 # changeBrightness
+monitor_icon=/usr/share/icons/breeze/devices/16/monitor.svg
 
 # Arbitrary but unique message tag
 msgTag="mybrightness"
@@ -15,7 +16,7 @@ fi
 bright=$(brightnessctl info | grep Current | sed 's|.*(\([0-9%]*\)).*|\1|g')
 
 # Show the brightness notification
-dunstify -a "changeBrightness" -u low -i audio-volume-high -h "string:x-dunst-stack-tag:$msgTag" \
+dunstify -a "changeBrightness" -u low -i $monitor_icon -h "string:x-dunst-stack-tag:$msgTag" \
     -h int:value:"$bright" "Brightness: ${bright}"
 
 # Play the volume changed sound

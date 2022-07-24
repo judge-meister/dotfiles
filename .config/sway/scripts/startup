@@ -7,5 +7,10 @@
 lxsession &
 udiskie -ant &
 # copyq &
+xrdb -load ~/.Xdefaults
 
-#exec  wl-paste -t text --watch clipman store 
+
+gsettings set org.gnome.desktop.interface gtk-theme "Dracula"
+gsettings set org.gnome.desktop.wm.preferences theme "Dracula"
+gsettings set org.gnome.desktop.interface icon-theme "Dracula"
+

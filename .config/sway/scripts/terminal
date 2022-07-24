@@ -7,18 +7,38 @@
 # xfce4-terminal
 # shellcheck disable=SC2068
 
-if [[ "$(which alacritty 2>/dev/null)" != "" ]]; then
-    alacritty -o font.size=12  $@
 
-elif [[ "$(which foot 2>/dev/null)" != "" ]]; then
-    foot -o main.font=monospace:size=8  $@
-
-elif [[ "$(which kitty 2>/dev/null)" != "" ]]; then
-    kitty -o font_size=12  $@
-
-elif [[ "$(which xterm 2>/dev/null)" != "" ]]; then
+alacritty_term()
+{
+  if [[ "$(which alacritty 2>/dev/null)" != "" ]]; then
+    alacritty  $@
+  fi
+}
+foot_term()
+{
+  if [[ "$(which foot 2>/dev/null)" != "" ]]; then
+    foot -o main.font=monospace:size=7.0  $@
+  fi
+}
+kitty_term()
+{
+  if [[ "$(which kitty 2>/dev/null)" != "" ]]; then
+    kitty -o font_size=10  $@
+  fi
+}
+xterm_term()
+{
+  if [[ "$(which xterm 2>/dev/null)" != "" ]]; then
     xterm -bg black -fg white  $@
-fi
+  fi
+}
 
 
+case "$1" in
+  alacritty) alacritty_term ;;
+  foot) foot_term ;;
+  kitty) kitty_term ;;
+  xterm) xterm_term ;;
+  *) alacritty_term ;;
+esac
 

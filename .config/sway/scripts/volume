@@ -5,6 +5,9 @@
 # -toggle  mute/unmute speaker
 # -mic     mute/unmute mic
 
+volume_high=/usr/share/icons/breeze/status/16/audio-volume-high.svg
+volume_muted=/usr/share/icons/breeze/status/16/audio-volume-muted.svg
+
 # Change the volume using pulseaudio
 case "$1" in
   -inc)
@@ -30,10 +33,10 @@ volume=$(pactl get-sink-volume @DEFAULT_SINK@ |head -1|awk '{print $5}' |sed 's|
 mute=$(pactl get-sink-mute @DEFAULT_SINK@ | awk '{print $2}' |sed 's|[^a-z]*||g')
 if [[ $volume == 0 || "$mute" == "yes" ]]; then
     # Show the sound muted notification
-    dunstify -a "changeVolume" -u low -i audio-volume-muted -h "string:x-dunst-stack-tag:$msgTag" "Volume muted" 
+    dunstify -a "changeVolume" -u low -i $volume_muted -h "string:x-dunst-stack-tag:$msgTag" "Volume muted" 
 else
     # Show the volume notification
-    dunstify -a "changeVolume" -u low -i audio-volume-high -h "string:x-dunst-stack-tag:$msgTag" \
+    dunstify -a "changeVolume" -u low -i $volume_high -h "string:x-dunst-stack-tag:$msgTag" \
     -h int:value:"$volume" "Volume: ${volume}%"
 fi
 
