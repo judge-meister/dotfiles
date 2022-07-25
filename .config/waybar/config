@@ -8,9 +8,10 @@
     "position": "top",    // Waybar at the top of your screen
     "height": 25,         // Waybar height
     // "width": 1366,     // Waybar width - (commented out means full width of screen)
-    "margin-top": 5,      // margin around waybar
-    "margin-left": 5,     // 
-    "margin-right": 5,    // 
+    "margin-top": 2,      // margin around waybar
+    "margin-left": 2,     // 
+    "margin-right": 2,    // 
+    "margin-bottom": 3,   //
     "spacing": 1,         // space between modules
 
     // Choose the order of the modules
@@ -25,6 +26,7 @@
                       "custom/disk_home", 
                       //"custom/docker", 
                       "custom/updates",
+                      "custom/weather",
                       "backlight",
                       "pulseaudio", 
                       "network", 
@@ -162,6 +164,7 @@
         "exec": "echo $(($(cat ~/.tmp/pacupts) /1000))",
         "exec-if": "[ -f $HOME/.tmp/pacupts ]",
         "on-click": "$HOME/.config/sway/scripts/terminal -e update_packages",
+        "on-click-right": "checkupdates_alert",
         "signal": 8
     },
     "custom/docker": {
@@ -187,7 +190,7 @@
         "format": "{}",
         "interval": 1,
         "tooltip": false,
-        "exec":           "$HOME/.config/sway/scripts/sway_scale.py -s",
+        "exec":           "$HOME/.config/sway/scripts/sway_scale.py -r",
         "on-click":       "$HOME/.config/sway/scripts/sway_scale.py -i",
         "on-click-right": "$HOME/.config/sway/scripts/sway_scale.py -d",
     },
@@ -196,6 +199,12 @@
         "interval": 1,
         "exec": "date +%H:%M",
         "exec-if": "[ -f /etc/debian_version ]",
+    },
+    "custom/weather": {
+        "format": "{}",
+        "interval": 3600,
+        "exec": "curl -Ss 'https://wttr.in?0&T&Q' | cut -c 16- | head -2 | xargs echo",
+
     },
     "idle_inhibitor": {
         "format": "{icon}",
