@@ -7,12 +7,13 @@
 #
 #output * resolution --custom 1366x768
 #output * mode 1600x900
-output LVDS-1 scale 0.85
+#output LVDS-1 scale 0.85
+exec_always ~/.config/sway/scripts/sway_scale.py --default
 
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 set $sway_blue /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png
-set $sexy_girl /home/judge/Pictures/sexy-model-woman-boobs-nude-gorgeous-trimmed-pussy-african-pierced-nipples-1366x768.png
-set $ivi_pizzot $HOME/Pictures/Montage/ivi_pizzot_montage_1920x1200_16668.jpg
+set $sexy_girl $HOME/lones/wallpapers/boobs/sexy-african-pierced-nipples.png
+set $ivi_pizzot $HOME/clones/wallpapers/montage/ivi_pizzot_montage_1920x1200_16668.jpg
 set $def_wall /home/judge/.config/sway/wallpaper.png
 
 #output * bg $sway_blue fill

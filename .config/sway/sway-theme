@@ -1,7 +1,8 @@
 # -----------------------------------------------
 # Sway theme
 
-font pango: SourceCodePro Medium 12
+#font pango: SourceCodePro Medium 12
+font pango: noto sans 10
 
 # float settings
 floating_minimum_size 150 x 150
@@ -9,11 +10,20 @@ floating_maximum_size 1600 x 900
 floating_modifier $mod normal
 
 # border width
-default_border pixel 1
-default_floating_border normal 1
+default_border pixel 4
+default_floating_border normal 5
 
 # gaps settings
-smart_gaps off
-gaps inner 5
+smart_gaps on
+gaps inner 10
 gaps outer 0
+
+# colours                  title    title     title               view border
+#     .class              <border> <backgrnd> <text> [<indicat> [<child_brdr>]]
+client.focused            #d65d0edd #d65d0edd #333333 #d65d0e77 #d65d0edd
+client.focused_inactive   #222222dd #222222dd #aaaaaa #d65d0e77 #222222dd
+client.unfocused          #222222dd #222222dd #aaaaaa #d65d0e77 #222222dd
+#client.focused_tab_title  #dddddd33 #dddddd33 #000000 #ddddddaa
+#client.placeholder        #dddddd33 #dddddd33 #000000 #ddddddaa
+#client.urgent             #ddaa7733 #dddddd33 #000000 #ddddddaa
 
