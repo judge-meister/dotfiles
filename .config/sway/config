@@ -1,5 +1,28 @@
 # Sway config file
 #
+# Requires: alacritty, swaylock, rofi, sway, swayidle
+# Requires: libpulse, swaynagmode, waybar
+# Requires: wl-clipboard
+#
+# -----------------------------------------------------------------------------
+# use windows / cmd / super key
+set $mod Mod4
+set $alt Mod1
+# 
+# -----------------------------------------------------------------------------
+include ~/.config/sway/sway-idle
+include ~/.config/sway/sway-input
+include ~/.config/sway/sway-output
+#include ~/.config/sway/sway-modes
+include ~/.config/sway/sway-theme
+include ~/.config/sway/sway-apps
+
+include /etc/sway/config.d/*
+
+
+# -----------------------------------------------------------------------------
+# Global Settings
+
 # Read `man 5 sway` for a complete reference.
 
 # Test other Mod keys
@@ -9,52 +32,31 @@
 #bindsym Mod4+Return exec $term -T "st Mod4 Cmd / Windows (L & R)"
 #bindsym Mod5+Return exec $term -T "st Mod5 Right Alt"
 
-# Requires: alacritty, swaylock, rofi, sway, swayidle
-# Requires: libpulse, swaynagmode, waybar
-# Requires: wl-clipboard
-
-
-# -----------------------------------------------------------------------------
-# Global Settings
-
 
 # -----------------------------------------------------------------------------
 # Variables
 
-# use windows / cmd key
-set $mod Mod4
-set $alt Mod1
-
-
-# Home row direction keys, like vim
-#set $left h
-#set $down j
-#set $up k
-#set $right l
-
 # preferred terminal emulator
-#set $term alacritty -o font.size=12.0
 set $term   ~/.config/sway/scripts/terminal
-set $term2  foot 
+set $term2  ~/.config/sway/scripts/terminal foot
 
 # preferred lock command
-#set $lockcmd $HOME/bin/fancy-swaylock
 set $lockcmd $HOME/.config/sway/scripts/lockscreen
 
 # preferred launcher - rofi
-set $rofi_themed   rofi -theme Arc-Dark
+set $rofi_themed   rofi
 set $drun_menu    $rofi_themed -show drun
 set $run_menu     $rofi_themed -show run
 set $combi_menu  "$rofi_themed -modi run,drun,calc -show drun"
+set $tofi_menu     tofi-run | xargs swaymsg exec --
 
-#-show combi -combi-modi run,drun,ssh,keys,filebrowser,calc 
+## show combi -combi-modi run,drun,ssh,keys,filebrowser,calc 
 
 # dmenu launcher commands
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
 set $dmenu dmenu_run -fn 'Roboto Sans-16' -b | xargs swaymsg exec --
 
-# -----------------------------------------------------------------------------
 # Programs - need to move some of these to ./scripts folder
 set $update_packages    update_packages
 set $kbdBrightness      kbdbrightness
@@ -65,81 +67,110 @@ set $sway_scale         ~/.config/sway/scripts/sway_scale.py
 set $screenshot         ~/.config/sway/scripts/swaygrab
 set $volume             ~/.config/sway/scripts/volume
 set $backlight          ~/.config/sway/scripts/backlight
+set $mpv_wallpaper      ~/.config/sway/scripts/mpv_wallpaper.sh
 
-# -----------------------------------------------------------------------------
-# -- Key bindings -----------------------------------------
+
+# ==============================================================================
+#= Key Bindings
+#=
 
 ## -- Start a terminal --
-bindsym $mod+Return       exec $term
-bindsym $mod+Shift+Return exec $term2
+bindsym $mod+Return            exec $term
+bindsym $mod+Shift+Return      exec $term2
 
 # help for key bindings
-bindsym $mod+Shift+slash  exec $keys_help
+bindsym $mod+Shift+slash       exec $keys_help
 
 # launcher bindings
-bindsym $mod+d            exec $drun_menu
-bindsym $mod+Shift+d      exec $run_menu
-bindsym $mod+Mod1+d       exec $combi_menu
-bindsym $mod+Control+d    exec $dmenu
+bindsym $mod+d                 exec $drun_menu
+bindsym $mod+Shift+d           exec $run_menu
+bindsym $mod+Mod1+d            exec $combi_menu
+#bindsym $mod+Control+d         exec $dmenu
+bindsym $mod+Control+d         exec $tofi_menu
 
-bindsym Ctrl+l            exec $lockcmd
+bindsym Ctrl+l                 exec $lockcmd
 
-bindsym $mod+u            exec $term -e $update_packages
-
-# Media keys:
+bindsym $mod+u                 exec $term -e $update_packages
+#=
+#= Media keys:
 
 # audio controls
-bindsym XF86AudioMute        exec $volume -toggle
-bindsym XF86AudioMicMute     exec $volume -mic
-bindsym XF86AudioLowerVolume exec $volume -dec
-bindsym XF86AudioRaiseVolume exec $volume -inc
+bindsym XF86AudioMute          exec $volume -toggle
+bindsym XF86AudioMicMute       exec $volume -mic
+bindsym XF86AudioLowerVolume   exec $volume -dec
+bindsym XF86AudioRaiseVolume   exec $volume -inc
 
 # screen brightness controls
-bindsym XF86MonBrightnessUp   exec $backlight -inc
-bindsym XF86MonBrightnessDown exec $backlight -dec
+bindsym XF86MonBrightnessUp    exec $backlight -inc
+bindsym XF86MonBrightnessDown  exec $backlight -dec
 
 # keyboard brightness controls
-bindsym XF86KbdBrightnessUp   exec $kbdBrightness -inc
-bindsym XF86KbdBrightnessDown exec $kbdBrightness -dec
+bindsym XF86KbdBrightnessUp    exec $kbdBrightness -inc
+bindsym XF86KbdBrightnessDown  exec $kbdBrightness -dec
 
 
 ## -- Controls --
 
 # Kill focused window
-bindsym $mod+Shift+q kill
+bindsym $mod+Shift+q           kill
 
 # Reload the configuration file
-bindsym $mod+Shift+c reload
+bindsym $mod+Shift+c           reload
 
 # move to monitor
-bindsym $mod+Control+Left  move workspace to output left
-bindsym $mod+Control+Right move workspace to output right
+bindsym $mod+Control+Left      move workspace to output left
+bindsym $mod+Control+Right     move workspace to output right
 
+#=
 # Move your focus around - use $mod+[up|down|left|right]
-bindsym $mod+Left  focus left
-bindsym $mod+Down  focus down
-bindsym $mod+Up    focus up
-bindsym $mod+Right focus right
-
+#= Move focus
+bindsym $mod+Left              focus left
+bindsym $mod+Down              focus down
+bindsym $mod+Up                focus up
+bindsym $mod+Right             focus right
+#=
 # Move the focused window with the same, but add Shift
-bindsym $mod+Shift+Left  move left
-bindsym $mod+Shift+Down  move down
-bindsym $mod+Shift+Up    move up
-bindsym $mod+Shift+Right move right
+#= Move Window
+bindsym $mod+Shift+Left        move left
+bindsym $mod+Shift+Down        move down
+bindsym $mod+Shift+Up          move up
+bindsym $mod+Shift+Right       move right
+#=
+#= Switch workspace
+#bindsym $mod+1 workspace number 1
+#bindsym $mod+2 workspace number 2
+#bindsym $mod+3 workspace number 3
+#bindsym $mod+4 workspace number 4
+#bindsym $mod+5 workspace number 5
+#bindsym $mod+6 workspace number 6
+#bindsym $mod+7 workspace number 7
+#bindsym $mod+8 workspace number 8
+#bindsym $mod+9 workspace number 9
+#bindsym $mod+0 workspace number 10
+##
+bindsym --no-repeat $mod+1 workspace number 1; exec "echo 1 > /tmp/sovpipe"
+bindsym --no-repeat $mod+2 workspace number 2; exec "echo 1 > /tmp/sovpipe"
+bindsym --no-repeat $mod+3 workspace number 3; exec "echo 1 > /tmp/sovpipe"
+bindsym --no-repeat $mod+4 workspace number 4; exec "echo 1 > /tmp/sovpipe"
+bindsym --no-repeat $mod+5 workspace number 5; exec "echo 1 > /tmp/sovpipe"
+bindsym --no-repeat $mod+6 workspace number 6; exec "echo 1 > /tmp/sovpipe"
+bindsym --no-repeat $mod+7 workspace number 7; exec "echo 1 > /tmp/sovpipe"
+bindsym --no-repeat $mod+8 workspace number 8; exec "echo 1 > /tmp/sovpipe"
+bindsym --no-repeat $mod+9 workspace number 9; exec "echo 1 > /tmp/sovpipe"
+bindsym --no-repeat $mod+0 workspace number 10; exec "echo 1 > /tmp/sovpipe"
 
-# Switch to workspace
-bindsym $mod+1 workspace number 1
-bindsym $mod+2 workspace number 2
-bindsym $mod+3 workspace number 3
-bindsym $mod+4 workspace number 4
-bindsym $mod+5 workspace number 5
-bindsym $mod+6 workspace number 6
-bindsym $mod+7 workspace number 7
-bindsym $mod+8 workspace number 8
-bindsym $mod+9 workspace number 9
-bindsym $mod+0 workspace number 10
-
-# Move focused container to workspace
+bindsym --release $mod+1 exec "echo 0 > /tmp/sovpipe"
+bindsym --release $mod+2 exec "echo 0 > /tmp/sovpipe"
+bindsym --release $mod+3 exec "echo 0 > /tmp/sovpipe"
+bindsym --release $mod+4 exec "echo 0 > /tmp/sovpipe"
+bindsym --release $mod+5 exec "echo 0 > /tmp/sovpipe"
+bindsym --release $mod+6 exec "echo 0 > /tmp/sovpipe"
+bindsym --release $mod+7 exec "echo 0 > /tmp/sovpipe"
+bindsym --release $mod+8 exec "echo 0 > /tmp/sovpipe"
+bindsym --release $mod+9 exec "echo 0 > /tmp/sovpipe"
+bindsym --release $mod+0 exec "echo 0 > /tmp/sovpipe"
+#=
+#= Move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace number 1
 bindsym $mod+Shift+2 move container to workspace number 2
 bindsym $mod+Shift+3 move container to workspace number 3
@@ -151,7 +182,8 @@ bindsym $mod+Shift+8 move container to workspace number 8
 bindsym $mod+Shift+9 move container to workspace number 9
 bindsym $mod+Shift+0 move container to workspace number 10
 
-## -- Layout stuff --
+#=
+#= Layout stuff
 
 ## -- change split orientation
 bindsym $mod+h split h
@@ -174,10 +206,13 @@ bindsym $mod+space focus mode_toggle
 # focus the parent container
 bindsym $mod+a focus parent
 
+bindsym $mod+t border toggle
+
+
 # focus the child container
 #bindsym $mod+d focus child
 
-## -- Scratchpad --
+## -- Scratchpad -- not used at present
 
 # "scratchpad", which is a bag of holding for windows.
 # You can send windows there and get them back later.
@@ -189,28 +224,26 @@ bindsym $mod+a focus parent
 # If there are multiple scratchpad windows, this command cycles through them.
 #bindsym $mod+minus scratchpad show
 
-#= Resizing containers:
 
-
-
-## -- Screen Resolution --  $mod -    $mod =
+#=
+#= Display Scaling
 bindsym $mod+minus            exec $sway_scale -i
 bindsym $mod+equal            exec $sway_scale -d
-
-## -- Random Wallpaper --
+#=
+#= Random Wallpaper
 bindsym $mod+b                exec $random_wallpaper
-bindsym $mod+Shift+b          exec $random_wallpaper $HOME/Pictures/WP/Montage/ivi_pizzot_montage_1920x1200_16668.jpg
-bindsym $mod+Control+b        exec $random_wallpaper $HOME/.config/sway/wallpaper.png
+bindsym $mod+Shift+b          exec $random_wallpaper $HOME/.config/sway/wallpapers/wallpaper_360254.png
+bindsym $mod+Control+b        exec $random_wallpaper $HOME/.config/sway/wallpapers/wallpaper_000001.png
 bindsym $mod+Mod1+b           exec $random_wallpaper $HOME/clones/wallpapers/montage
-
-## -- Toggle Alacritty Opacity --
+#=
+#= Alacritty Opacity
 bindsym $mod+Control+minus    exec $alacritty_opacity -d
 bindsym $mod+Control+equal    exec $alacritty_opacity -i
 
 
 # -----------------------------------------------------------------------------
-
-## -- Screenshots --
+#=
+#= Screenshots 
 
 # Screenshot fullscreen, sway
 bindsym Print                 exec $screenshot        ${HOME}/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').png"
@@ -252,22 +285,11 @@ set {
 }
 mode "nag" {
     bindsym {
-	    Ctrl+d    mode "default"
-
-	    Ctrl+c    $nag_exit
-	    q         $nag_exit
 	    Escape    $nag_exit
-
 	    Return    $nag_confirm
-
-	    Tab       $nag_select prev
-	    Shift+Tab $nag_select next
 
 	    Left      $nag_select next
 	    Right     $nag_select prev
-
-	    Up        $nag_select next
-	    Down      $nag_select prev
     }
 }
 
@@ -287,60 +309,6 @@ bar {
     swaybar_command waybar
 }
 
-# -----------------------------------------------------------------------------
-# Discrete app settings
-
-# tigervnc, Brave - open on new workspace
-assign [class="TigerVNC Viewer"] → 6
-assign [class="Vncviewer"] → 6
-assign [class="Brave-browser"] → 10
-assign [app_id="org.qutebrowser.qutebrowser"] → 9
-assign [app_id="firefoxdeveloperedition"] → 10
-#assign [app_id="Firefox Developer Edition"] → 10
-
-# spotify, brave: no border
-for_window [app_id="^Spotify$"] border none
-for_window [app_id="^Spotify Premium$"] border none
-for_window [app_id="Brave-browser"] border none
-for_window [app_id="firefoxdeveloperedition"] border none
-for_window [app_id="org.qutebrowser.qutebrowser"] border none
-#for_window [app_id="Firefox Developer Edition"] border none
-
-# no title: st terminal
-for_window [app_id="st-256color"] border pixel 1
-for_window [app_id="Alacritty"] border pixel 1
-
-# skype, steam, wine, Gimp etc. : float
-for_window [class="Code"] floating enable
-for_window [app_id="copyq"] floating enable
-for_window [class="feh"] floating enable
-for_window [class="Fontviewer"] floating enable
-for_window [app_id="nmtui"] floating enable
-for_window [class="Gimp"] floating enable
-for_window [class="Gimp-2.10"] floating enable
-for_window [app_id="imv"] floating enable
-#for_window [class="jigsawgirls.exe"] floating enable
-for_window [app_id="mpv"] floating enable
-for_window [class="NEdit"] border normal 1
-for_window [class="NEdit" instance="FileSelect_popup"] floating enable, border pixel 1
-for_window [class="NEdit" instance="help"] floating enable
-for_window [class="NEdit" instance="Information"] floating enable, border pixel 1
-for_window [class="NEdit" instance="Warning"] floating enable, border pixel 1
-for_window [class="NEdit" instance="Question"] floating enable, border pixel 1
-for_window [class="NEdit" instance="Prompt_popup"] floating enable, border pixel 1
-for_window [class="NEdit" instance="findDialog_popup"] floating enable, border pixel 1
-for_window [app_id="nm-connection-editor"] floating enable
-for_window [app_id="Qemu-system-i386"] floating enable
-for_window [app_id="qemu-system-x86_64"] floating enable
-for_window [class="Toplevel"] floating enable
-
-for_window [app_id="virt-manager"] floating enable
-for_window [app_id="virt-viewer"] floating enable
-#for_window [class="vlc"] floating enable
-#for_window [class="zoom"] floating enable
-for_window [app_id="yad"] floating enable
-
-
 
 
 # -----------------------------------------------------------------------------
@@ -350,15 +318,139 @@ exec --no-startup-id ~/.config/sway/scripts/startup
 
 exec  wl-paste -t text --watch clipman store 
 
+exec_always rm -f /tmp/sovpipe && mkfifo /tmp/sovpipe && tail -f /tmp/sovpipe | sov
+
 #exec stacki3 45
 
 #exec_always $HOME/bin/random_swaybg.py $HOME/.config/sway/wallpaper.png fill
 
-include ~/.config/sway/sway-idle
-include ~/.config/sway/sway-input
-include ~/.config/sway/sway-output
-include ~/.config/sway/sway-modes
-include ~/.config/sway/sway-theme
+# -----------------------------------------------
+#=
+#= Sway Modes
 
-include /etc/sway/config.d/*
+## -- resize containers --
+#=
+bindsym $mod+r mode "Resize"
+mode "Resize" {
+    bindsym Left  resize shrink width  5 px or 5 ppt
+    bindsym Down  resize grow   height 5 px or 5 ppt
+    bindsym Up    resize shrink height 5 px or 5 ppt
+    bindsym Right resize grow   width  5 px or 5 ppt
+    bindsym Escape mode "default"
+}
+
+## -- move floating container --
+#=
+bindsym $mod+m mode "move"
+mode "move" {
+    bindsym Up    move up
+    bindsym Down  move down
+    bindsym Left  move left
+    bindsym Right move right
+    bindsym Escape mode "default"
+}
+
+## -- adjust gaps (inner/outer) --
+#=
+set $mode_gaps Gaps: (o)uter (i)nner
+set $mode_outer_gaps Outer Gaps: ^|v|0 (local), Shift + ^|v|0 (global)
+set $mode_inner_gaps Inner Gaps: ^|v|0 (local), Shift + ^|v|0 (global)
+mode "$mode_outer_gaps" {
+    bindsym Up          gaps outer current plus 5
+    bindsym Down        gaps outer current minus 5
+    bindsym Shift+Up    gaps outer all plus 5
+    bindsym Shift+Down  gaps outer all minus 5
+    bindsym 0           gaps outer current set 5
+    bindsym Shift+0     gaps outer all set 5
+    bindsym Escape mode "$mode_gaps"
+}
+#=
+mode "$mode_inner_gaps" {
+    bindsym Up          gaps inner current plus 5
+    bindsym Down        gaps inner current minus 5
+    bindsym Shift+Up    gaps inner all plus 5
+    bindsym Shift+Down  gaps inner all minus 5
+    bindsym 0           gaps inner current set 5
+    bindsym Shift+0     gaps inner all set 5
+    bindsym Escape mode "$mode_gaps"
+}
+#=
+bindsym $mod+g mode "$mode_gaps"
+mode "$mode_gaps" {
+    # Gaps: (o)uter (i)nner - can we have a mode within a mode
+    # Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+    bindsym o mode "$mode_outer_gaps"
+    bindsym i mode "$mode_inner_gaps"
+    bindsym Escape mode "default"
+}
+
+## -- Opacity of a container --
+set $opacity 1
+for_window {
+    [class=".*"] opacity $opacity
+    [app_id=".*"] opacity $opacity
+}
+
+#=
+bindsym $mod+o       mode "opacity"
+bindsym $mod+slash   opacity plus 0.02
+bindsym $mod+period  opacity minus 0.02
+mode "opacity" {
+     bindsym  1 opacity 0.55
+     bindsym  2 opacity 0.65
+     bindsym  3 opacity 0.70
+     bindsym  4 opacity 0.75
+     bindsym  5 opacity 0.80
+     bindsym  6 opacity 0.85
+     bindsym  7 opacity 0.90
+     bindsym  8 opacity 0.95
+     bindsym  9 opacity 0.98
+     bindsym  0 opacity 1
+        
+     bindsym  Escape mode "default"
+     bindsym  $mod+o mode "default"
+}
+
+## -- Opacity of alacritty background --
+#=
+set $mode_alacritty_opacity alacritty opacity
+bindsym $mod+$alt+a mode "$mode_alacritty_opacity"
+mode "$mode_alacritty_opacity" {
+    bindsym Up   exec toggle_alacritty_opacity.sh -i
+    bindsym Down exec toggle_alacritty_opacity.sh -d
+    bindsym Escape mode "default"
+}
+
+#=
+set $mode_mpv_wallpaper mpv wallpaper
+bindsym $mod+$alt+w mode "$mode_mpv_wallpaper"
+mode "$mode_mpv_wallpaper" {
+# controls
+    bindsym s exec $mpv_wallpaper 
+    bindsym q exec $mpv_wallpaper quit
+    bindsym p exec $mpv_wallpaper pause
+    bindsym m exec $mpv_wallpaper mute
+    bindsym i exec $mpv_wallpaper info
+    bindsym o exec $mpv_wallpaper osd
+# skip forward 5s or 1min (left, right, up, down)
+    bindsym Left   exec $mpv_wallpaper back5
+    bindsym Right  exec $mpv_wallpaper fore5
+    bindsym Up     exec $mpv_wallpaper fore60
+    bindsym Down   exec $mpv_wallpaper back60
+# speed up slow down ( ] [ )
+    bindsym bracketLeft  exec $mpv_wallpaper slowdown
+    bindsym bracketRight exec $mpv_wallpaper speedup
+
+    bindsym Escape mode "default"
+}
+
+#=
+seat * shortcuts_inhibitor disable
+# mode: hotkeygrab
+set $mode_hotkeygrab Hotkey grab: mod+Shift+z to exit
+bindsym $mod+Shift+z mode "$mode_hotkeygrab"
+mode "$mode_hotkeygrab" {
+    # back to normal: mod+Shift+z
+    bindsym $mod+Shift+z mode "default"
+}
 
