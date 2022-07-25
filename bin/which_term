@@ -1,0 +1,3 @@
+#!/bin/bash
+pstree -s  $(echo $$) | sed 's/bash.*//g;s/systemd//g;s/terminal//g;s/-//g' | head -1
+
