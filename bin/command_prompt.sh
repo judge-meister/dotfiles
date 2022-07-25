@@ -116,6 +116,7 @@ PS1+="\n"
 PS1+="$__comm_num__"
 PS1+="$__end"
 
+WHICH_TERM=$(which_term)
 #PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD}\007"'
-PROMPT_COMMAND='echo -ne "\033]0;${TERM}: ${PWD}\007"'
+PROMPT_COMMAND='echo -ne "\033]0;${WHICH_TERM}: ${PWD}\007"'
 
