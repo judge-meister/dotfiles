@@ -1,0 +1,52 @@
+!
+! Some example Xresource optoins for nedit
+!
+
+! Nedit resources
+!nc.autoStart: True
+!nedit.remapDeleteKey: False
+!!nedit.printCommand: nenscript -G -2 -r
+!!nedit.printQueueOption: -P
+!!nedit.printNameOption: -b
+!!nedit.printDefaultQueue: CM6040
+
+!nedit*text.heavyCursor: True
+
+nedit*text.highlightForeground: black
+!nedit*text.highlightBackground: grey80
+nedit*text.highlightBackground: #282a36
+!!nedit*background: #00C178
+!nedit*background: grey20
+nedit*background: #282a36
+nedit*foreground: grey90
+nedit*text.background:  grey18
+!!nedit*text.background:  wheat
+nedit*text.cursorForeground:    white
+!!nedit*text.cursorForeground:    black
+nedit*text.foreground:  white
+!!nedit*text.foreground:  black
+!!nedit*statsForm*background: #00C178
+!nedit*statsForm*background: grey90
+nedit*statsForm*background:#282a36
+nedit*statsForm*foreground: grey20
+
+!nedit.findReplaceUsesSelection: False
+!nedit.visualID: default
+
+
+! Clear some Nedit Keybindings
+! Ctrl+Y
+!nedit*fileMenu.openSelected.accelerator:
+!nedit*fileMenu.openSelected.acceleratorText:
+! Ctrl+W
+!nedit*fileMenu.close.accelerator:
+!nedit*fileMenu.close.acceleratorText: 
+
+Sxiv*background: grey15
+Sxiv*foreground: grey50
+Nsxiv*window.background: #282a36
+Nsxiv*window.foreground: #d65d0e
+Nsxiv*mark.foreground: grey90
+Nsxiv*bar.foreground: grey75
+Nsxiv*bar.background: grey15
+
