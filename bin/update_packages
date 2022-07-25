@@ -6,7 +6,7 @@ HEADER_KERNEL_VER=$(cat /usr/src/linux/version)
 KERNEL_CHANGED="false"
 
 sudo pacman --sync --needed archlinux-keyring
-sudo pacman -Su
+#sudo pacman -Su
 yay -Syu
 
 if [ "$(uname -r)" != "$UNAME_KERNEL_VER" ]
@@ -32,7 +32,7 @@ then
   read -r ANS
   if [ "$ANS" != "n" ] && [ "$ANS" != "N" ]
   then
-    reboot
+    sudo systemctl reboot
   fi
 
 else
@@ -41,7 +41,7 @@ else
   read -r ANS
   if [ "$ANS" == "Y" ] || [ "$ANS" == "y" ]
   then
-    reboot
+    sudo systemctl reboot
   fi
 
   pkill -SIGRTMIN+8 waybar
