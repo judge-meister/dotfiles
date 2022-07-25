@@ -35,10 +35,10 @@ xterm_term()
 
 
 case "$1" in
-  alacritty) alacritty_term ;;
-  foot) foot_term ;;
-  kitty) kitty_term ;;
-  xterm) xterm_term ;;
-  *) alacritty_term ;;
+  alacritty) alacritty_term $@ ;;
+  foot) shift; foot_term $@ ;;
+  kitty) shift; kitty_term $@ ;;
+  xterm) shift; xterm_term $@ ;;
+  *) alacritty_term $@ ;;
 esac
 
