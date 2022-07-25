@@ -10,7 +10,8 @@ env:
   # each instance of Alacritty. If it is not present, alacritty will
   # check the local terminfo database and use `alacritty` if it is
   # available, otherwise `xterm-256color` is used.
-  TERM: xterm-256color
+  #TERM: xterm-256color
+  TERM: alacritty
 
 window:
   # Window dimensions (changes require restart)
@@ -83,7 +84,7 @@ window:
   # Window opacity as a floating point number from `0.0` to `1.0`.
   # The value `0.0` is completely transparent and `1.0` is opaque.
   #background_opacity: 0.85
-  opacity: 0.85
+  opacity: 0.40
 
 
 scrolling:
@@ -261,8 +262,8 @@ schemes:
   ### Dracula ###
   dracula: &dracula
     primary:
-      #background: '#282a36'
-      background: '#222222' # a dark gray looks better with opacity of 0.9
+      background: '#282a36'
+      #background: '#222222' # a dark gray looks better with opacity of 0.9
       foreground: '#f8f8f2'
     cursor:
       text: CellBackground
@@ -543,8 +544,8 @@ schemes:
 ## SET THEME: Choose ONE color scheme from those in the above list. ##
 ## ###################################################################
 # Available themes are:
-colors: *doom-one
-#colors: *dracula
+#colors: *doom-one
+colors: *dracula
 #colors: *gruvbox-dark
 #colors: *monokai-pro
 #colors: *nord
