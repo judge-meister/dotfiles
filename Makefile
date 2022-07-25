@@ -74,12 +74,15 @@ cleanPictures: ##
 
 .PHONY: etc
 etc: cleanetc ## install etc files
-	for file in $(shell find etc -type f | grep -v monitor); do \
+	for file in $(shell find etc -type f | grep -v -E 'monitor|apple'); do \
 		sudo mkdir -p /$$(dirname $$file); \
 		sudo ln -snfv $(CURDIR)/$$file /$$(dirname $$file)/; \
 	done;
 ifeq ($(MANU), QEMU)
 	sudo ln -snfv $(CURDIR)/etc/X11/xorg.conf.d/20-monitor.conf /etc/X11/xorg.conf.d/
+endif
+ifeq ($(MANU), Apple Inc.)
+	sudo ln -snfv $(CURDIR)/etc/modprobe.d/hid_apple.conf /etc/modprobe.d/
 endif
 
 .PHONY: cleanetc
