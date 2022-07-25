@@ -26,9 +26,9 @@ autocmd BufWritePre *.py :%s/\s\+$//e
 " not suitable - blue, darkblue
 " transparent - default
 " not black - desert, evening, slate
-colorscheme slate
 " black bg - elflord, industry, koehler, murphy, pablo, ron, torte
 "colorscheme industry - black
+colorscheme dracula
 
 set bg=dark
 ":hi Normal guibg=NONE ctermbg=NONE
