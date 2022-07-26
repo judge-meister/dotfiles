@@ -7,7 +7,7 @@ OUTPUT=LVDS-1
 
 case $1 in
   start) shift;;
-  quit) random_swaybg.py $HOME/.config/sway/wallpaper.png; 
+  quit) random_swaybg.py "$HOME"/.config/sway/wallpaper.png; 
         pkill mpvpaper;
         swaymsg mode default;
         exit;;
@@ -25,11 +25,12 @@ esac
 
 if [ $# -gt 0 ]
 then
+  # shellcheck disable=SC2124
   PLAYLIST="$@"
 fi
 
-echo $(pgrep swaybg)|xargs kill
-echo $(pgrep mpvpaper)|xargs kill
+pgrep swaybg|xargs kill
+pgrep mpvpaper|xargs kill
 
 mpvpaper -p -o "--loop-playlist shuffle input-ipc-server=/tmp/mpv-socket-$OUTPUT" $OUTPUT "$PLAYLIST"
 

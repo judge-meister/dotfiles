@@ -33,7 +33,7 @@ dimmer()
 
 set_wallpaper()
 {
-  cd ~/.config/sway/
+  cd ~/.config/sway/ || exit 1
   ln -sf "$result" wallpaper.png
   pid=$(pgrep swaybg)
   swaybg -m fill -i "wallpaper.png" 2>/dev/null &
@@ -57,7 +57,7 @@ choose_wallpaper()
   CLONES=$HOME/clones/wallpapers/
   DIMMED=$HOME/.config/sway/wallpapers/
 
-  CHOSEN=$(nsxiv -t -r -o $DIMMED -o $CLONES | head -1)
+  CHOSEN=$(nsxiv -t -r -o "$DIMMED" -o "$CLONES" | head -1)
 
   echo "[$CHOSEN]"
   if [ -n "$CHOSEN" ]

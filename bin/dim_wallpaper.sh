@@ -34,7 +34,7 @@ set_wallpaper()
   #rm -f $shade
   if [ $wallpaper -eq 1 ]
   then
-    cd ~/.config/sway/
+    cd ~/.config/sway/ || exit 1
     ln -sf "$result" wallpaper.png
     pid=$(pgrep swaybg)
     swaybg -m fill -i "wallpaper.png" 2>/dev/null &
