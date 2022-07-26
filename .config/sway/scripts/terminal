@@ -11,7 +11,7 @@
 alacritty_term()
 {
   if [[ "$(which alacritty 2>/dev/null)" != "" ]]; then
-    alacritty  $@
+    alacritty -o font.size=10.0 $@
   fi
 }
 foot_term()
@@ -35,7 +35,7 @@ xterm_term()
 
 
 case "$1" in
-  alacritty) alacritty_term $@ ;;
+  alacritty) shift; alacritty_term $@ ;;
   foot) shift; foot_term $@ ;;
   kitty) shift; kitty_term $@ ;;
   xterm) shift; xterm_term $@ ;;
