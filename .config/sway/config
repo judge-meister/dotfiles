@@ -62,18 +62,19 @@ set $update_packages    update_packages
 set $kbdBrightness      kbdbrightness
 set $random_wallpaper   ~/bin/random_swaybg.py
 set $alacritty_opacity  ~/bin/toggle_alacritty_opacity.sh
-set $keys_help          ~/.local/bin/keys.sh sway
+set $keys_help          ~/.config/sway/scripts/sway_keys.py
 set $sway_scale         ~/.config/sway/scripts/sway_scale.py
-set $screenshot         ~/.config/sway/scripts/swaygrab
+#set $screenshot         ~/.config/sway/scripts/swaygrab
 set $volume             ~/.config/sway/scripts/volume
 set $backlight          ~/.config/sway/scripts/backlight
 set $mpv_wallpaper      ~/.config/sway/scripts/mpv_wallpaper.sh
 
 
 # ==============================================================================
-#= Key Bindings
-#=
+# Sway Key Bindings
+#
 
+#= Basics
 ## -- Start a terminal --
 bindsym $mod+Return            exec $term
 bindsym $mod+Shift+Return      exec $term2
@@ -85,30 +86,12 @@ bindsym $mod+Shift+slash       exec $keys_help
 bindsym $mod+d                 exec $drun_menu
 bindsym $mod+Shift+d           exec $run_menu
 bindsym $mod+Mod1+d            exec $combi_menu
-#bindsym $mod+Control+d         exec $dmenu
-bindsym $mod+Control+d         exec $tofi_menu
+#bindsym $mod+Ctrl+d            exec $dmenu
+bindsym $mod+Ctrl+d            exec $tofi_menu
 
 bindsym Ctrl+l                 exec $lockcmd
 
 bindsym $mod+u                 exec $term -e $update_packages
-#=
-#= Media keys:
-
-# audio controls
-bindsym XF86AudioMute          exec $volume -toggle
-bindsym XF86AudioMicMute       exec $volume -mic
-bindsym XF86AudioLowerVolume   exec $volume -dec
-bindsym XF86AudioRaiseVolume   exec $volume -inc
-
-# screen brightness controls
-bindsym XF86MonBrightnessUp    exec $backlight -inc
-bindsym XF86MonBrightnessDown  exec $backlight -dec
-
-# keyboard brightness controls
-bindsym XF86KbdBrightnessUp    exec $kbdBrightness -inc
-bindsym XF86KbdBrightnessDown  exec $kbdBrightness -dec
-
-
 ## -- Controls --
 
 # Kill focused window
@@ -118,12 +101,12 @@ bindsym $mod+Shift+q           kill
 bindsym $mod+Shift+c           reload
 
 # move to monitor
-bindsym $mod+Control+Left      move workspace to output left
-bindsym $mod+Control+Right     move workspace to output right
+bindsym $mod+Ctrl+Left         move workspace to output left
+bindsym $mod+Ctrl+Right        move workspace to output right
 
 #=
 # Move your focus around - use $mod+[up|down|left|right]
-#= Move focus
+#= Move Focus
 bindsym $mod+Left              focus left
 bindsym $mod+Down              focus down
 bindsym $mod+Up                focus up
@@ -136,7 +119,7 @@ bindsym $mod+Shift+Down        move down
 bindsym $mod+Shift+Up          move up
 bindsym $mod+Shift+Right       move right
 #=
-#= Switch workspace
+#= Switch Workspace
 #bindsym $mod+1 workspace number 1
 #bindsym $mod+2 workspace number 2
 #bindsym $mod+3 workspace number 3
@@ -169,8 +152,8 @@ bindsym --release $mod+7 exec "echo 0 > /tmp/sovpipe"
 bindsym --release $mod+8 exec "echo 0 > /tmp/sovpipe"
 bindsym --release $mod+9 exec "echo 0 > /tmp/sovpipe"
 bindsym --release $mod+0 exec "echo 0 > /tmp/sovpipe"
-#=
-#= Move focused container to workspace
+
+#= Move Focused Container to Workspace
 bindsym $mod+Shift+1 move container to workspace number 1
 bindsym $mod+Shift+2 move container to workspace number 2
 bindsym $mod+Shift+3 move container to workspace number 3
@@ -186,27 +169,46 @@ bindsym $mod+Shift+0 move container to workspace number 10
 #= Layout stuff
 
 ## -- change split orientation
-bindsym $mod+h split h
-bindsym $mod+v split v
+bindsym $mod+h           split h
+bindsym $mod+v           split v
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
+bindsym $mod+s           layout stacking
+bindsym $mod+w           layout tabbed
+bindsym $mod+e           layout toggle split
 
 # enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen
+bindsym $mod+f           fullscreen
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
 
 # change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
+bindsym $mod+space       focus mode_toggle
 
 # focus the parent container
-bindsym $mod+a focus parent
+bindsym $mod+a           focus parent
 
-bindsym $mod+t border toggle
+bindsym $mod+t           border toggle
+
+#=
+#= Media Keys
+
+# audio controls
+bindsym XF86AudioMute          exec $volume -toggle
+bindsym XF86AudioMicMute       exec $volume -mic
+bindsym XF86AudioLowerVolume   exec $volume -dec
+bindsym XF86AudioRaiseVolume   exec $volume -inc
+
+# screen brightness controls
+bindsym XF86MonBrightnessUp    exec $backlight -inc
+bindsym XF86MonBrightnessDown  exec $backlight -dec
+
+# keyboard brightness controls
+bindsym XF86KbdBrightnessUp    exec $kbdBrightness -inc
+bindsym XF86KbdBrightnessDown  exec $kbdBrightness -dec
+
+
 
 
 # focus the child container
@@ -233,26 +235,29 @@ bindsym $mod+equal            exec $sway_scale -d
 #= Random Wallpaper
 bindsym $mod+b                exec $random_wallpaper
 bindsym $mod+Shift+b          exec $random_wallpaper $HOME/.config/sway/wallpapers/wallpaper_360254.png
-bindsym $mod+Control+b        exec $random_wallpaper $HOME/.config/sway/wallpapers/wallpaper_000001.png
+bindsym $mod+Ctrl+b           exec $random_wallpaper $HOME/.config/sway/wallpapers/wallpaper_000001.png
 bindsym $mod+Mod1+b           exec $random_wallpaper $HOME/clones/wallpapers/montage
 #=
 #= Alacritty Opacity
-bindsym $mod+Control+minus    exec $alacritty_opacity -d
-bindsym $mod+Control+equal    exec $alacritty_opacity -i
+bindsym $mod+Ctrl+minus       exec $alacritty_opacity -d
+bindsym $mod+Ctrl+equal       exec $alacritty_opacity -i
 
 
 # -----------------------------------------------------------------------------
 #=
 #= Screenshots 
+set $screenshot              ~/.config/sway/scripts/swaygrab        ${HOME}/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').png"
+set $screenshot_region       ~/.config/sway/scripts/swaygrab region ${HOME}/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').png"
+set $screenshot_active       ~/.config/sway/scripts/swaygrab active ${HOME}/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').png"
 
 # Screenshot fullscreen, sway
-bindsym Print                 exec $screenshot        ${HOME}/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').png"
+bindsym Print                 exec $screenshot 
 
 # Screenshot capture, sway
-bindsym $mod+Print            exec $screenshot region ${HOME}/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').webm"
+bindsym $mod+Print            exec $screenshot_region
 
 # Screenshot current focused window, sway
-bindsym Shift+Print           exec $screenshot active ${HOME}/Pictures/Screenshots/$(date '+%Y-%m-%d-%H-%M-%S').png"
+bindsym Shift+Print           exec $screenshot_active 
 
 #-
 #-Keys used and available
@@ -265,7 +270,7 @@ bindsym Shift+Print           exec $screenshot active ${HOME}/Pictures/Screensho
 #-   [space],[left],[up],[down],[right]     [space],[left],[up],[down],[right]
 #-
 #- 
-#-   [Mod] CONTROL                          CTRL (no Mod)
+#-   [Mod] CTRL                          CTRL (no Mod)
 #-    , , , , , , , , , , ,-,=               , , , , , , , , , , ,_,+
 #-                                           , , , , , , , ,l
 #-   [left],[right]                         
@@ -276,7 +281,7 @@ bindsym Shift+Print           exec $screenshot active ${HOME}/Pictures/Screensho
 ###----------------------------------------------------------------------------
 ### nag settings
 
-# nag
+#> nag start
 set {
 	$nag         exec swaynagmode
 	$nag_exit    $nag --exit
@@ -299,6 +304,7 @@ bindsym {
 # -R is recommended for swaynag_command so that, upon a syntax error in your sway config, the
 # 'Reload Sway' option will be initially selected instead of the 'Exit Sway' option
 swaynag_command $nag -R
+#> nag end
 
 # -----------------------------------------------------------------------------
 # Status Bar:
@@ -332,22 +338,22 @@ exec_always rm -f /tmp/sovpipe && mkfifo /tmp/sovpipe && tail -f /tmp/sovpipe | 
 #=
 bindsym $mod+r mode "Resize"
 mode "Resize" {
-    bindsym Left  resize shrink width  5 px or 5 ppt
-    bindsym Down  resize grow   height 5 px or 5 ppt
-    bindsym Up    resize shrink height 5 px or 5 ppt
-    bindsym Right resize grow   width  5 px or 5 ppt
-    bindsym Escape mode "default"
+    bindsym Left    resize shrink width  5 px or 5 ppt
+    bindsym Down    resize grow   height 5 px or 5 ppt
+    bindsym Up      resize shrink height 5 px or 5 ppt
+    bindsym Right   resize grow   width  5 px or 5 ppt
+    bindsym Escape  mode "default"
 }
 
 ## -- move floating container --
 #=
 bindsym $mod+m mode "move"
 mode "move" {
-    bindsym Up    move up
-    bindsym Down  move down
-    bindsym Left  move left
-    bindsym Right move right
-    bindsym Escape mode "default"
+    bindsym Up      move up
+    bindsym Down    move down
+    bindsym Left    move left
+    bindsym Right   move right
+    bindsym Escape  mode "default"
 }
 
 ## -- adjust gaps (inner/outer) --
@@ -362,7 +368,7 @@ mode "$mode_outer_gaps" {
     bindsym Shift+Down  gaps outer all minus 5
     bindsym 0           gaps outer current set 5
     bindsym Shift+0     gaps outer all set 5
-    bindsym Escape mode "$mode_gaps"
+    bindsym Escape      mode "$mode_gaps"
 }
 #=
 mode "$mode_inner_gaps" {
@@ -372,29 +378,30 @@ mode "$mode_inner_gaps" {
     bindsym Shift+Down  gaps inner all minus 5
     bindsym 0           gaps inner current set 5
     bindsym Shift+0     gaps inner all set 5
-    bindsym Escape mode "$mode_gaps"
+    bindsym Escape      mode "$mode_gaps"
 }
 #=
 bindsym $mod+g mode "$mode_gaps"
 mode "$mode_gaps" {
     # Gaps: (o)uter (i)nner - can we have a mode within a mode
     # Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
-    bindsym o mode "$mode_outer_gaps"
-    bindsym i mode "$mode_inner_gaps"
-    bindsym Escape mode "default"
+    bindsym o       mode "$mode_outer_gaps"
+    bindsym i       mode "$mode_inner_gaps"
+    bindsym Escape  mode "default"
 }
 
 ## -- Opacity of a container --
 set $opacity 1
 for_window {
-    [class=".*"] opacity $opacity
-    [app_id=".*"] opacity $opacity
+    [class=".*"]     opacity $opacity
+    [app_id=".*"]    opacity $opacity
 }
 
 #=
-bindsym $mod+o       mode "opacity"
 bindsym $mod+slash   opacity plus 0.02
 bindsym $mod+period  opacity minus 0.02
+
+bindsym $mod+o       mode "opacity"
 mode "opacity" {
      bindsym  1 opacity 0.55
      bindsym  2 opacity 0.65
@@ -416,9 +423,9 @@ mode "opacity" {
 set $mode_alacritty_opacity alacritty opacity
 bindsym $mod+$alt+a mode "$mode_alacritty_opacity"
 mode "$mode_alacritty_opacity" {
-    bindsym Up   exec toggle_alacritty_opacity.sh -i
-    bindsym Down exec toggle_alacritty_opacity.sh -d
-    bindsym Escape mode "default"
+    bindsym Up      exec toggle_alacritty_opacity.sh -i
+    bindsym Down    exec toggle_alacritty_opacity.sh -d
+    bindsym Escape  mode "default"
 }
 
 #=
