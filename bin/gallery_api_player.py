@@ -8,13 +8,16 @@ think of something for image galleries
 # Requires: mpv, qutebrowser, curl
 
 import os
+import sys
+import getopt
 import urllib.parse
 from subprocess import getstatusoutput as unix
 
 # curl -s http://gallery/phpgallery/?path=/zvideos/torrents/ | piclister.py \
 #       | grep -E 'phpgallery.*path|phpgallery.*media'
 
-START_URL="/phpgallery/?path=/zvideos/torrents/"
+TORRENT_URL="/phpgallery/?path=/zvideos/torrents/"
+MOVIE_URL="/phpgallery/?path=/zdata/Elements/RARBG/"
 FILTER=r" | piclister.py | grep -E 'phpgallery.*path|phpgallery.*media|\.jpg$|\.png$' " \
        r"| grep -v -E '/\.pics/|/images/template/engage.png'"
 CURL="curl -s "
@@ -61,7 +64,7 @@ def mainloop(url):
             print("")
             done = False
             while not done:
-                value = input("Choose a number: ")
+                value = input("Choose a number (or search): ")
                 try:
                     if value == "q":
                         value = 0
@@ -72,25 +75,49 @@ def mainloop(url):
                         print(f"Invalid option, got {num}")
 
                 except ValueError:
-                    print("Invalid: not a number")
-                    done = False
+                    url = url+"&s="+value
+                    num=-1
+                    #print("Invalid: not a number")
+                    done = True
 
-            if choice[num][0] == "Quit":
-                finished = True
-            else:
-                if choice[num][1].find("/?media=") > -1:
-                    playvideo(choice[num][1])
-                elif choice[num][1].find("large=") > -1:
-                    showimages(choice[num][1])
+            if num > -1:
+                if choice[num][0] == "Quit":
+                    finished = True
                 else:
-                    url = choice[num][1]
+                    if choice[num][1].find("/?media=") > -1:
+                        playvideo(choice[num][1])
+                    elif choice[num][1].find("large=") > -1:
+                        showimages(choice[num][1])
+                    else:
+                        url = choice[num][1]
         else:
             finished = True
             print(f"Error: {out}")
 
+def usage():
+    """"""
+    print(f"Usage: {sys.argv[0]} [-h -t -m]")
+    print("   -h   help/usage")
+    print("   -t   torents")
+    print("   -m   movies")
+
+
 def main():
     """main"""
-    mainloop(START_URL)
+    opts, args = getopt.getopt(sys.argv[1:], "htm", ["help", "movies", "torrents"])
+    if len(opts) == 0:
+        usage()
+        sys.exit()
+
+    for opt, args in opts:
+        if opt in ['-h', '--help']:
+            usage()
+            sys.exit()
+        elif opt in ['-t', '--torrents']:
+            mainloop(TORRENT_URL)
+        elif opt in ['-m', '--movies']:
+            mainloop(MOVIE_URL)
+
 
 
 if __name__ == "__main__":
