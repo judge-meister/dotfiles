@@ -202,8 +202,9 @@
     },
     "custom/weather": {
         "format": "{}",
-        "interval": 3600,
-        "exec": "curl -Ss 'https://wttr.in?0&T&Q' | cut -c 16- | head -2 | xargs echo",
+        "interval": 1200,
+        //"exec": "curl -Ss 'https://wttr.in?0&T&Q' | cut -c 16- | head -2 | xargs echo",
+        "exec": "$HOME/bin/darksky.py",
 
     },
     "idle_inhibitor": {

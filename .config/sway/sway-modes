@@ -6,10 +6,10 @@
 mode "Resize" {
     # These bindings trigger as soon as you enter the resize mode
 
-    bindsym Left  resize shrink width  10 px or 10 ppt
-    bindsym Down  resize grow   height 10 px or 10 ppt
-    bindsym Up    resize shrink height 10 px or 10 ppt
-    bindsym Right resize grow   width  10 px or 10 ppt
+    bindsym Left  resize shrink width  5 px or 5 ppt
+    bindsym Down  resize grow   height 5 px or 5 ppt
+    bindsym Up    resize shrink height 5 px or 5 ppt
+    bindsym Right resize grow   width  5 px or 5 ppt
 
     # Return to default mode
     bindsym Return mode "default"
@@ -19,25 +19,29 @@ bindsym $mod+r mode "Resize"
 
 ## -- adjust gaps (inner/outer) --
 
-mode "Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)" {
-    bindsym plus         gaps outer current plus 5
-    bindsym minus        gaps outer current minus 5
-    bindsym Shift+plus   gaps outer all plus 5
-    bindsym Shift+minus  gaps outer all minus 5
+mode "Outer Gaps: ^|v|0 (local), Shift + ^|v|0 (global)" {
+    bindsym Up          gaps outer current plus 5
+    bindsym Down        gaps outer current minus 5
+    bindsym Shift+Up    gaps outer all plus 5
+    bindsym Shift+Down  gaps outer all minus 5
+    bindsym 0           gaps outer current set 5
+    bindsym Shift+0     gaps outer all set 5
     bindsym Escape mode "Gaps: (o)uter (i)nner"
 }
-mode "Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)" {
-    bindsym plus         gaps inner current plus 5
-    bindsym minus        gaps inner current minus 5
-    bindsym Shift+plus   gaps inner all plus 5
-    bindsym Shift+minus  gaps inner all minus 5
+mode "Inner Gaps: ^|v|0 (local), Shift + ^|v|0 (global)" {
+    bindsym Up          gaps inner current plus 5
+    bindsym Down        gaps inner current minus 5
+    bindsym Shift+Up    gaps inner all plus 5
+    bindsym Shift+Down  gaps inner all minus 5
+    bindsym 0           gaps inner current set 5
+    bindsym Shift+0     gaps inner all set 5
     bindsym Escape mode "Gaps: (o)uter (i)nner"
 }
 mode "Gaps: (o)uter (i)nner" {
     # Gaps: (o)uter (i)nner - can we have a mode within a mode
     # Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
-    bindsym o mode "Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)"
-    bindsym i mode "Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)"
+    bindsym o mode "Outer Gaps: ^|v|0 (local), Shift + ^|v|0 (global)"
+    bindsym i mode "Inner Gaps: ^|v|0 (local), Shift + ^|v|0 (global)"
     bindsym Escape mode "default"
 }
 bindsym $mod+g mode "Gaps: (o)uter (i)nner"
@@ -94,4 +98,26 @@ mode "alacritty opacity" {
     bindsym Escape mode "default"
 }
 bindsym $mod+$alt+a mode "alacritty opacity"
+
+# mpv_wallpaper
+mode "mpv_wallpaper" {
+# controls
+    bindsym s exec mpv_wallpaper.sh 
+    bindsym q exec mpv_wallpaper.sh quit
+    bindsym p exec mpv_wallpaper.sh pause
+    bindsym m exec mpv_wallpaper.sh mute
+    bindsym i exec mpv_wallpaper.sh info
+    bindsym o exec mpv_wallpaper.sh osd
+# skip forward 5s or 1min (left, right, up, down)
+    bindsym Left   exec mpv_wallpaper.sh back5
+    bindsym Right  exec mpv_wallpaper.sh fore5
+    bindsym Up     exec mpv_wallpaper.sh fore60
+    bindsym Down   exec mpv_wallpaper.sh back60
+# speed up slow down ( ] [ )
+    bindsym bracketLeft  exec mpv_wallpaper.sh slowdown
+    bindsym bracketRight exec mpv_wallpaper.sh speedup
+
+    bindsym Escape mode "default"
+}
+bindsym $mod+$alt+w mode "mpv_wallpaper"
 

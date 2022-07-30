@@ -70,6 +70,12 @@ choose_wallpaper()
   fi
 }
 
+if [ "$#" -eq 0 ]
+then
+  usage
+  exit 1
+fi
+
 while getopts "ci:o:t:wh" OPTION; do
     case $OPTION in
         c) choose=1 ;;

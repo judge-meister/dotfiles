@@ -3,7 +3,19 @@
 # ~/Videos/lexa-sorted.m3u
 # or given video file
 PLAYLIST=$HOME/Videos/lexa-sorted.m3u
-OUTPUT=LVDS-1
+OUTPUT_0=$(swaymsg -t get_outputs | jq '.[0].name' | sed 's/"//g' )
+OUTPUT_0_FOCUSED=$(swaymsg -t get_outputs | jq '.[0].focused')
+OUTPUT_1=$(swaymsg -t get_outputs | jq '.[1].name' | sed 's/"//g' )
+OUTPUT_1_FOCUSED=$(swaymsg -t get_outputs | jq '.[1].focused')
+
+#echo "$OUTPUT_0 $OUTPUT_0_FOCUSED"
+#echo "$OUTPUT_1 $OUTPUT_1_FOCUSED"
+
+if [ "$OUTPUT_1_FOCUSED" == "true" ]; then 
+    OUTPUT=$OUTPUT_1
+else
+    OUTPUT=$OUTPUT_0
+fi
 
 case $1 in
   start) shift;;
