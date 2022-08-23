@@ -8,9 +8,9 @@ import sys
 import getopt
 from subprocess import check_output
 
-FACTOR=0.02
-MINVAL=1.0
-MAXVAL=2.0
+FACTOR=0.05 # 0.02
+MINVAL=0.5 # 1.0
+MAXVAL=1.0 # 2.0
 
 xrandr = check_output(['xrandr'], universal_newlines=True)
 
@@ -31,9 +31,11 @@ class ScaleScrn:
     def get_scale(self):
         """calculate the current scale"""
         try:
-            self.scale = float(self.scaled[0])/float(self.native[0])
+            #print(f"get_scale() - native/scaled {self.native[0]}/{self.scaled[0]}")
+            self.scale = float(self.native[0])/float(self.scaled[0])
         except IndexError:
             self.scale = 1.0
+        #print("get_scale() = ",self.scale)
 
     def find_native_res(self):
         """find native resolution"""
@@ -62,19 +64,30 @@ class ScaleScrn:
 
     def decrease(self):
         """decrease scale"""
-        self.scale = max(self.scale-FACTOR, MINVAL)
-        self.call_xrandr(f"{self.scale:4.2f}")
+        self.scale = min(self.scale+FACTOR, MAXVAL)
+        #self.scale = max(self.scale-FACTOR, MINVAL)
+        self.scaled[0] = str(int(int(self.native[0])/self.scale))
+        self.scaled[1] = str(int(int(self.native[1])/self.scale))
+        #self.call_xrandr(f"{self.scale:4.2f}")
+        self.call_xrandr2()
 
     def increase(self):
         """increase scale"""
-        self.scale = min(self.scale+FACTOR, MAXVAL)
-        self.call_xrandr(f"{self.scale:4.2f}")
+        #self.scale = min(self.scale+FACTOR, MAXVAL)
+        self.scale = max(self.scale-FACTOR, MINVAL)
+        self.scaled[0] = str(int(int(self.native[0])/self.scale))
+        self.scaled[1] = str(int(int(self.native[1])/self.scale))
+        #self.call_xrandr_scale(f"{self.scale:4.2f}")
+        self.call_xrandr_scale_from()
 
-
-    def call_xrandr(self, scale): # xrandr --output LVDS-1 --scale 1.25
+    def call_xrandr_scale(self, scale): # xrandr --output LVDS-1 --scale 1.25
         """call xrandr to change scale"""
         check_output(['xrandr','--output', self.name, '--scale', scale], universal_newlines=True)
 
+    def call_xrandr_scale_from(self): # xrandr --output LVDS-1 --scale 1.25
+        """call xrandr to change scale"""
+        check_output(['xrandr','--output', self.name, '--scale-from', 'x'.join(self.scaled)], universal_newlines=True)
+        #print(self.scale, "--scale-from ",'x'.join(self.scaled))
 
 def usage():
     """usage"""
