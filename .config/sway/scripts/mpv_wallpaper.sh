@@ -4,7 +4,7 @@
 # or given video file
 PLAYLIST=$HOME/Videos/lexa-sorted.m3u
 OUTPUT_0=$(swaymsg -t get_outputs | jq '.[0].name' | sed 's/"//g' )
-OUTPUT_0_FOCUSED=$(swaymsg -t get_outputs | jq '.[0].focused')
+#OUTPUT_0_FOCUSED=$(swaymsg -t get_outputs | jq '.[0].focused')
 OUTPUT_1=$(swaymsg -t get_outputs | jq '.[1].name' | sed 's/"//g' )
 OUTPUT_1_FOCUSED=$(swaymsg -t get_outputs | jq '.[1].focused')
 
@@ -44,5 +44,5 @@ fi
 pgrep swaybg|xargs kill
 pgrep mpvpaper|xargs kill
 
-mpvpaper -p -o "--loop-playlist shuffle input-ipc-server=/tmp/mpv-socket-$OUTPUT" $OUTPUT "$PLAYLIST"
+mpvpaper -p -o "--loop-playlist shuffle input-ipc-server=/tmp/mpv-socket-$OUTPUT" "$OUTPUT" "$PLAYLIST"
 
