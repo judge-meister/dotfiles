@@ -8,18 +8,23 @@
 #  sed 's|bindsym $mod+|Mod-|g;s|bindsym ||g;s|# KP_GROUP\(.*\)|\n\1|g' | \
 #  yad --text-info --back=#282c34 --fore=#46d9ff --geometry=1000x600
 
-if [ "$1" == "i3" ] || [ "$1" == "sway" ]
+if pgrep sway$ >/dev/null
 then
-    WM=$1
-else
-    exit
+  WM=sway
 fi
+
+if pgrep i3$ >/dev/null
+then
+  WM=i3
+fi
+
 (
 grep -E 'bindsym|^#=' ~/.config/"${WM}"/config \
-    | grep -E '\$mod|Ctrl|Print|Shift|#=' | grep -v '#bindsym' \
-    | sed -e 's/#=//g' \
+    | grep -E '\$mod|Ctrl|Print|Shift|#=' | grep -v -E '#bindsym|^set ' \
+    | sed \
           -e 's/exec //g' \
-          -e 's/$mod/[Mod]/g' \
+          -e 's/$mod\+/[Super]/g' \
+          -e 's/\[Super]e/$mode/g' \
           -e 's/Shift/[Shift]/g' \
           -e 's/Ctrl/[Ctrl]/g' \
           -e 's/Control/[Control]/g' \

@@ -144,7 +144,7 @@ layouts = [
 ]
 
 widget_defaults = dict(
-    font='noto sans',
+    font='NotoSans Nerd Font',
     fontsize=14,
     padding=3,
     markup=True
