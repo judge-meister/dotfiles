@@ -3,7 +3,7 @@
 output=""
 if [ "$1" == "-utf" ]
 then
-  output="${output}<span font='FontAwesome'>"
+  output="${output}<span font='NotoSans Nerd Font'>"
 fi
 
 CHARGING="\uf0e7 "  # "⚡"  #  \uf0e7 lightning

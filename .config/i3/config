@@ -21,7 +21,7 @@
 # Global Settings
 
 # font settings
-font pango: SourceCodePro Medium 8
+font pango: NotoSans Nerd Font 8
 
 # float settings
 floating_minimum_size 150 x 150
@@ -49,7 +49,7 @@ set $up k
 set $right l
 
 # preferred temrinal emulator
-set $term alacritty
+set $term alacritty -o font.size=7.5
 
 # preferred lock command
 set $lockcmd ~/.config/i3/scripts/i3lock-fancy
@@ -270,8 +270,8 @@ bindsym $mod+r mode "resize"
 #=
 #= Screen Resolution
 #=
-    bindsym $mod+plus exec (~/bin/scale_screen.py -i && sleep 1 && ~/.fehbg)
-    bindsym $mod+minus exec (~/bin/scale_screen.py -d && sleep 1 && ~/.fehbg)
+    bindsym $mod+minus exec (~/bin/scale_screen.py -i && sleep 1 && ~/.fehbg)
+    bindsym $mod+plus exec (~/bin/scale_screen.py -d && sleep 1 && ~/.fehbg)
 #=
 #= Random Wallpaper
 #=
@@ -303,7 +303,7 @@ bindsym $mod+r mode "resize"
 bar {
     position top
     #font pango: FontAwesome 10
-    font pango: Noto Sans 11
+    font pango: NotoSans Nerd Font 11
     status_command i3blocks
     colors {
         separator  #268bd2

@@ -2,7 +2,7 @@
 # Sway theme
 
 #font pango: SourceCodePro Medium 12
-font pango: noto sans 10
+font pango: NotoSans Nerd Font 10
 
 # float settings
 floating_minimum_size 150 x 150

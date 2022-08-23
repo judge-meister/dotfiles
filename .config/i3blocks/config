@@ -1,4 +1,4 @@
-# Requires: nerd-fonts-mononoki, curl
+# Requires: nerd-fonts-NotoSans, curl
 # Requires: networkmanager
 
 separator_block_width=10
@@ -18,7 +18,7 @@ interval=1
 #color=#1793d1
 
 [updates]
-label=<span font="mononoki Nerd Font"></span>
+label=<span font="NotoSans Nerd Font"></span>
 #command=checkupdates | wc -l | awk '{print "📦: "$1}'
 command=checkupdates | wc -l | awk '{print "  "$1}'
 interval=15
@@ -26,14 +26,14 @@ interval=15
 markup=pango
 
 [disk-root]
-label=<span font="mononoki Nerd Font"></span>
+label=<span font="NotoSans Nerd Font"></span>
 command=df -h |grep ' /$' | awk -F' ' '{print "  "$4}'
 interval=600
 #color=#1793d1
 markup=pango
 
 [disk-home]
-label=<span font="mononoki Nerd Font"></span>
+label=<span font="NotoSans Nerd Font"></span>
 #command=df -h |grep ' /$' | awk -F' ' '{print "/: "$4}'
 command=df -h |grep '/home$' | awk -F' ' '{print "  "$4}'
 interval=600
@@ -68,7 +68,7 @@ interval=3600
 # clickable block to show wifi ip address or SSID or just the icon
 [ip-wifi]
 full_text=""
-label=<span font="mononoki Nerd Font"> </span>
+label=<span font="NotoSans Nerd Font"> </span>
 command=while read but; do if [ $but -eq 2 ]; then nmcli -t device show | grep -A5 TYPE:wifi | grep CONNECTION | cut -d':' -f2; elif [ $but -eq 1 ]; then nmcli -t device show $(nmcli -t device | grep -E ':wifi:' | cut -d':' -f1) | grep IP4.ADDRESS | cut -d':' -f2 | cut -d'/' -f1 ; else echo ""; fi; done
 #command=while read but; do if [ $but -eq 1 ]; then echo "wifi"; else echo "";fi;done
 #color=#d33682
@@ -79,14 +79,14 @@ markup=pango
 # Query my default IP address only on startup
 [ip-eth]
 full_text= 
-label=<span font="mononoki Nerd Font 10"> </span>
+label=<span font="NotoSans Nerd Font 10"> </span>
 command=while read but; do if [ $but -eq 1 ]; then nmcli -t device show $(nmcli -t device | grep -E ':ethernet:' | cut -d':' -f1) | grep IP4.ADDRESS | cut -d':' -f2 | cut -d'/' -f1 ; else echo ""; fi; done
 interval=persist
 #color=#91E78B
 markup=pango
 
 [cpu temp]
-label=<span font="mononoki Nerd Font"></span>
+label=<span font="NotoSans Nerd Font"></span>
 #command=t=$(cat /sys/class/hwmon/hwmon4/temp2_input); echo "$t / 1000" | bc  | awk '{print " "$1"°C"}'; if [ "$t" -gt 75000 ];then exit 33; fi; exit 0
 command=~/.config/i3blocks/cpu_temp.sh
 interval=10
@@ -94,7 +94,7 @@ interval=10
 markup=pango
 
 [load]
-label=<span font="mononoki Nerd Font"> </span>
+label=<span font="NotoSans Nerd Font"> </span>
 command=~/.config/i3blocks/load_average
 interval=10
 #color=#6c71c4
@@ -108,7 +108,7 @@ interval=20
 markup=pango
 
 [Volume]
-label=<span font="mononoki Nerd Font"></span>
+label=<span font="NotoSans Nerd Font"></span>
 command=volume | awk '{print " "$1}'
 interval=2
 #color=#d70a53
