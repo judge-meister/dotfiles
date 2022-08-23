@@ -20,10 +20,11 @@
                      "sway/mode", 
                      "custom/spotify"],
     /*"modules-center": ["sway/window"],*/
-    "modules-right": ["custom/scale", 
+    "modules-right": ["mpd",
+                      "custom/scale", 
                       "idle_inhibitor",
-                      "custom/disk_root", 
-                      "custom/disk_home", 
+                      //"custom/disk_root", 
+                      //"custom/disk_home", 
                       //"custom/docker", 
                       "custom/updates",
                       "custom/weather",
@@ -31,13 +32,15 @@
                       "pulseaudio", 
                       "network", 
                       "temperature", 
-                      "custom/fanspeed",
+                      //"custom/fanspeed",
                       "cpu", 
                       "memory", 
-                      "battery", 
+                      //"battery",
+                      "upower", //new
+                      //"bluetooth",
                       "custom/language",
                       "tray", 
-                      "clock", 
+                      "clock",
                       "custom/clock"
                       ],
     "sway/workspaces": {
@@ -57,18 +60,21 @@
     },
     "tray": {
         "icon-size": 16,
-        "spacing": 10
+        "spacing": 4,
     },
     "clock": {
-        /*"format-alt": "{:%Y-%m-%d}",*/
+        //"format": "{:%H:%M}",
         "format-alt": "{:%c}",
+        "tooltip-format": "{:%B %Y}\n<tt>{calendar}</tt>",
+        "today-format": "<span color='black' bgcolor='#d65f0e'>{}</span>",
     },
     "cpu": {
         "format": "{usage}%  ",
         "on-click": "alacritty -o font.size=11.0 -e htop",
     },
     "memory": {
-        "format": "{}%  "
+        "format": "{}%  ",
+        "on-click": "alacritty -o font.size=11.0 -e htop",
     },
     "temperature": {
         "hwmon-path": "/sys/class/hwmon/hwmon4/temp2_input",
@@ -107,6 +113,23 @@
         "format-charging": "{capacity}% ⚡",
         "format-icons": ["", "", "", "", ""]
     },
+    "upower": {
+        "format-alt": "{time}",
+        "icon-size": 16,
+        "hide-if-empty": true,
+        "tooltip": true,
+        "tooltip-spacing": 20
+    },
+    "bluetooth": {
+        "format": " {status}",
+        "format-connected": " {device_alias}",
+        "format-connected-battery": " {device_alias} {device_battery_percentage}%",
+        // "format-device-preference": [ "device1", "device2" ], // preference list deciding the displayed device
+        "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+        "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%"
+    },
     "network": {
         // "interface": "wlp2s0", // (Optional) To force the use of this interface
         "format-wifi": "({signalStrength}%)  ",
@@ -117,17 +140,20 @@
         "on-click": "~/.config/sway/scripts/run_nmtui",
     },
     "pulseaudio": {
-        //"scroll-step": 1,
+        "scroll-step": 2,
         "format": "{volume}% {icon} ",
-        "format-bluetooth": "{volume}% {icon}",
+        "format-bluetooth": "{volume}% {icon} ",
         "format-muted": "",
         "format-icons": {
             "headphones": "",
-            "handsfree": "",
-            "headset": "",
+            //"speaker": "🕨",
+            //"hdmi": "",
+            //"hands-free": "",
+            "headset": "",
             "phone": "",
-            "portable": "",
-            "car": "",
+            //"portable": "",
+            //"car": "",
+            //"hifi": "",
             "default": ["", ""]
         },
         "on-click-middle": "pavucontrol",
@@ -158,7 +184,7 @@
         "exec-if": "pgrep spotify"
     },
     "custom/updates": {
-        "format": "{}  ",
+        "format": "{} <span></span> ",
         "tooltip": false,
         "interval": 360,
         "exec": "echo $(($(cat ~/.tmp/pacupts) /1000))",
@@ -187,9 +213,9 @@
         "exec": "df -hl | grep '/home$' | awk -F' ' '{print $4}'",
     },
     "custom/scale": {
-        "format": "{}",
+        "format": "<span>{icon}</span>  {}",
+        "format-icons": ["",""],
         "interval": 1,
-        "tooltip": false,
         "exec":           "$HOME/.config/sway/scripts/sway_scale.py -r",
         "on-click":       "$HOME/.config/sway/scripts/sway_scale.py -i",
         "on-click-right": "$HOME/.config/sway/scripts/sway_scale.py -d",
@@ -203,8 +229,7 @@
     "custom/weather": {
         "format": "{}",
         "interval": 1200,
-        //"exec": "curl -Ss 'https://wttr.in?0&T&Q' | cut -c 16- | head -2 | xargs echo",
-        "exec": "$HOME/bin/darksky.py",
+        "exec": "$HOME/bin/darksky.py -w",
 
     },
     "idle_inhibitor": {
@@ -213,5 +238,30 @@
             "activated": " ",
             "deactivated": " ",
         },
+    },
+    "mpd": {
+        "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ",
+        "format-disconnected": " ", //"Disconnected ",
+        "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
+        "interval": 2,
+        "consume-icons": {
+            "on": " " // Icon shows only when "consume" is on
+        },
+        "random-icons": {
+            "off": "<span color=\"#f53c3c\"></span> ", // Icon grayed out when "random" is off
+            "on": " "
+        },
+        "repeat-icons": {
+            "on": " "
+        },
+        "single-icons": {
+            "on": "1 "
+        },
+        "state-icons": {
+            "paused": "",
+            "playing": ""
+        },
+        "tooltip-format": "MPD (connected)",
+        "tooltip-format-disconnected": "MPD (disconnected)"
     },
 }
