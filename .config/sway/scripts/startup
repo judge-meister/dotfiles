@@ -6,6 +6,7 @@
 
 lxsession &
 udiskie -ant &
+nm-applet --indicator &
 # copyq &
 xrdb -load ~/.Xdefaults
 

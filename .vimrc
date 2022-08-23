@@ -2,11 +2,6 @@
 " .vimrc file
 "_______________
 
-" Plug 'terminalnode/sway-vim-syntax'
-"aug i3config#ft_detect
-"    au BufNewFile,BufRead *config/sway/* set filetype=swayconfig
-"    au BufNewFile,BufRead *config/sway/*sh set filetype=sh
-"aug end
 
 " enable syntax highlighting, duh
 syntax enable
@@ -104,27 +99,7 @@ set cursorline
 set laststatus=2
 "highlight CursorLine cterm=underline ctermbg=none 
 
-" filetype_sh ------------{{{
-augroup filetype_sh
-    autocmd!
-    autocmd Filetype sh iabbrev <buffer> ifa if<space>[[<space>]];<space>then<cr><cr><bs>fi<cr>
-    autocmd Filetype sh iabbrev <buffer> getoptsa while<space>getopts<space":h"<space>opt;<cr>do<cr>case<space>${opt}<space>in<cr><space><space><space><space>h)<cr><space><space><space><space>;;<cr><bs><bs>esac<cr><cr><bs>done<cr>
-augroup END
-" }}}
 
-" status bar and cursor ------------------ {{{
-"highlight StatusLine cterm=None ctermbg=DarkGrey ctermfg=white
-"augroup statusbar
-"    autocmd!
-"    autocmd InsertEnter * highlight StatusLine ctermbg=5
-    "autocmd InsertEnter * highlight CursorLine ctermbg=black
-"    autocmd InsertEnter * highlight FoldColumn ctermbg=5
-
-"    autocmd InsertLeave * highlight StatusLine ctermbg=DarkGrey ctermfg=white
-    "autocmd InsertLeave * highlight CursorLine ctermbg=NONE
-"    autocmd InsertLeave * highlight FoldColumn ctermbg=DarkGrey
-"augroup END
-" }}}
 
 function! GitBranch()
   return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
@@ -135,32 +110,21 @@ function! StatuslineGit()
   return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
 endfunction
 
-" switch cursor colour in insert mode, only works in right kind of terminal
-"if &term =~ "xterm"
-    " colour when in insert mode
-    let &t_SI = "\<Esc>]12;yellow\x7"
-    " colour otherwise
-    let &t_EI = "\<Esc>]12;grey\x7"
-    " don't know the point of this line
-    silent !echo -ne "\033]12;grey\007"
-    " revert back to grey
-    autocmd VimLeave * silent !echo -ne "\033]112\007"
-"endif
+
 
 set statusline=
-set statusline+=%{StatuslineGit()}>
-set statusline+=\ %f                                                        " file name
-"set statusline+=\ [%{strlen(&fenc)?&fenc:'none'},                       " encoding
-"set statusline+=%{&ff}]                                                 " file format
-set statusline+=\ %Y                                                     " file type
-"set statusline+=\ [%{getbufvar(bufnv('%'),'&mod')?'modified':'saved'}]   " modified 
-set statusline+=\ %{&modified?'[modified]':'[saved]'}
-set statusline+=%r                                                       " read only
-set statusline+=\ %=                                                     " right-align
-set statusline+=\ Col:\ %c                                               " column number
-set statusline+=\ Buf:\ %n                                               " buffer number
-set statusline+=\ [%b/0x%B]                                              " ASCII and byte value under cursor
-set statusline+=\ %l/%L\ [%p%%]                                          " line x of y [ percentage ]
-
+"set statusline+=%{StatuslineGit()}>
+set statusline+=\ %f                                     " file name
+"set statusline+=\ [%{strlen(&fenc)?&fenc:'none'},       " encoding
+"set statusline+=%{&ff}]                                 " file format
+set statusline+=\ %Y                                     " file type
+set statusline+=\ %{&modified?'[modified]':'[saved]'}    " modified
+set statusline+=%r                                       " read only
+set statusline+=\ %=                                     " right-align
+set statusline+=\ Col:\ %c                               " column number
+set statusline+=\ Buf:\ %n                               " buffer number
+set statusline+=\ [%b/0x%B]                              " ASCII and byte value under cursor
+set statusline+=\ %l/%L\ [%p%%]                          " line x of y [ percentage ]
+"----------------------------------
 " }}}
 
