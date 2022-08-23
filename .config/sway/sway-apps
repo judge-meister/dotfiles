@@ -51,6 +51,7 @@ for_window [app_id="virt-viewer"] floating enable, shortcuts_inhibitor enable
 #for_window [class="vlc"] floating enable
 #for_window [class="zoom"] floating enable
 for_window [app_id="yad"] floating enable
+for_window [app_id="zenity"] floating enable
 
 
 

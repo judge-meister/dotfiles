@@ -87,7 +87,7 @@ def main():
             set_scale(name, read_scale())
 
         elif opt in ['-r', '--report']:
-            print(f"{scaled[0]}x{scaled[1]}({scale:.2f})")
+            print(f"{scale:.2f}\n{scaled[0]}x{scaled[1]}\n")
 
         elif opt in ['-s', '--scale']:
            try:
