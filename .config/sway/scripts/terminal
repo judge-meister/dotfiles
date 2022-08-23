@@ -17,7 +17,7 @@ alacritty_term()
 foot_term()
 {
   if [[ "$(which foot 2>/dev/null)" != "" ]]; then
-    foot -o main.font=monospace:size=7.0  $@
+    foot -o "main.font=Hack Nerd Font:size=7.0"  $@
   fi
 }
 kitty_term()
