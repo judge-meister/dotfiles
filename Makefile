@@ -46,7 +46,7 @@ cleanswayfolders: ## do lower directories
 
 .PHONY: folders
 folders: cleanfolders ## do lower directories
-	for file in $(shell find .config .local bin docs dockerfiles -type f | grep -v -E 'wofi|__pycache__|play-with-mpv.desktop' ); do \
+	for file in $(shell find .config .local bin docs dockerfiles .nedit -type f | grep -v -E 'wofi|__pycache__|play-with-mpv.desktop' ); do \
 		d=$$(dirname $$file); \
 		mkdir -p $(HOME)/$$d; \
 		ln -snfv $(CURDIR)/$$file $(HOME)/$$d/ ; \
@@ -119,6 +119,9 @@ pylint_df: ## runs pylint on all the python files in the repo.
 pylint: ## runs pylint on all the python files in the repo.
 	./test_pylint.sh
 
+.PHONY: packagelist
+packagelist: ##
+	for x in Q Qe Qet Qm; do pacman -$${x} > pacman.-$${x}.$(shell hostname); done
 
 # make file for kvm installs
 # vim: noet
