@@ -28,6 +28,7 @@ then
             dunstctl close
             done=1
         fi
+        sleep 0.5
     done
 fi
 
