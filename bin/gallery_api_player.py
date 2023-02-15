@@ -55,8 +55,11 @@ def mainloop(url):
             choice[3] = ("Next", navigation[6])
             idx=4
             for line in lines:
-                choice[idx] = (urllib.parse.unquote(os.path.basename(line)), line)
-                idx += 1
+                if line.find('IMAGES') > 0:
+                    pass
+                else:
+                    choice[idx] = (urllib.parse.unquote(os.path.basename(line)), line)
+                    idx += 1
 
             for i in range(idx):
                 print(f"{i}. {choice[i][0]}")
