@@ -53,9 +53,9 @@ def set_scale(name, scale):
 def call_swaymsg(name, scale): # swaymsg 'output LVDS-1 scale 0.80'
     """sway uses reciprical of scale value"""
     ret = json.loads( check_output(['swaymsg', 'output', name, 'scale', scale],
-                                   universal_newlines=True) )
-    if not ret[0]['success']:
-        print(ret[0]['success'])
+                                   universal_newlines=True) )[0]
+    if not ret['success']:
+        print(ret['success'])
         print("error occured changing resolution")
 
 
@@ -71,10 +71,15 @@ def usage():
 def main():
     """do stuff"""
     joutput = json.loads(check_output(['swaymsg', "-t", "get_outputs"], universal_newlines=True))
-    name = joutput[0]['name']
-    scale = float(joutput[0]['scale'])
-    native = [int(joutput[0]['current_mode']['width']), int(joutput[0]['current_mode']['height'])]
-    scaled = [int(native[0]/float(scale)), int(native[1]/float(scale))]
+
+    for n in range(len(joutput)):
+        if joutput[n]['focused']:
+            active = n
+
+    name = joutput[active]['name']
+    scale = float(joutput[active]['scale'])
+    native = {'w':int(joutput[active]['current_mode']['width']), 'h':int(joutput[active]['current_mode']['height'])}
+    scaled = [int(native['w']/float(scale)), int(native['h']/float(scale))]
 
     opts, _args = getopt.getopt(sys.argv[1:], "hs:rdi", ["help", "default", "scale=", "report", "dec", "inc"])
 
