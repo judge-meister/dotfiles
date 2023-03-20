@@ -463,3 +463,12 @@ mode "$mode_hotkeygrab" {
     bindsym $mod+Shift+z mode "default"
 }
 
+#=
+set $mode_scale Scale
+bindsym $mod+Shift+s mode "$mode_scale"
+mode "$mode_scale" {
+    bindsym Up   exec ~/.config/sway/scripts/sway_scale.py -i
+    bindsym Down exec ~/.config/sway/scripts/sway_scale.py -d
+    bindsym Escape mode "default"
+}
+

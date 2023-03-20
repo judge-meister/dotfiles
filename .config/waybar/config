@@ -217,8 +217,9 @@
         "format-icons": ["",""],
         "interval": 1,
         "exec":           "$HOME/.config/sway/scripts/sway_scale.py -r",
-        "on-click":       "$HOME/.config/sway/scripts/sway_scale.py -i",
-        "on-click-right": "$HOME/.config/sway/scripts/sway_scale.py -d",
+        //"on-click":       "$HOME/.config/sway/scripts/sway_scale.py -i &",
+        //"on-click":  "alacritty &",
+        //"on-click-right": "$HOME/.config/sway/scripts/sway_scale.py -d &",
     },
     "custom/clock": { // this custom clock module for debian because its clock module is broken
         "format": "{}",
