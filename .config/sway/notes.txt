@@ -1,0 +1,12 @@
+Improvements
+------------
+
+- use mpd and ncmpcpp to play music
+- modes
+  - adjust gaps dynamically - now a gaps mode with inner and outer sub modes
+  - opacity mode - skeleton ready - seems to be specific to one terminal
+  - could have modes for screen res
+- new settings for swaylock - updated fancy-swaylock
+- re-configure sway config into separate files
+- move scripts to .config/sway/scripts folder
+
