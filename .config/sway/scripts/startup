@@ -1,15 +1,17 @@
 #
 # start some stuff for sway
 #
-# Requires: lxsession, udiskie
+# Requires: lxsession, udiskie, network-manager-applet
 
 
 lxsession &
 udiskie -ant &
 nm-applet --indicator &
 # copyq &
-xrdb -load ~/.Xdefaults
-
+if [ "$(which xrdb 2>/dev/null)" != "" ]
+then
+    xrdb -load ~/.Xdefaults
+fi
 
 gsettings set org.gnome.desktop.interface gtk-theme "Dracula"
 gsettings set org.gnome.desktop.wm.preferences theme "Dracula"

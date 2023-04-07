@@ -20,6 +20,7 @@ set $def_wall /home/judge/.config/sway/wallpaper.png
 #output * bg $sexy_girl fill
 #output * bg $ivi_pizzot fill
 output LVDS-1 bg $def_wall fill
+output * bg $def_wall fill
 output DP-1 bg $def_wall fill
 
 # -- hide the cursor --
