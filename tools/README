@@ -1,23 +1,38 @@
 Notes
 -----
-pacman -Sy vim git openssh
-systemctl enable sshd
-systemctl start sshd
+sudo pacman -Sy vim git openssh
+sudo systemctl enable sshd
+sudo systemctl start sshd
+
 mkdir ~/clones
 cd ~/clones
-git clone https://github.com/judge-meister/dotfiles.git dotfiles
+git clone git@github.com:judge-meister/dotfiles.git dotfiles
 ./tools/install.sh -i install_yay_from_git
 ./tools/install.sh -i pacman_settings
 
 # install package.list
 yay -Sy $(cat package.list)
 
-systemctl enable ly
-systemctl enable bluetooth
-systemctl start bluetooth
-
 make
 
+sudo systemctl enable ly
+sudo systemctl enable bluetooth
+sudo systemctl start bluetooth
+
 pip3 install psutil beautifulsoup4
+
+sudo usermod -a -G audio,kvm,lp,optical,storage,video judge
+
+# for Virtual Machine Manager
+sudo usermod -a -G libvirt,libvirt-qemu judge
+sudo systemctl enable libvirtd
+sudo systemctl start libvirtd
+
+update /etc/libvirt/libvirtd.conf
+  unix_sock_group = libvirt
+  unix_sock_rw_perms = "0770"
+update /etc/libvirt/qemu.conf
+  user = "judge"
+  group = "judge"
 
 
