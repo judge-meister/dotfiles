@@ -21,7 +21,7 @@ sudo systemctl start bluetooth
 
 pip3 install psutil beautifulsoup4
 
-sudo usermod -a -G audio,kvm,lp,optical,storage,video judge
+sudo usermod -a -G audio,kvm,lp,optical,storage,video,sys,network,scanner,power,rfkill,users judge
 
 # for Virtual Machine Manager
 sudo usermod -a -G libvirt,libvirt-qemu judge
