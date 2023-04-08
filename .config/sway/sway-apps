@@ -22,6 +22,7 @@ for_window [app_id="org.qutebrowser.qutebrowser"] border none
 #for_window [app_id="Alacritty"] border pixel 1
 
 # skype, steam, wine, Gimp etc. : float
+for_window [app_id="blueman-manager"] floating enable
 for_window [class="Code"] floating enable
 for_window [app_id="copyq"] floating enable
 for_window [class="feh"] floating enable
