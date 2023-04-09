@@ -5,7 +5,9 @@ bc
 blueberry
 blueman
 brightnessctl
+cups
 curl
+dmidecode
 docker
 dracula-gtk-theme
 dunst
@@ -14,6 +16,7 @@ foot
 git
 git-filter-repo
 grim
+htop
 i3lock
 icdiff
 imagemagick
@@ -21,6 +24,7 @@ jq
 kitty
 libnotify
 libpulse
+lshw
 lxsession
 ly
 man
@@ -29,6 +33,8 @@ mpvpaper
 nerd-fonts-noto-sans-regular-complete
 networkmanager
 network-manager-applet
+net-tools
+nfs-utils
 pacman
 pacman-contrib
 pacman-mirrorlist
@@ -44,7 +50,10 @@ pulseaudio-bluetooth
 qutebrowser
 rofi
 scrot
+shellcheck
 slurp
+socat
+strace
 sway
 swaybg
 swaybg-git
@@ -54,8 +63,12 @@ swaylock
 swaynagmode
 swaysettings-git
 swaytools
+system-config-printer
+tree
 ttf-hack
 ttf-nerd-fonts-hack-complete-git
+ttf-roboto
+ttf-roboto-mono
 udiskie
 vim-dracula
 waybar

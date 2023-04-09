@@ -15,7 +15,7 @@ set -o pipefail
 
 # -----------------------------------------------------------------------------
 # adjust pacman settings
-pacman_settings()
+install_pacman_settings()
 {
   echo "Adjust some pacman settings"; sleep 2
 
@@ -277,7 +277,7 @@ install_everything()
   return
 
   # initial setup
-  pacman_settings
+  install_pacman_settings
   install_scripts
 
   # PACMAN
