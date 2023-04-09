@@ -21,14 +21,22 @@ magenta="C77800ff"
 cyan="55B6C2ff"
 alpha="00000000"
 
+IMAGE=""
+if [ "$1" != "" ]
+then
+    IMAGE="-i $1"
+fi
+
 # CMD
-set -x
-swaylock -f \
+swaylock -f ${IMAGE} \
     \
     --ignore-empty-password \
     --show-failed-attempts \
     --hide-keyboard-layout \
     --indicator-caps-lock \
+    \
+    --indicator-thickness 15 \
+    --indicator-radius 120 \
     \
     --color ${bge6} \
     \
