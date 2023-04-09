@@ -11,7 +11,7 @@
 #
 ##########################################################################
 set -e
-#set -x
+set -x
 
 # subshell this shiz
 #(
@@ -25,7 +25,7 @@ BLURTYPE="5x3" # 3.80s
 # BLURTYPE="2x3" # 2.92s
 
 #grim $IMAGE
-grim -g "0,0 $(xrandr | grep  XWAYLAND0 | awk -F' ' '{print $3}' |sed 's|+0+0||')" $IMAGE
+grim -g "0,0 $(xrandr | grep  connected | awk -F' ' '{print $3}' |sed 's|+0+0||')" $IMAGE
 
 # original convertion
 #convert $IMAGE -brightness-contrast -30x10 -level 0%,100%,0.6 -blur $BLURTYPE -gravity center - | composite -gravity center $HOME/.local/share/icons/lock.png - $IMAGE
