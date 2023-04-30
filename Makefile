@@ -51,7 +51,9 @@ folders: cleanfolders ## do lower directories
 		mkdir -p $(HOME)/$$d; \
 		ln -snfv $(CURDIR)/$$file $(HOME)/$$d/ ; \
 	done; \
-	systemctl --user daemon-reload;
+	mkdir -p $(HOME)/.tmp; \
+	systemctl --user daemon-reload; \
+	systemctl --user enable alert-checkupdates.timer;
 
 .PHONY: cleanfolders
 cleanfolders: ## do lower directories
