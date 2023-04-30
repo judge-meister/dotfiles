@@ -24,6 +24,7 @@ CURL="curl -s "
 
 def playvideo(url):
     """play the video url"""
+    print(f"mpv \"http://gallery{url}\" ")
     stt, out = unix(f"mpv \"http://gallery{url}\" ")
     if stt != 0:
         print(f"{stt} {out}")

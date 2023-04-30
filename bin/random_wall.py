@@ -8,6 +8,7 @@ import random
 import urllib.request
 from urllib.error import URLError
 from bs4 import BeautifulSoup
+from subprocess import getstatusoutput as unix
 
 # Requires: feh
 
@@ -72,6 +73,15 @@ def get_random_local_pic(picpath):
     return pics[random.randint(0, len(pics)-1)]
 
 
+def check_ok():
+    """ensure we are running in a non-sway desktop"""
+    st, out = unix('ps -e | grep sway')
+    for line in out.split('\n'):
+        if line.find('sway') > -1:
+            return False
+    return True
+
+
 def main():
     """ main """
     try:
@@ -86,5 +96,5 @@ def main():
 
 
 if __name__ == '__main__':
-
-    main()
+    if check_ok():
+        main()

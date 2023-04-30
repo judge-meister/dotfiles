@@ -2,25 +2,32 @@
 # Requires: sudo, pacman, yay, procps-ng, waybar
 
 UNAME_KERNEL_VER=$(uname -r)
-HEADER_KERNEL_VER=$(cat /usr/src/linux/version)
+HEADER_KERNEL_VER=$UNAME_KERNEL_VER
+if [ -f /usr/src/linux/version ]
+then
+  HEADER_KERNEL_VER=$(cat /usr/src/linux/version)
+fi
 KERNEL_CHANGED="false"
 
 sudo pacman --sync --needed archlinux-keyring
 #sudo pacman -Su
 yay -Syu
 
-if [ "$(uname -r)" != "$UNAME_KERNEL_VER" ]
+NEW_KERNEL=$(pacman -Q linux | cut -d' ' -f2-| sed 's|\.arch|-arch|g')
+if [ "$NEW_KERNEL" != "$UNAME_KERNEL_VER" ]
 then
-  NEW_KERNEL=$(uname -r)
   echo -e "\nkernel updated to $NEW_KERNEL"
   KERNEL_CHANGED="true"
 fi
 
-if [ "$(cat /usr/src/linux/version)" != "$HEADER_KERNEL_VER" ]
-then
-  NEW_KERNEL=$(cat /usr/src/linux/version)
-  echo -e "\nkernel headers updated to $NEW_KERNEL"
-  KERNEL_CHANGED="true"
+if [ -f /usr/src/linux/version ] 
+then 
+  if [ "$(cat /usr/src/linux/version)" != "$HEADER_KERNEL_VER" ]
+  then
+    NEW_KERNEL=$(cat /usr/src/linux/version)
+    echo -e "\nkernel headers updated to $NEW_KERNEL"
+    KERNEL_CHANGED="true"
+  fi
 fi
 
 checkupdates_alert

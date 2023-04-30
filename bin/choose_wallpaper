@@ -5,8 +5,8 @@ pictures=/home/judge/clones/wallpapers
 
 opacity=0.65
 shade=/tmp/out.png
-input=${pictures}/boobs/sexy-african-pierced-nipples.png 
-dimensions=$(identify "$input" |sed  's/.* \([0-9x]*\) .*/\1/g') 
+#input=${pictures}/boobs/sexy-african-pierced-nipples.png 
+#dimensions=$(identify "$input" |sed  's/.* \([0-9x]*\) .*/\1/g') 
 result=$HOME/.config/sway/wallpapers/wallpaper_$$.png
 wallpaper=0
 choose=0
@@ -59,7 +59,7 @@ choose_wallpaper()
 
   CHOSEN=$(nsxiv -t -r -o "$DIMMED" -o "$CLONES" | head -1)
 
-  echo "[$CHOSEN]"
+  #echo "[$CHOSEN]"
   if [ -n "$CHOSEN" ]
   then
     dimensions=$(identify "$CHOSEN" |sed  's/.* \([0-9x]*\) .*/\1/g')
@@ -87,7 +87,6 @@ while getopts "ci:o:t:wh" OPTION; do
         *) echo "Invalid Option [$OPTION]"; usage; exit 2 ;;
     esac
 done
-dimensions=$(identify "$input" |sed  's/.* \([0-9x]*\) .*/\1/g')
 
 
 if [ "$choose" -eq 1 ]
@@ -95,10 +94,16 @@ then
     choose_wallpaper
     exit
 else
-    dimmer
-    if [ $wallpaper -eq 1 ]
+    if [ -f "$input" ] && [ -d "$(dirname "$output")" ]
     then
-      set_wallpaper
+        dimensions=$(identify "$input" |sed  's/.* \([0-9x]*\) .*/\1/g')
+        dimmer
+        if [ $wallpaper -eq 1 ]
+        then
+            set_wallpaper
+        fi
+    else
+        echo "Error: input or output parameter was invalid."
     fi
 fi
 
