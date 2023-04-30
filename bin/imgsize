@@ -1,0 +1,225 @@
+#!/usr/bin/python3
+#
+# imgsize -- output image sizes in WWW format
+# by Ian Judge <judge@roadster.eunos.com>
+# 
+# Fix up IMG tags in given documents to contain correct sizes.
+# 
+# Works with Python 1.5.2
+#
+# Copy, use, and redistribute freely, but don't take my name off it and
+# clearly mark an altered version.  Fixes and enhancements cheerfully 
+# accepted.
+#
+# Changelog:
+#
+# Originally created by Eric S. Raymond <esr@thyrsus.com> 30 Jul 1996
+#
+# Modified by Ian Judge <judge@roadster.eunos.com> 14 Jun 2009
+#
+#    Removed all the html file update code to just leave a imgsize
+#    program.
+#
+# Modified by Erik Rossen <rossen@planet.ch> 15 May 1999
+#
+#    Added the --nomagick switch, to use file(1) and rdjpgcom(1)
+#    to determine the image size instead of identify(1) from the
+#    ImageMagick suite.
+#
+# Modified by Michael C. Toren <michael@toren.net> 18 Aug 2000
+#
+#    Fixed bug where the SRC attribute's value needed to be in quotes,
+#    improved command line parsing (but it could still use some work),
+#    added -q switch to omit quotes when generating tags, and -l switch
+#    to generate lowercase tags.  -mct
+#
+# Modified by Michael C. Toren <michael@toren.net> 19 Aug 2000
+#
+#    Improved the command line parsing some more, now looks for additional
+#    arguments via an IMGSIZE environmental variable, added the -d switch
+#    to set the DocumentRoot, -v switch to display version information,
+#    and -h switch to display usage information.  -mct
+#
+# Modified by Michael C. Toren <michael@toren.net> 23 Feb 2001
+#
+#    Fixed two bugs reported by Jeroen Valcke <jeroen@valcke.com>, one
+#    where the -d switch did not function properly if the img src attribute
+#    was quoted, and another where the &error sub was incorrectly reporting
+#    the line number an error occurred due to the input record separator
+#    being set to ">".
+#
+# Rewritten in Python by Eric S. Raymond <esr@thyrsus.com> 11 July 2001
+#
+#    Time to get rid of the dependency on httpget.  The -l option is gone, too;
+#    instead, we deduce the right case by looking at the leading tag.  -q
+#    is gone; we always emit without quotes.  -m is gone too, instead we
+#    try commands in least to most expensive order, and notice when a command
+#    returns not to try it again.
+#
+# Fixes by ESR, 29 July 2001
+#
+#    Incorporated fixes by Peter S. Galbraith.
+#
+# Fixes by ESR, 25 April 2003
+#
+#    Merged amended versions of Lennart Poettering's fix for Debian bug 139714.
+#    and Jeroen N. Witmond's fix for Debian bug 168964.  Added regression-test
+#    production.
+#
+# Enhancement by ESR, 14 Nov 2003
+#
+#    Verify and merge Lucien Saviot's patch to produce XHTML from XHTML input.
+#    Also his change to handle spurious lin e breaks produced by Dave Raggett's
+#    tidy(1) utility.
+#
+# Modified by Andrew Gwozdziewycz <gwozdzie@lucas.cis.temple.edu>, 17 June 2004
+#
+#    Added support for the Python Imaging Library to determine size in case of
+#    failure from file(1), rdjpgcom(1) and identify(1).
+
+import sys, os, getopt  
+import re, urllib.request, urllib.parse, urllib.error, subprocess
+
+# Arrange for both 1.5 and 2.1 compatibility
+try:
+    import filecmp
+    cmp = filecmp
+    del filecmp
+except ImportError:
+    import cmp
+
+version = "0.1, 14 Jun 2009";
+
+splash = """imgsize version %s, I. Judge <judge@roadster.eunos.com>
+See <http://roadster/software.html> for updates."""
+
+usage = """Usage: imgsize [OPTIONS] file [[file] ...]
+
+Options:
+
+    -V, --version
+
+        Display version information and exit.
+
+    -h, --help
+
+        Display usage information.
+
+
+"""
+
+# Optimization latches -- if an attempt  to invoke a command returns 127
+# "not found" there will turn off and that command won't be tried again.
+magick = 1	# using ImageMagick by default
+rdjpgcom = 1	# using rdjpcom by default
+pythonimage = 1 # use python imaging library
+
+def isimage(path):
+    """
+    if the path contains a file extention of a recognised image type return true
+    """
+    imgext = ['.jpg', '.jpeg', '.jpe', '.gif', '.png', '.bmp', '.pcx', '.tif', '.tiff', '.pbm', 
+              '.pgm', '.ppm', '.tga', '.thm', '.tbn', '.xbm', '.xpm', '.xcf']
+    front, ext = os.path.splitext(path)
+    return ext.lower() in imgext
+
+
+x_match = re.compile (r" ([0-9]+) *x *([0-9]+)")
+rdjpg_match = re.compile (r" ([0-9]+)w *\* *([0-9]+)h")
+
+def imgsize(src):
+    "Return the image size in pixels for a given image source."
+    global magick, rdjpgcom, pythonimage
+    #try:
+    #    (filename, headers) = urllib.urlretrieve(src)
+    #except IOError:
+    #    print 'urllib IOError'
+    #    return None
+    #print src,filename, headers
+    filename = src
+
+    # Now let's see if we can get a size for the retrieved image.
+    # Try file(1) first -- cheapest, as it doesn't read the whole image
+    (status, output) = subprocess.getstatusoutput('file "' + filename + '"')
+    if status == 0:
+        # file(1) works for every common image format other than JPEG
+        if output.find("JPEG") == -1:
+            sizes = x_match.search(output)
+            if sizes:
+                return (sizes.group(1), sizes.group(2))
+        elif rdjpgcom:
+            # Use rdjpgcom(1) to handle JPEGs
+            (status, output) = subprocess.getstatusoutput('rdjpgcom -verbose "' + filename + '"')
+            sizes = rdjpg_match.search(output)
+            if sizes:
+                return (sizes.group(1), sizes.group(2))
+            elif status == 127:
+                rdjpgcom = 0
+    # Next try identify(1), more expensive but bulletproof
+    if magick:
+        (status, output) = subprocess.getstatusoutput('identify "' + filename + '"')
+        if status == 0:
+            sizes = x_match.search(output)
+            if sizes:
+                return (sizes.group(1), sizes.group(2))
+        elif status == 127:
+            #sys.stderr.write("error: imgsize: giving up on ImageMagick\n")
+            magick = 0
+    # if that fails, try at _LAST_ resort Python Imaging Library
+    # open doesn't actually load all the data, so it shouldn't be too expensive
+    if pythonimage:
+        try:
+           import Image
+           pyimg = Image.open(filename)
+           return pyimg.size
+        except (ImportError, IOError):
+           #sys.stderr.write("error: imgsize: giving up on Python Imaging Library\n")
+           pythonimage = 0
+           pass
+
+    # All attempts failed
+    #sys.stderr.write("error: imgsize: couldn't analyze %s\n" % src)
+    return None
+
+def main():
+    # Collect options from the environment first, then the command line
+    options = os.environ.get("IMGSIZE")
+    if options:
+        options = options.split()
+    else:
+        options = []
+    options = options + sys.argv[1:]
+
+    # Process options
+    (options, arguments) = getopt.getopt(options, "Vh",
+    			     ('version', 'help', 'usage'))
+    for (switch, val) in options:
+        if switch in ('-V', '--version'):
+            print(splash % version)
+            raise SystemExit
+        elif switch in ('-h', '--help', '--usage'):
+            print(splash + "\n\n" + usage)
+            raise SystemExit
+
+    if not arguments:
+        print(splash + "\n\n" + usage)
+    else:
+
+        if len(arguments) > 1:
+            for file in arguments:
+                if isimage(file):
+                    dimensions=imgsize(file)
+                    if dimensions:
+                        print('%s: WIDTH="%s" HEIGHT="%s"' % (file, dimensions[0], dimensions[1]))
+                else:
+                    print('not an image: %s' % (file))
+        elif isimage(arguments[0]):
+            dimensions=imgsize(arguments[0])
+            if dimensions:
+                print('WIDTH="%s" HEIGHT="%s"' % (dimensions[0], dimensions[1]))
+        elif not isimage(arguments[0]):
+            print('not an image: %s' % (arguments[0]))
+
+if __name__ == '__main__':
+    main()
+# End
