@@ -1,0 +1,3 @@
+# run the Steam flatpak
+flatpak run com.valvesoftware.Steam
+
