@@ -3,7 +3,9 @@ Description=Check on available package updates every 30 minutes to warn the user
 
 [Timer]
 OnActiveSec=2m
+OnStartupSec=2m
 OnUnitActiveSec=30m
+#Persistent=true
 
 [Install]
 WantedBy=timers.target
