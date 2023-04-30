@@ -20,14 +20,14 @@
                      "sway/mode", 
                      "custom/spotify"],
     /*"modules-center": ["sway/window"],*/
-    "modules-right": ["mpd",
+    "modules-right": [//"mpd",
                       "custom/scale", 
                       "idle_inhibitor",
-                      //"custom/disk_root", 
+                      "custom/disk_root", 
                       //"custom/disk_home", 
                       //"custom/docker", 
                       "custom/updates",
-                      "custom/weather",
+                      //"custom/weather",
                       "backlight",
                       "pulseaudio", 
                       "network", 
@@ -77,7 +77,7 @@
         "on-click": "alacritty -o font.size=11.0 -e htop",
     },
     "temperature": {
-        "hwmon-path": "/sys/class/hwmon/hwmon4/temp2_input",
+        "hwmon-path": "/sys/class/hwmon/hwmon1/temp1_input",
         "format": "{temperatureC}°C ",
         "critical-threshold": 80,
         "format-critical": "{temperatureC}°C ",
@@ -157,8 +157,8 @@
             "default": ["", ""]
         },
         "on-click-middle": "pavucontrol",
-        "on-scroll-down": "~/.config/sway/scripts/volume -inc",
-        "on-scroll-up":   "~/.config/sway/scripts/volume -dec",
+        "on-scroll-down": "~/.config/sway/scripts/volume -dec",
+        "on-scroll-up":   "~/.config/sway/scripts/volume -inc",
         "on-click":       "~/.config/sway/scripts/volume -inc",
         "on-click-right": "~/.config/sway/scripts/volume -dec",
     },
@@ -231,7 +231,6 @@
         "format": "{}",
         "interval": 1200,
         "exec": "$HOME/bin/darksky.py -w",
-
     },
     "idle_inhibitor": {
         "format": "{icon}",

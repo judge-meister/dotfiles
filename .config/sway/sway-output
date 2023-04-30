@@ -12,16 +12,19 @@ exec_always ~/.config/sway/scripts/sway_scale.py --default
 
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 set $sway_blue /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png
-set $sexy_girl $HOME/lones/wallpapers/boobs/sexy-african-pierced-nipples.png
+set $sexy_girl $HOME/clones/wallpapers/boobs/sexy-african-pierced-nipples.png
 set $ivi_pizzot $HOME/clones/wallpapers/montage/ivi_pizzot_montage_1920x1200_16668.jpg
-set $def_wall /home/judge/.config/sway/wallpaper.png
+set $def_wall /home/judge/.config/sway/wallpapers/wallpaper_002049.jpg
 
 #output * bg $sway_blue fill
 #output * bg $sexy_girl fill
 #output * bg $ivi_pizzot fill
-output LVDS-1 bg $def_wall fill
-output * bg $def_wall fill
-output DP-1 bg $def_wall fill
+
+#output LVDS-1 bg $def_wall fill
+#output * bg $def_wall fill
+
+#output DP-1 pos 0 0 bg $def_wall fill
+#output HDMI-A-2 pos 1920 0 bg $def_wall fill
 
 # -- hide the cursor --
 seat seat0 hide_cursor when-typing enable

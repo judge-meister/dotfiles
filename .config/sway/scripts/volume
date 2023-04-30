@@ -8,6 +8,14 @@
 volume_high=/usr/share/icons/breeze/status/16/audio-volume-high.svg
 volume_muted=/usr/share/icons/breeze/status/16/audio-volume-muted.svg
 
+ICON_PATH=/usr/share/icons/Dracula/22/actions
+
+volume_overampped=${ICON_PATH}/audio-volume-overamplified-symbolic.svg
+volume_high=${ICON_PATH}/audio-volume-high.svg
+volume_medium=${ICON_PATH}/audio-volume-medium.svg
+volume_low=${ICON_PATH}/audio-volume-low.svg
+volume_muted=${ICON_PATH}/audio-volume-muted.svg
+
 # Change the volume using pulseaudio
 case "$1" in
   -inc)
@@ -34,7 +42,18 @@ mute=$(pactl get-sink-mute @DEFAULT_SINK@ | awk '{print $2}' |sed 's|[^a-z]*||g'
 if [[ $volume == 0 || "$mute" == "yes" ]]; then
     # Show the sound muted notification
     dunstify -a "changeVolume" -u low -i $volume_muted -h "string:x-dunst-stack-tag:$msgTag" "Volume muted" 
-else
+elif [[ $volume -gt 0 && $volume -le 30 ]]
+then
+    # Show the volume notification
+    dunstify -a "changeVolume" -u low -i $volume_low -h "string:x-dunst-stack-tag:$msgTag" \
+    -h int:value:"$volume" "Volume: ${volume}%"
+elif [[ $volume -gt 30 && $volume -le 65 ]]
+then
+    # Show the volume notification
+    dunstify -a "changeVolume" -u low -i $volume_medium -h "string:x-dunst-stack-tag:$msgTag" \
+    -h int:value:"$volume" "Volume: ${volume}%"
+elif [[ $volume -gt 65 ]]
+then
     # Show the volume notification
     dunstify -a "changeVolume" -u low -i $volume_high -h "string:x-dunst-stack-tag:$msgTag" \
     -h int:value:"$volume" "Volume: ${volume}%"

@@ -1,32 +1,32 @@
 /* style sheet for waybar */
 
+@import url("./colors.css"); /* dracula themed colors */
+
+/*
 @define-color ared #e06b74;
 @define-color agreen #98c379;
 @define-color ayellow #E5C07A;
 @define-color ablue #62AEEF;
 @define-color amagenta #C77800;
 @define-color acyan #55B6C2;
+*/
 
-/*@define-color whitecolor #bbbbbb;*/
-@define-color whitecolor #202020;
-/*@define-color buttonbg rgba(55,55,55,0.6);*/
-@define-color buttonbgalpha rgba(214,93,14,0.6);
-@define-color buttonbg #d65f0e;
-@define-color buttonborder #202020;
+@define-color foreground #aaaaaa;
+@define-color buttonbgalpha rgba(0,0,0,0.4);
+@define-color buttonborder #666666;
 
 * {
     border: none;
     border-radius: 4px;
-    font-family: "NotoSans Nerd Font"; /*"noto sans,mononoki Nerd Font";*/
+    font-family: "NotoSans Nerd Font";
     font-size: 12pt;
-    font-weight: normal /*bold*/;
+    font-weight: normal;
     min-height: 0;
 }
 
 window#waybar {
-    /*background: rgba(0,0,0,0.4);*//* black 70% transparent; */
-    background: rgba(0,0,0,0.1);/* black 70% transparent; */
-    color: @whitecolor;
+    background: @background-darker-alpha;
+    color: @foreground;
     padding: 0px;
     margin: 0px;
 }
@@ -35,55 +35,55 @@ window#waybar {
     min-width: 800px;
 }
 
-#window {
-    color: @whitecolor;
+/*#window {
+    color: @foreground;
     padding-right: 20px;
     border-right: 0px solid #777;
-}
+}*/
 
 #workspaces button {
     padding: 0 3px;
     margin: 0 1px;
-    background: @buttonbgalpha;
-    color: @whitecolor;
-    border-left: 0px solid @whitecolor;
-    border-right: 0px solid @whitecolor;
+    background: @buttonbgalpha; /*@background-darker; */
+    color: @foreground; 
+    border-left: 0px solid @foreground;
+    border-right: 0px solid @foreground;
     border: 1px solid @buttonborder;
 }
 
 #workspaces button.focused {
-    border: 0px solid #777;    /*1*/ 
-    border: 1px solid @buttonborder;
-    background: #6c71c4;       /*2*/
-    color: #cccccc;            /*3*/
+    /*border: 0px solid #777;*/
+    border: 1px solid @buttonborder; /*@background;*/
+    color: @foreground; /*@background;*/ 
+    background: @selection; /*@purple;*/
 }
 
-#workspaces button.active {
-    border: 0px solid #fdf6e6; /*1*/ 
-    border: 1px solid @buttonborder;
-    background: #6c71c4;       /*2*/
-    color: #fdf6e3;            /*3*/
-}
+/*#workspaces button.active {
+    border: 0px solid #fdf6e6;  
+    border: 1px solid @buttonborder; 
+    background: #6c71c4;
+    color: #fdf6e3;            
+}*/
 
-#workspaces button.inactive {
-    border: 0px solid #586e75;  /*1*/ 
+/*#workspaces button.inactive {
+    border: 0px solid #586e75;  / *1* / 
     border: 1px solid @buttonborder;
-    background: @buttonborder;  /*2*/
-    color: #586e75;             /*3*/
-}
+    background: @buttonborder;  / *2* /
+    color: #586e75;             / *3* /
+}*/
 
 #workspaces button.urgent {
     border: 0px solid #d33682; /*1*/ 
-    border: 1px solid @buttonborder;
+    border: 1px solid #cccccc; /*@buttonborder;*/
     background: #d33682;       /*2*/
     color: #fdf6e3;            /*3*/
 }
 
 tooltip {
     font-family: "NotoSans Nerd Font";
-    background: rgba(32,32,32,0.65);
-    color:  #999999;
-    border: 1px solid @buttonbg;
+    background: @background-darker;
+    color:  @foreground;
+    border: 1px solid @foreground;
 }
 
 
@@ -121,9 +121,8 @@ tooltip {
     margin: 0 1px;
     border-left: 0px solid #777;
     border-right: 0px solid #777;
-    background: @buttonbgalpha;
-    /*background-image: linear-gradient(to right,@acyan,white,@ablue);*/
-    color: @whitecolor;
+    background: @buttonbgalpha; /*@background;*/
+    color: @foreground;
     border: 1px solid @buttonborder;
 }
 
@@ -143,13 +142,12 @@ tooltip {
 
 @keyframes blink {
     to {
-        background-color: #ff9900; /*#ffffff;*/
-        /*color: black;*/
+        background-color: #ff9900;
     }
 }
 
 #battery.warning:not(.charging) {
-    color: @whitecolor;
+    color: @foreground;
     animation-name: blink;
     animation-duration: 0.5s;
     animation-timing-function: linear;
@@ -175,9 +173,9 @@ tooltip {
     background: #f53c3c;
 }
 
-#custom-spotify {
+/*#custom-spotify {
     color: rgb(102, 220, 105);
-}
+}*/
 
 #custom-updates.hover {
     background: #444;

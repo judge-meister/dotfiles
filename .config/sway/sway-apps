@@ -1,59 +1,79 @@
 # -----------------------------------------------------------------------------
 # Discrete app settings
 
+for_window [app_id=".*"       ] title_format "%title - [app_id=%app_id] - [class=%class]"
+for_window [app_id="Alacritty"] title_format "%title"
+
 # tigervnc, Brave - open on new workspace
-assign [class="TigerVNC Viewer"] → 6
-assign [class="Vncviewer"] → 6
-assign [class="Brave-browser"] → 10
+assign [class="TigerVNC Viewer"             ] → 6
+assign [class="Vncviewer"                   ] → 6
+#assign [class="Brave-browser"               ] → 10
 assign [app_id="org.qutebrowser.qutebrowser"] → 9
-assign [app_id="firefoxdeveloperedition"] → 10
+assign [app_id="firefoxdeveloperedition"    ] → 10
 #assign [app_id="Firefox Developer Edition"] → 10
 
 # spotify, brave: no border
-for_window [app_id="^Spotify$"] border none
-for_window [app_id="^Spotify Premium$"] border none
-for_window [app_id="Brave-browser"] border none
-for_window [app_id="firefoxdeveloperedition"] border none
-for_window [app_id="org.qutebrowser.qutebrowser"] border none
+for_window [app_id="^Spotify$"                  ] border none
+for_window [app_id="^Spotify Premium$"          ] border none
+for_window [class="Brave-browser"               ] border none, gaps outer current set 0
+for_window [app_id="firefoxdeveloperedition"    ] border none, gaps outer current set 0
+for_window [app_id="org.qutebrowser.qutebrowser"] border none, gaps outer current set 0
+for_window [class="Chromium"                    ] border none, gaps outer current set 0
 #for_window [app_id="Firefox Developer Edition"] border none
 
 # no title: st terminal
 #for_window [app_id="st-256color"] border pixel 1
 #for_window [app_id="Alacritty"] border pixel 1
+#for_window [app_id="Alacritty" floating] border normal 
+#for_window [app_id="Alacritty" tiling] border pixel 
 
 # skype, steam, wine, Gimp etc. : float
-for_window [app_id="blueman-manager"] floating enable
-for_window [class="Code"] floating enable
-for_window [app_id="copyq"] floating enable
-for_window [class="feh"] floating enable
-for_window [class="Fontviewer"] floating enable
-for_window [app_id="nmtui"] floating enable
-for_window [class="Gimp"] floating enable
-for_window [class="Gimp-2.10"] floating enable
-for_window [app_id="imv"] floating enable
-#for_window [class="jigsawgirls.exe"] floating enable
-for_window [app_id="mpv"] floating enable
-for_window [class="NEdit"] border normal 1
-for_window [class="NEdit" instance="FileSelect_popup"] floating enable, border pixel 1
-for_window [class="NEdit" instance="help"] floating enable
-for_window [class="NEdit" instance="Information"] floating enable, border pixel 1
-for_window [class="NEdit" instance="Warning"] floating enable, border pixel 1
-for_window [class="NEdit" instance="Question"] floating enable, border pixel 1
-for_window [class="NEdit" instance="Prompt_popup"] floating enable, border pixel 1
-for_window [class="NEdit" instance="findDialog_popup"] floating enable, border pixel 1
-for_window [app_id="nm-connection-editor"] floating enable
-for_window [app_id="pavucontrol"] floating enable
-for_window [app_id="Qemu-system-i386"] floating enable
-for_window [app_id="qemu-system-x86_64"] floating enable
-for_window [app_id="swaysettings"] floating enable
-for_window [class="Toplevel"] floating enable
 
+for_window [app_id="blueman-manager"] floating enable
+for_window [class="crispy-doom"     ] floating enable
+for_window [class="Code"            ] floating enable
+for_window [app_id="copyq"          ] floating enable
+for_window [class="feh"             ] floating enable
+for_window [class="Fontviewer"      ] floating enable
+for_window [class="Gimp"            ] floating enable
+for_window [class="Gimp-2.10"       ] floating enable
+for_window [app_id="imv"            ] floating enable
+#for_window [class="jigsawgirls.exe"] floating enable
+for_window [class="Lxappearance"    ] floating enable
+for_window [app_id="mpv"            ] floating enable
+for_window [class="NEdit"           ] floating enable, border normal 1
+for_window [class="NEdit" instance="FileSelect_popup"] floating enable, border pixel 1
+for_window [class="NEdit" instance="Fonts_popup"     ] floating enable, border pixel 1
+for_window [class="NEdit" instance="Font Selector"   ] floating enable, border pixel 1
+for_window [class="NEdit" instance="help"            ] floating enable
+for_window [class="NEdit" instance="Information"     ] floating enable, border pixel 1
+for_window [class="NEdit" instance="Warning"         ] floating enable, border pixel 1
+for_window [class="NEdit" instance="Question"        ] floating enable, border pixel 1
+for_window [class="NEdit" instance="Prompt_popup"    ] floating enable, border pixel 1
+for_window [class="NEdit" instance="findDialog_popup"] floating enable, border pixel 1
+for_window [app_id="nmtui"               ] floating enable
+for_window [app_id="nm-connection-editor"] floating enable
+for_window [app_id="pavucontrol"         ] floating enable
+for_window [app_id="Qemu-system-i386"    ] floating enable
+for_window [app_id="qemu-system-x86_64"  ] floating enable
+#for_window [app_id="remote-viewer"] floating enable, border pixel 1
+for_window [app_id="solaar"      ] floating enable
+for_window [class="Steam"        ] floating enable
+for_window [class="steam_app_4071" ] floating enable
+for_window [app_id="swaysettings"] floating enable
+for_window [class="Toplevel"     ] floating enable
+for_window [class="Universe Sandbox.x86_64"] floating enable, border pixel 1
+
+for_window [app_id="variety"     ] floating enable
 for_window [app_id="virt-manager"] floating enable, shortcuts_inhibitor enable
-for_window [app_id="virt-viewer"] floating enable, shortcuts_inhibitor enable
-#for_window [class="vlc"] floating enable
-#for_window [class="zoom"] floating enable
-for_window [app_id="yad"] floating enable
-for_window [app_id="zenity"] floating enable
+for_window [app_id="virt-viewer" ] floating enable, shortcuts_inhibitor enable
+for_window [class="vlc"          ] floating enable
+for_window [app_id="vlc"         ] floating enable
+for_window [class="Vncviewer"    ] shortcuts_inhibitor enable
+for_window [app_id="zoom"        ] floating enable
+for_window [app_id="xfce4-appearance-settings"] floating enable
+for_window [app_id="yad"         ] floating enable
+for_window [app_id="zenity"      ] floating enable
 
 
 

@@ -7,23 +7,60 @@ font pango: NotoSans Nerd Font 10
 # float settings
 floating_minimum_size 150 x 150
 floating_maximum_size 1920 x 1200
+# hold $mod and left click to move, right click to resize
 floating_modifier $mod normal
 
 # border width
-default_border pixel 4
-default_floating_border normal 5
+#default_border pixel 4
+#default_floating_border normal 5
+default_border pixel 1
+default_floating_border normal 2
 
 # gaps settings
 smart_gaps on
 gaps inner 10
 gaps outer 0
 
+# my orange colour scheme
 # colours                  title    title     title               view border
 #     .class              <border> <backgrnd> <text> [<indicat> [<child_brdr>]]
-client.focused            #d65d0edd #d65d0edd #333333 #d65d0e77 #d65d0edd
-client.focused_inactive   #222222dd #222222dd #aaaaaa #d65d0e77 #222222dd
-client.unfocused          #222222dd #222222dd #aaaaaa #d65d0e77 #222222dd
-#client.focused_tab_title  #dddddd33 #dddddd33 #000000 #ddddddaa
-#client.placeholder        #dddddd33 #dddddd33 #000000 #ddddddaa
-#client.urgent             #ddaa7733 #dddddd33 #000000 #ddddddaa
+#client.focused            #d65d0edd #d65d0edd #333333 #d65d0e77 #d65d0edd
+#client.focused_inactive   #222222dd #222222dd #aaaaaa #d65d0e77 #222222dd
+#client.unfocused          #222222dd #222222dd #aaaaaa #d65d0e77 #222222dd
+
+##client.focused_tab_title  #dddddd33 #dddddd33 #000000 #ddddddaa
+##client.placeholder        #dddddd33 #dddddd33 #000000 #ddddddaa
+##client.urgent             #ddaa7733 #dddddd33 #000000 #ddddddaa
+
+
+# new colour scheme (very monotone dark grey)
+# colours                  title    title     title               view border
+#     .class              <border> <backgrnd> <text> [<indicat> [<child_brdr>]]
+#client.focused            #666666  #00000077  #aaaaaa  #aaaaaa    #666666      
+#client.focused_inactive   #333333  #22000050  #777777  #484e50    #222222      
+#client.unfocused          #333333  #00000019  #777777  #292d2e    #222222      
+#client.focused_tab_title  #333333  #00000030  #ffffff            
+#client.urgent             #2f343a  #900000    #ffffff  #900000    #900000      
+#client.placeholder        #000000  #0c0c0c    #ffffff  #000000    #0c0c0c
+
+# newly obtained dracula color scheme
+# class                 border  bground text    indicator child_border
+client.focused          #6272A4 #6272A477 #F8F8F2 #6272A4   #6272A4
+client.focused_inactive #44475A #44475A50 #F8F8F2 #44475A   #44475A
+client.unfocused        #282A36 #282A3619 #BFBFBF #282A36   #282A36
+#client.focused_tab_title ??????
+client.urgent           #44475A #FF5555   #F8F8F2 #FF5555   #FF5555
+client.placeholder      #282A36 #282A36   #F8F8F2 #282A36   #282A36
+
+client.background       #F8F8F2
+
+# default sway colour scheme
+#     .class              <border> <backgrnd> <text> [<indicat> [<child_brdr>]]
+
+#client.focused            #4c7899  #285577    #ffffff  #2e9ef4    #285577      
+#client.focused_inactive   #333333  #5f676a    #ffffff  #484e50    #5f676a      
+#client.focused_tab_title  #333333  #5f676a    #ffffff            
+#client.unfocused          #333333  #222222    #888888  #292d2e    #222222      
+#client.urgent             #2f343a  #900000    #ffffff  #900000    #900000      
+#client.placeholder        #000000  #0c0c0c    #ffffff  #000000    #0c0c0c
 

@@ -19,7 +19,8 @@ fi
 
 case $1 in
   start) shift;;
-  quit) random_swaybg.py "$HOME"/.config/sway/wallpaper.png; 
+  quit) ~/.swaybgrc
+        #random_swaybg.py "$HOME"/.config/sway/wallpaper.png; 
         pkill mpvpaper;
         swaymsg mode default;
         exit;;
@@ -33,16 +34,29 @@ case $1 in
   slowdown) echo 'keypress [' | socat - "/tmp/mpv-socket-$OUTPUT"; exit;;
   info) echo 'keypress i' | socat - "/tmp/mpv-socket-$OUTPUT"; exit;;
   osd) echo 'keypress o' | socat - "/tmp/mpv-socket-$OUTPUT"; exit;;
+  next) echo 'keypress >' | socat - "/tmp/mpv-socket-$OUTPUT"; exit;;
+  prev) echo 'keypress <' | socat - "/tmp/mpv-socket-$OUTPUT"; exit;;
 esac
 
+SINGLE=""
 if [ $# -gt 0 ]
 then
   # shellcheck disable=SC2124
-  PLAYLIST="$@"
+  SINGLE="$@"
 fi
 
 pgrep swaybg|xargs kill
 pgrep mpvpaper|xargs kill
 
-mpvpaper -p -o "--loop-playlist shuffle input-ipc-server=/tmp/mpv-socket-$OUTPUT" "$OUTPUT" "$PLAYLIST"
+if [ "$SINGLE" == "" ]
+then
+    mpvpaper -p -o "--loop-playlist shuffle input-ipc-server=/tmp/mpv-socket-$OUTPUT" "$OUTPUT" "$PLAYLIST"
+else
+    mpvpaper -p -o "input-ipc-server=/tmp/mpv-socket-$OUTPUT" "$OUTPUT" "$SINGLE"
+    ~/.swaybgrc
+        #random_swaybg.py "$HOME"/.config/sway/wallpaper.png; 
+    pkill mpvpaper;
+    swaymsg mode default;
+    exit
+fi
 

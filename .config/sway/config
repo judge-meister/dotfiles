@@ -130,29 +130,21 @@ bindsym $mod+7 workspace number 7
 bindsym $mod+8 workspace number 8
 bindsym $mod+9 workspace number 9
 bindsym $mod+0 workspace number 10
+
+bindsym $mod+alt+1 workspace number 11
+bindsym $mod+alt+2 workspace number 12
+bindsym $mod+alt+3 workspace number 13
+bindsym $mod+alt+4 workspace number 14
+bindsym $mod+alt+5 workspace number 15
+bindsym $mod+alt+6 workspace number 16
+bindsym $mod+alt+7 workspace number 17
+bindsym $mod+alt+8 workspace number 18
+bindsym $mod+alt+9 workspace number 19
+bindsym $mod+alt+0 workspace number 20
 ##
-#bindsym --no-repeat $mod+1 workspace number 1; exec "echo 1 > /tmp/sovpipe"
-#bindsym --no-repeat $mod+2 workspace number 2; exec "echo 1 > /tmp/sovpipe"
-#bindsym --no-repeat $mod+3 workspace number 3; exec "echo 1 > /tmp/sovpipe"
-#bindsym --no-repeat $mod+4 workspace number 4; exec "echo 1 > /tmp/sovpipe"
-#bindsym --no-repeat $mod+5 workspace number 5; exec "echo 1 > /tmp/sovpipe"
-#bindsym --no-repeat $mod+6 workspace number 6; exec "echo 1 > /tmp/sovpipe"
-#bindsym --no-repeat $mod+7 workspace number 7; exec "echo 1 > /tmp/sovpipe"
-#bindsym --no-repeat $mod+8 workspace number 8; exec "echo 1 > /tmp/sovpipe"
-#bindsym --no-repeat $mod+9 workspace number 9; exec "echo 1 > /tmp/sovpipe"
-#bindsym --no-repeat $mod+0 workspace number 10; exec "echo 1 > /tmp/sovpipe"
-
-#bindsym --release $mod+1 exec "echo 0 > /tmp/sovpipe"
-#bindsym --release $mod+2 exec "echo 0 > /tmp/sovpipe"
-#bindsym --release $mod+3 exec "echo 0 > /tmp/sovpipe"
-#bindsym --release $mod+4 exec "echo 0 > /tmp/sovpipe"
-#bindsym --release $mod+5 exec "echo 0 > /tmp/sovpipe"
-#bindsym --release $mod+6 exec "echo 0 > /tmp/sovpipe"
-#bindsym --release $mod+7 exec "echo 0 > /tmp/sovpipe"
-#bindsym --release $mod+8 exec "echo 0 > /tmp/sovpipe"
-#bindsym --release $mod+9 exec "echo 0 > /tmp/sovpipe"
-#bindsym --release $mod+0 exec "echo 0 > /tmp/sovpipe"
-
+bindsym $mod+alt+Left   workspace prev
+bindsym $mod+alt+Right  workspace next
+##
 #= Move Focused Container to Workspace
 bindsym $mod+Shift+1 move container to workspace number 1
 bindsym $mod+Shift+2 move container to workspace number 2
@@ -165,6 +157,16 @@ bindsym $mod+Shift+8 move container to workspace number 8
 bindsym $mod+Shift+9 move container to workspace number 9
 bindsym $mod+Shift+0 move container to workspace number 10
 
+bindsym $mod+Shift+alt+1 move container to workspace number 11
+bindsym $mod+Shift+alt+2 move container to workspace number 12
+bindsym $mod+Shift+alt+3 move container to workspace number 13
+bindsym $mod+Shift+alt+4 move container to workspace number 14
+bindsym $mod+Shift+alt+5 move container to workspace number 15
+bindsym $mod+Shift+alt+6 move container to workspace number 16
+bindsym $mod+Shift+alt+7 move container to workspace number 17
+bindsym $mod+Shift+alt+8 move container to workspace number 18
+bindsym $mod+Shift+alt+9 move container to workspace number 19
+bindsym $mod+Shift+alt+0 move container to workspace number 20
 #=
 #= Layout stuff
 
@@ -181,7 +183,10 @@ bindsym $mod+e           layout toggle split
 bindsym $mod+f           fullscreen
 
 # toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
+#bindsym $mod+Shift+space floating toggle
+bindsym $mod+Shift+space floating toggle; \
+    [app_id="Alacritty" tiling con_id=__focused__] border pixel; \
+    [app_id="Alacritty" floating con_id=__focused__] border normal 2;\
 
 # change focus between tiling / floating windows
 bindsym $mod+space       focus mode_toggle
@@ -237,6 +242,8 @@ bindsym $mod+b                exec $random_wallpaper
 bindsym $mod+Shift+b          exec $random_wallpaper $HOME/.config/sway/wallpapers/wallpaper_360254.png
 bindsym $mod+Ctrl+b           exec $random_wallpaper $HOME/.config/sway/wallpapers/wallpaper_000001.png
 bindsym $mod+Mod1+b           exec $random_wallpaper $HOME/clones/wallpapers/montage
+bindsym $mod+Mod1+n           exec $random_wallpaper next
+bindsym $mod+Mod1+p           exec $random_wallpaper prev
 #=
 #= Alacritty Opacity
 bindsym $mod+Ctrl+minus       exec $alacritty_opacity -d
@@ -322,15 +329,18 @@ bar {
 
 exec --no-startup-id ~/.config/sway/scripts/startup
 
-exec  wl-paste -t text --watch clipman store 
+exec wl-paste -t text --watch clipman store 
 
-exec_always blueman-tray
+exec blueman-tray
+
+exec /usr/bin/solaar --window=hide
 
 #exec_always rm -f /tmp/sovpipe && mkfifo /tmp/sovpipe && tail -f /tmp/sovpipe | sov
 
 #exec stacki3 45
 
 #exec_always $HOME/bin/random_swaybg.py $HOME/.config/sway/wallpaper.png fill
+exec_always $HOME/.swaybgrc
 
 # -----------------------------------------------
 #=
@@ -400,20 +410,20 @@ for_window {
 }
 
 #=
-bindsym $mod+slash   opacity plus 0.02
-bindsym $mod+period  opacity minus 0.02
+bindsym $mod+slash   opacity plus 0.1
+bindsym $mod+period  opacity minus 0.1
 
 bindsym $mod+o       mode "opacity"
 mode "opacity" {
-     bindsym  1 opacity 0.55
-     bindsym  2 opacity 0.65
-     bindsym  3 opacity 0.70
-     bindsym  4 opacity 0.75
-     bindsym  5 opacity 0.80
-     bindsym  6 opacity 0.85
-     bindsym  7 opacity 0.90
-     bindsym  8 opacity 0.95
-     bindsym  9 opacity 0.98
+     bindsym  1 opacity 0.50
+     bindsym  2 opacity 0.55
+     bindsym  3 opacity 0.65
+     bindsym  4 opacity 0.70
+     bindsym  5 opacity 0.75
+     bindsym  6 opacity 0.80
+     bindsym  7 opacity 0.85
+     bindsym  8 opacity 0.90
+     bindsym  9 opacity 0.95
      bindsym  0 opacity 1
         
      bindsym  Escape mode "default"
@@ -449,6 +459,9 @@ mode "$mode_mpv_wallpaper" {
 # speed up slow down ( ] [ )
     bindsym bracketLeft  exec $mpv_wallpaper slowdown
     bindsym bracketRight exec $mpv_wallpaper speedup
+# next prev in playlist
+    bindsym Shift+period exec $mpv_wallpaper next
+    bindsym Shift+comma exec $mpv_wallpaper prev
 
     bindsym Escape mode "default"
 }

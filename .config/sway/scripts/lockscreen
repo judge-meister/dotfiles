@@ -28,15 +28,15 @@ then
 fi
 
 # CMD
-swaylock -f ${IMAGE} \
-    \
+swaylock -f ${IMAGE} -C ~/.config/swaylock/config.dracula \
+
+exit 0
+
+\
     --ignore-empty-password \
     --show-failed-attempts \
     --hide-keyboard-layout \
     --indicator-caps-lock \
-    \
-    --indicator-thickness 15 \
-    --indicator-radius 120 \
     \
     --color ${bge6} \
     \
