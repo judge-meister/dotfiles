@@ -1,0 +1,71 @@
+TO DO
+-----
+
+1. Install and test zoom with Apple Cinema screen
+   - zoom installed 
+     - needs testing
+ 
+DONE 2. Maybe update swaylock with swaylock-effects (copy swaylock config from thinkpad)
+
+DONE 3. Install DOOM
+        - installed crispy-doom-git and copied doom.wad from Mac Mini
+
+DONE 4. Try to get currently selected wallpaper re-displayed on Reload or login
+
+DONE 5. Steam - maybe try Flatpak verison
+        - then install Universe Simulator - DONE
+          - some problems with fonts and invisible text
+            - seems to have sorted itself out - maybe?
+
+DONE 6. tigervnc client to access torrent vm
+
+DONE 7. proxmox viewer access app from alpards wiki
+        - wrote my own because the other one refused to connect
+
+DONE 8. customize the grub menu
+        - its been Dracula'd
+
+DONE 9. setup ssh keys so passwords are not required
+        - not all machines working yet
+
+DONE 10. have more than 10 workspaces (ready for Dual monitor use)
+         - this also includes shortcuts to move to next/prev workspace
+ 
+DONE 11. install Brave Browser as it has better dark mode support than chrome and firefox
+         Also it has implemented cookie warning blocker
+         - add uBlock Adblocker
+         - add 1Password
+         - add fake spot
+         - add violent monkey
+         - add enhancer for youtube
+
+DONE 12. think about new sway colour theme to replace the orange we have currently
+
+DONE 13. does alacritty support scroll bars ?
+         - NO, but you can use PgUp and PgDown to scroll quicker than the mouse scrollwheel
+
+14. get mpv_wallpaper to ask for a video to play, or at least offer a choice. 
+    Maybe we start it from a zenity GUI rather than a bindsym mode with a fixed m3u playlist.
+
+DONE 15. more Dracula theme options for 
+         - Kitty[Y], rofi[Y], grub[Y], qt5ct[Y], dunst[Y], foot[Y], Gimp[Y], ranger[Y]
+         - KDiff3[Y], bashtop[Y],
+         - [Not curently installed] geany[?], 
+         - swaylock[Y], waybar[Y], sway(i3)[Y]
+
+16. Update git repo for dotfiles
+    - maybe create a branch or a fork so that Thinkpad and MinisForum can have independent config
+
+17. think about whether to copy Windows VM from Proxmox to UM690
+
+18. Come up with a better hostname than UM690
+
+NOT NEEDED 19. Build a VM with XFS file system to try out the overlayFS properly
+            - xfs is not needed, works find with ext4
+
+DONE 20. Need to try some other games from Steam. Unfortunately Machinarium is Windows/Mac only.
+         - got Machinarium working in Steam on Linux, yeah.
+
+21. login to Google account to get Mail and Youtube history
+    - and Amazon, ebay etc for shopping
+

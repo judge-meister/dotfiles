@@ -12,6 +12,8 @@ docker
 dracula-gtk-theme
 dunst
 feh
+figlet
+figlet-fonts
 foot
 git
 git-filter-repo
@@ -59,7 +61,7 @@ swaybg
 swaybg-git
 swayidle
 swayimg-git
-swaylock
+swaylock-efects
 swaynagmode
 swaysettings-git
 swaytools
