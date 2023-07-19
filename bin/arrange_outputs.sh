@@ -36,12 +36,22 @@ function vertical_output()
     #set +x
 }
 
+function reset_apple_cinema()
+{
+    echo "reseting Apple Cinema Display"
+    swaymsg output DP-1 disable
+    sleep 0.5
+    swaymsg output DP-1 enable
+}
+
 if [ "${#OUTPUTS[@]}" -eq 1 ]
 then
   echo "Single output only."
   swaymsg output ${OUTPUTS[$1]} pos 0 0
   exit
 fi
+
+reset_apple_cinema
 
 echo -en "Arrange Outputs Horizontal or Vertical [h/v]: "
 read ans

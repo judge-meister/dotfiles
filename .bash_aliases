@@ -24,6 +24,11 @@ alias gad='git add'
 alias gcm='git commit -m'
 alias gdt='git icdiff'
 
+alias git-untracked='git ls-files --others '
+alias git-tracked='git ls-tree --name-only -r HEAD'
+
+alias ddd='kdbg'
+
 function getappid()
 {
   swaymsg -t get_tree | grep -E 'class|app_id' | grep -v null | awk -F' ' '{print $1 $2}' | sort -u

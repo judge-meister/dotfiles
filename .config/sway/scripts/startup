@@ -4,7 +4,7 @@
 # Requires: lxsession, udiskie, network-manager-applet
 
 
-lxsession &
+#lxsession &
 udiskie -ant &
 nm-applet --indicator &
 # copyq &

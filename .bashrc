@@ -18,3 +18,8 @@ PS1='[\u@\h \W]\$ '
 
 export PATH=$PATH:~/.emacs.d/bin
 
+if [ -S "$SWAYSOCK" ]
+then
+    swaymsg opacity set 0.9
+fi
+

@@ -68,6 +68,7 @@ set $sway_scale         ~/.config/sway/scripts/sway_scale.py
 set $volume             ~/.config/sway/scripts/volume
 set $backlight          ~/.config/sway/scripts/backlight
 set $mpv_wallpaper      ~/.config/sway/scripts/mpv_wallpaper.sh
+set $reset_apple_disp   ~/.config/sway/scripts/reset_apple_display.sh
 
 
 # ==============================================================================
@@ -100,7 +101,9 @@ bindsym $mod+Shift+q           kill
 # Reload the configuration file
 bindsym $mod+Shift+c           reload
 
-# move to monitor
+#=
+# Move Workspace to a Monitor
+#= Move To Monitor
 bindsym $mod+Ctrl+Left         move workspace to output left
 bindsym $mod+Ctrl+Right        move workspace to output right
 
@@ -188,6 +191,7 @@ bindsym $mod+Shift+space floating toggle; \
     [app_id="Alacritty" tiling con_id=__focused__] border pixel; \
     [app_id="Alacritty" floating con_id=__focused__] border normal 2;\
 
+
 # change focus between tiling / floating windows
 bindsym $mod+space       focus mode_toggle
 
@@ -248,6 +252,9 @@ bindsym $mod+Mod1+p           exec $random_wallpaper prev
 #= Alacritty Opacity
 bindsym $mod+Ctrl+minus       exec $alacritty_opacity -d
 bindsym $mod+Ctrl+equal       exec $alacritty_opacity -i
+#=
+#= Fix Apple Cinema Display
+bindsym $mod+Shift+a          exec $reset_apple_disp
 
 
 # -----------------------------------------------------------------------------
@@ -338,8 +345,8 @@ exec /usr/bin/solaar --window=hide
 #exec_always rm -f /tmp/sovpipe && mkfifo /tmp/sovpipe && tail -f /tmp/sovpipe | sov
 
 #exec stacki3 45
+exec /usr/bin/play-with-mpv 
 
-#exec_always $HOME/bin/random_swaybg.py $HOME/.config/sway/wallpaper.png fill
 exec_always $HOME/.swaybgrc
 
 # -----------------------------------------------
@@ -400,6 +407,16 @@ mode "$mode_gaps" {
     bindsym o       mode "$mode_outer_gaps"
     bindsym i       mode "$mode_inner_gaps"
     bindsym Escape  mode "default"
+}
+
+## -- choose a title format --
+#=
+bindsym $mod+Shift+t mode "title"
+mode "title" {
+    bindsym 1 title_format "%title"
+    bindsym 2 title_format "%title (%app_id)(%class)"
+
+    bindsym Escape mode "default"
 }
 
 ## -- Opacity of a container --
@@ -468,6 +485,8 @@ mode "$mode_mpv_wallpaper" {
 
 #=
 seat * shortcuts_inhibitor disable
+#bindsym $mod+Shift+z swaymsg seat seat0 shortcuts_inhibitor activate
+#bindsym $mod+Shift+x swaymsg seat seat0 shortcuts_inhibitor deactivate
 # mode: hotkeygrab
 set $mode_hotkeygrab Hotkey grab: mod+Shift+z to exit
 bindsym $mod+Shift+z mode "$mode_hotkeygrab"
@@ -475,6 +494,7 @@ mode "$mode_hotkeygrab" {
     # back to normal: mod+Shift+z
     bindsym $mod+Shift+z mode "default"
 }
+
 
 #=
 set $mode_scale Scale

@@ -20,7 +20,6 @@ fi
 case $1 in
   start) shift;;
   quit) ~/.swaybgrc
-        #random_swaybg.py "$HOME"/.config/sway/wallpaper.png; 
         pkill mpvpaper;
         swaymsg mode default;
         exit;;
@@ -54,7 +53,6 @@ then
 else
     mpvpaper -p -o "input-ipc-server=/tmp/mpv-socket-$OUTPUT" "$OUTPUT" "$SINGLE"
     ~/.swaybgrc
-        #random_swaybg.py "$HOME"/.config/sway/wallpaper.png; 
     pkill mpvpaper;
     swaymsg mode default;
     exit

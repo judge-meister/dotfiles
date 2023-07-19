@@ -19,10 +19,10 @@ volume_muted=${ICON_PATH}/audio-volume-muted.svg
 # Change the volume using pulseaudio
 case "$1" in
   -inc)
-    pactl set-sink-volume @DEFAULT_SINK@ +5%
+    pactl set-sink-volume @DEFAULT_SINK@ +2%
     ;;
   -dec)
-    pactl set-sink-volume @DEFAULT_SINK@ -5%
+    pactl set-sink-volume @DEFAULT_SINK@ -2%
     ;;
   -toggle)
     pactl set-sink-mute @DEFAULT_SINK@ toggle

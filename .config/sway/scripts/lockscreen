@@ -1,6 +1,13 @@
 #!/bin/bash
 # shellcheck disable=SC2034
 
+SINK_INPUTS=$(pactl list sink-inputs | wc -l)
+if [ "$SINK_INPUTS" -gt 0 ]
+then
+  # audio is playing so abort the screen lock
+  exit
+fi
+
 # Backgroud Image
 #IMAGE="$HOME/.config/sway/wallpaper/lockscreen.png"
 

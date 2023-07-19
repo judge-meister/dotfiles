@@ -12,6 +12,8 @@ export XDG_CONFIG_HOME=$HOME/.config
 export XDG_STATE_HOME=$HOME/.local/state
 export XDG_CACHE_HOME=$HOME/.cache
 export QT_QPA_PLATFORMTHEME=qt5ct
+#export PYOPENGL_PLATFORM=x11
+export PYOPENGL_PLATFORM=egl
 
 #export OPENER=
 export IMAGER=swayimg

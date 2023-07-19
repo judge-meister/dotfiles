@@ -5,7 +5,7 @@
 font pango: NotoSans Nerd Font 10
 
 # float settings
-floating_minimum_size 150 x 150
+floating_minimum_size 128 x 128
 floating_maximum_size 1920 x 1200
 # hold $mod and left click to move, right click to resize
 floating_modifier $mod normal
