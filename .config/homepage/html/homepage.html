@@ -95,6 +95,7 @@
         </div>
     </div>
 
+    <script src="../config.js"></script>
     <script>
         // Search on enter key event
         document.getElementById("search-field").addEventListener("keydown",  event => { 
@@ -119,7 +120,8 @@
         window.onload = () => {
             let xhr = new XMLHttpRequest();
             // Request to open weather map (using my api key and not Distro Tubes)
-            xhr.open('GET', 'https://api.openweathermap.org/data/2.5/weather?lat=51.2828&lon=-0.8316&units=metric&appid=a41ad59cf63ab14dce08b31e58d84260' );
+            let weatherurl = 'https://api.openweathermap.org/data/2.5/weather?lat=51.2828&lon=-0.8316&units=metric&appid='+openweatherapi;
+            xhr.open('GET', weatherurl );
             xhr.onload = () => {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
