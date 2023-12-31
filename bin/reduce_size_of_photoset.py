@@ -3,14 +3,16 @@
 
 import sys, os, glob
 from subprocess import getstatusoutput as unix
+from PIL import Image
+
 
 MAX=5670
-   
+
 def progress(str='.'):
     """"""
     sys.stdout.write(str)
     sys.stdout.flush()
-    
+
 
 def main():
     if len(sys.argv) == 1: #if [ "$1" == "" ]
@@ -19,6 +21,8 @@ def main():
 
     for dirn in sys.argv[1:]:
         CWD = os.getcwd()
+        if not os.path.isdir(dirn):
+            continue
         os.chdir(dirn)
 
         jpegs = glob.glob('*.jpg')
@@ -26,14 +30,15 @@ def main():
         progend = ""
         for x in jpegs:
             #print(f"identify \"{x}\" | cut -d' ' -f3")
-            ret, wh = unix(f"identify \"{x}\" | cut -d' ' -f3")
+            #ret, wh = unix(f"identify \"{x}\" | cut -d' ' -f3")
             #print(f"{ret}, {wh}")
-            w,h = wh.split('x')
-            w = int(w)
-            h = int(h)
+            #w,h = wh.split('x')
+            #w = int(w)
+            #h = int(h)
+            w,h = Image.open(x).size
 
             if w > MAX or h > MAX:
-                if not os.path.exists(".orig"): 
+                if not os.path.exists(".orig"):
                     os.makedirs(".orig")
                 if not os.path.exists(f".orig/{x}"):
                     os.rename(x, f".orig/{x}") #/bin/mv -f "$x" ".orig/$x"
