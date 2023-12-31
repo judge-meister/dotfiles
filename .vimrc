@@ -50,7 +50,7 @@ map <c-v> "+P
 
 " make return indent to the same as previous line
 set autoindent
-set smartindent
+"set smartindent
 
 " only search case sensitive for something containing uppercase letters
 set smartcase
@@ -67,7 +67,8 @@ set number
 set shiftwidth=4
 
 " set the tab amount
-set tabstop=4
+set tabstop=2
+autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4 softtabstop=4
 
 set wildmenu
 
@@ -99,6 +100,9 @@ set cursorline
 set laststatus=2
 "highlight CursorLine cterm=underline ctermbg=none 
 
+" set cursor shape for insert mode
+let &t_SI = "\e[6 q"
+let &t_EI = "\e[2 q"
 
 
 function! GitBranch()
