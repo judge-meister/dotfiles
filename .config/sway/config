@@ -100,7 +100,9 @@ bindsym $mod+Shift+q           kill
 # Reload the configuration file
 bindsym $mod+Shift+c           reload
 
-# move to monitor
+#=
+# Move Workspace to a Monitor
+#= Move To Monitor
 bindsym $mod+Ctrl+Left         move workspace to output left
 bindsym $mod+Ctrl+Right        move workspace to output right
 
@@ -339,7 +341,6 @@ exec /usr/bin/solaar --window=hide
 
 #exec stacki3 45
 
-#exec_always $HOME/bin/random_swaybg.py $HOME/.config/sway/wallpaper.png fill
 exec_always $HOME/.swaybgrc
 
 # -----------------------------------------------
@@ -400,6 +401,16 @@ mode "$mode_gaps" {
     bindsym o       mode "$mode_outer_gaps"
     bindsym i       mode "$mode_inner_gaps"
     bindsym Escape  mode "default"
+}
+
+## -- choose a title format --
+#=
+bindsym $mod+Shift+t mode "title"
+mode "title" {
+    bindsym 1 title_format "%title"
+    bindsym 2 title_format "%title (%app_id)(%class)"
+
+    bindsym Escape mode "default"
 }
 
 ## -- Opacity of a container --

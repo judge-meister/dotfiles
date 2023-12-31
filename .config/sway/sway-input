@@ -18,10 +18,16 @@ input "type:touchpad" {
 ## -- keyboard --
 
 input "type:keyboard" {
-      xkb_layout gb 
+      xkb_layout gb
+
+      # for using logitect keyboard in MacOS mode
+      #xkb_layout us 
       # xkb_model macbook79
+      #xkb_options "altwin:swap_lalt_lwin"
+      # man 7 xkeyboard-config for more xkb_options
 }
 
 # only add the xkb_model setting if on a macbook
 exec_always ~/bin/kbd_model
+
 

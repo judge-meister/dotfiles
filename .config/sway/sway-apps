@@ -1,7 +1,7 @@
 # -----------------------------------------------------------------------------
 # Discrete app settings
 
-for_window [app_id=".*"       ] title_format "%title - [app_id=%app_id] - [class=%class]"
+#for_window [app_id=".*"       ] title_format "%title - [app_id=%app_id] - [class=%class]"
 for_window [app_id="Alacritty"] title_format "%title"
 
 # tigervnc, Brave - open on new workspace
@@ -69,7 +69,7 @@ for_window [app_id="virt-manager"] floating enable, shortcuts_inhibitor enable
 for_window [app_id="virt-viewer" ] floating enable, shortcuts_inhibitor enable
 for_window [class="vlc"          ] floating enable
 for_window [app_id="vlc"         ] floating enable
-for_window [class="Vncviewer"    ] shortcuts_inhibitor enable
+for_window [class="Vncviewer"    ] shortcuts_inhibitor enable, border none
 for_window [app_id="zoom"        ] floating enable
 for_window [app_id="xfce4-appearance-settings"] floating enable
 for_window [app_id="yad"         ] floating enable
